@@ -1,14 +1,19 @@
 """Entry point."""
 
+from models import tournaments
 from models.tournaments import Tournament
 
 from controllers.base import Controller
 
-from views.base import Views
+from views.tournament import TournamentView
+from views.player import PlayerView
 
 
 def main():
-    pass
+    tournament_view = TournamentView()
+    player_view = PlayerView()
+    controller = Controller(tournament_view, player_view)
+    controller.run()
 
 
 if __name__ == "__main__":
