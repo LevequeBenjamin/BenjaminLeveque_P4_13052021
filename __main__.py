@@ -1,7 +1,6 @@
 """Entry point."""
 
 from models import tournaments
-from models.tournaments import Tournament
 
 from controllers.base import Controller
 

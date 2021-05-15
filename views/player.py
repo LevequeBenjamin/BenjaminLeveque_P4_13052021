@@ -104,3 +104,31 @@ class PlayerView:
                     else:
                         print(
                             "Je n'ai pas compris ce que vous voulez dire.")
+                        
+    @property
+    def prompt_player_elo(self) -> int:
+        """prompt for get player elo
+
+        Returns:
+            str: elo for class Player
+        """
+        confirm = ""
+        while confirm != "Y":
+            elo = input(
+                "entrez le classement Elo du joueur en caractère numerique: ")
+            if elo.isnumeric() == False or not elo:
+                print("Je n'ai pas compris ce que vous voulez dire, "
+                      "veuillez entrer le classement Elo du joueur en caractère numerique svp.")
+            else:
+                print(f"Le classement elo du joueur est: {elo}")
+                while confirm != "Y" or "N":
+                    confirm = input("Vous confirmez ? (Y/N) : ").upper()
+                    if confirm == "Y":
+                        return elo
+                    elif confirm == "N":
+                        print("Veuillez entrez le classement Elo du joueur svp.")
+                        break
+                    else:
+                        print(
+                            "Je n'ai pas compris ce que vous voulez dire.")
+
