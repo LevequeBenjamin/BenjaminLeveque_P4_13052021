@@ -64,15 +64,13 @@ class Controller:
         except Exception as err:
             logger.error("Oops! %s", err)
             
-    @property
-    def set_list_players(self):
+    def set_list_players(self, tournament):
         """[summary]
 
         Args:
             number_of_players ([type]): [description]
         """
-        players = []
-        for i in range(8):
+        for j in range(8):
             try:
                 last_name = self.player_view.prompt_player_lastname
                 first_name = self.player_view.prompt_player_firstname
@@ -81,10 +79,9 @@ class Controller:
                 elo = self.player_view.prompt_player_elo
 
                 player = Player(last_name, first_name, birth_date, sex, elo)
-                players.append(player.__str__)
+                tournament.append_list_players(player.__str__)
             except Exception as err:
                 logger.error("Oops! %s", err)
-        return players
 
 
     def save_table_players(self, player):
@@ -104,13 +101,24 @@ class Controller:
         except Exception as err:
             logger.error("Oops! %s :", err)
 
+    def start_rounds(self):
+        """Docstrings."""
+        pass
+
     @property
     def start_tournament(self):
         """Docstrings."""
+        print()
+        print(Fore.LIGHTYELLOW_EX + "********** Créez un tournoi **********")
         tournament = self.set_tournament
-        players = self.set_list_players
-        tournament.append_list_players(players)
-        round = Round(players)
+        print()
+        print(Fore.LIGHTYELLOW_EX + "********** Créez 8 joueurs **********")
+        self.set_list_players(tournament)
+        round = Round(tournament.get_list_players)
+        print()
+        print("Lancer le premier tour.")
+        players = round.sort_elo_players
+        print(players)
 
 
     @property
