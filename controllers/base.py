@@ -7,6 +7,7 @@ from models import tournaments
 from models.tournaments import Tournament
 from models.players import Player
 from models.rounds import Round
+from models.matches import Match
 import logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -17,11 +18,12 @@ db = TinyDB("db/db.json")
 class Controller:
     """Main controller."""
 
-    def __init__(self, tournament_view, player_view):
+    def __init__(self, user_view, tournament_view, player_view, round_view):
         # views
+        self.user_view = user_view
         self.tournament_view = tournament_view
         self.player_view = player_view
-
+        self.round_view = round_view
 
     @property
     def set_tournament(self):
@@ -36,14 +38,13 @@ class Controller:
             dated = self.tournament_view.prompt_tournament_dated
             time_control = self.tournament_view.prompt_tournament_time_control
             description = self.tournament_view.prompt_tournament_description
-            
+
             tournament = Tournament(name, location, dated, time_control,
                                     description)
             self.save_table_tournament(tournament)
             return tournament
         except Exception as err:
             logger.error("Oops! %s", err)
-
 
     @property
     def set_new_player(self):
@@ -61,9 +62,13 @@ class Controller:
 
             player = Player(last_name, first_name, birth_date, sex, elo)
             self.save_table_players(player)
+            print()
+            print(Fore.LIGHTYELLOW_EX + f"Le joueur {last_name} a bien été ajouté !")
+            print("************************************************************")
+            print()
         except Exception as err:
             logger.error("Oops! %s", err)
-            
+
     def set_list_players(self, tournament):
         """[summary]
 
@@ -83,7 +88,6 @@ class Controller:
             except Exception as err:
                 logger.error("Oops! %s", err)
 
-
     def save_table_players(self, player):
         """Docstrings."""
         table = db.table("table_players")
@@ -91,7 +95,6 @@ class Controller:
             table.insert(player.__str__)
         except Exception as err:
             logger.error("Oops! %s :", err)
-
 
     def save_table_tournament(self, tournament):
         """Docstrings."""
@@ -101,9 +104,35 @@ class Controller:
         except Exception as err:
             logger.error("Oops! %s :", err)
 
-    def start_rounds(self):
-        """Docstrings."""
-        pass
+    def start_rounds(self, tournament):
+        round = Round(tournament.get_list_players)
+        print()
+        for i in range(1, 5):
+            j = 1
+            if i == 1:
+                print("Lancer le premier tour.")
+                players = round.sort_elo_players
+
+            else:
+                print(f"{i}ème tour.")
+                players = round.sort_score_players
+
+            players_pair = round.generate_pair(players)
+            for player in players_pair:
+                player_one = player[0]
+                player_two = player[1]
+                print(f"match :", j)
+                print(f"joueur :", player_one["lastname"])
+                score_player_one = self.round_view.prompt_set_score
+                player_one["score"] += score_player_one
+                print(f"joueur :", player_two["lastname"])
+                score_player_two = self.round_view.prompt_set_score
+                player_two["score"] += score_player_two
+                match = Match(player_one, player_two, score_player_one, score_player_two)
+                round.append_list_matches(match.tuple_match)
+                j += 1
+        
+
 
     @property
     def start_tournament(self):
@@ -114,12 +143,9 @@ class Controller:
         print()
         print(Fore.LIGHTYELLOW_EX + "********** Créez 8 joueurs **********")
         self.set_list_players(tournament)
-        round = Round(tournament.get_list_players)
         print()
-        print("Lancer le premier tour.")
-        players = round.sort_elo_players
-        print(players)
-
+        print(Fore.LIGHTYELLOW_EX + "********** Lancer le tournoi **********")
+        self.start_rounds(tournament)
 
     @property
     def menu(self):
@@ -127,7 +153,6 @@ class Controller:
         print(Fore.LIGHTWHITE_EX + "[1] Ajouter un nouveau joueur.")
         print("[2] Créer un tournoi.")
         print("[0] Quitter Chess Tournament.")
-
 
     def perform(self, user_choice):
         """Docstrings."""
@@ -139,7 +164,6 @@ class Controller:
             print(Fore.WHITE + "Merci d'avoir utilisé Chess Tournament, à bientôt !!")
             quit()
 
-
     @property
     def start_program(self):
         """Docstrings."""
@@ -147,28 +171,13 @@ class Controller:
         print("            CHESS TOURNAMENT            ")
         print("========================================")
         print()
-        self.menu
-        print()
-        user_choice = 3
-        while user_choice not in range(0, 3):
-            try:
-                user_choice = int(
-                    input(Fore.LIGHTBLUE_EX + "Bonjour, que voulez-vous faire ? : "))
-            except (ValueError, TypeError):
-                print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
-            except Exception as err:
-                logger.error("Oops! %s", err)
-        self.perform(user_choice)
-
+        user_choice = ""
+        while user_choice != 0:
+            self.menu
+            print()
+            user_choice = self.user_view.prompt_start_program
+            self.perform(user_choice)
 
     def run(self):
         """Run the tournament."""
         self.start_program
-
-        #tournament = self.set_tournament()
-        # self.set_players(tournament.number_of_players,
-        # tournament.append_list_players)
-        # for player in tournament.list_players:
-        # db_player.insert(player)
-        # tournament.append_list_players(self.list_players)
-        # db_tournament.insert(tournament.__str__())

@@ -54,3 +54,6 @@ class Round:
             j += 1
             players_pair.append(player_pair)
         return players_pair
+    
+    def append_list_matches(self, match):
+        self.players.append(match)

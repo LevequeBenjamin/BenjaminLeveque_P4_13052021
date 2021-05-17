@@ -4,10 +4,16 @@
 class Match:
     """Match class."""
 
-    def __init__(self, player1, player2):
-        self.player1 = player1
-        self.player2 = player2
-        self.tuple_matches = ()
+    def __init__(self, player_one, player_two, score_players_one, score_players_two):
+        self.player_one = player_one
+        self.player_two = player_two
+        self.score_players_one = score_players_one
+        self.score_players_two = score_players_two
+        self.tuple_match = ([player_one, score_players_one], [
+                            player_two, score_players_two])
+
+    def get_tuple_match(self):
+        return self.tuple_match
 
     def save_game(self):
         """Docstrings."""
