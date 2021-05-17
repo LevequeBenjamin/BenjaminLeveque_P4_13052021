@@ -6,10 +6,15 @@ from operator import itemgetter, attrgetter
 class Round:
     """Round class."""
 
-    def __init__(self, players):
+    def __init__(self, players, name, created_at):
         self.list_matches = []
         self.players = players
+        self.name = name
+        self.created_at = created_at
 
+    def __str__(self):
+        return {"round": self.name, "début tour": self.created_at, "liste match": self.list_matches}
+    
     def get_elo(self, players):
         return players.get("elo")
 
@@ -42,11 +47,10 @@ class Round:
         """Docstrings."""
         pass      
 
-    @property
-    def generate_pair(self):
+    def generate_pair(self, players):
         """Docstrings."""
-        players_part_one = self.players[0:4]
-        players_part_two = self.players[4:]
+        players_part_one = players[0:4]
+        players_part_two = players[4:]
         players_pair = []
         j = 0
         while j in range(4):
@@ -54,6 +58,6 @@ class Round:
             j += 1
             players_pair.append(player_pair)
         return players_pair
-    
+   
     def append_list_matches(self, match):
         self.players.append(match)

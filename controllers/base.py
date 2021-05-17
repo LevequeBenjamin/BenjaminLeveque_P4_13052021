@@ -1,6 +1,7 @@
 """Define the main controller."""
 
 from colorama import Fore
+from datetime import datetime
 
 from tinydb import TinyDB
 from models import tournaments
@@ -75,7 +76,11 @@ class Controller:
         Args:
             number_of_players ([type]): [description]
         """
-        for j in range(8):
+        for j in range(1, 9):
+            if j == 1:
+                print(f"Créez le {j}er joueur.")
+            else:
+                print(f"Créez le {j}eme joueur.")
             try:
                 last_name = self.player_view.prompt_player_lastname
                 first_name = self.player_view.prompt_player_firstname
@@ -85,6 +90,10 @@ class Controller:
 
                 player = Player(last_name, first_name, birth_date, sex, elo)
                 tournament.append_list_players(player.__str__)
+                print()
+                print(Fore.LIGHTYELLOW_EX + f"Le joueur {last_name} a bien été ajouté !")
+                print("************************************************************")
+                print()
             except Exception as err:
                 logger.error("Oops! %s", err)
 
@@ -105,16 +114,20 @@ class Controller:
             logger.error("Oops! %s :", err)
 
     def start_rounds(self, tournament):
-        round = Round(tournament.get_list_players)
         print()
         for i in range(1, 5):
             j = 1
+            name = f"Round{i}"
+            created_at = datetime.now()
+            round = Round(tournament.get_list_players, name, created_at)
             if i == 1:
                 print("Lancer le premier tour.")
                 players = round.sort_elo_players
 
             else:
                 print(f"{i}ème tour.")
+                #todo fix AttributeError: 'tuple' object has no attribute 'get'
+                print(players)
                 players = round.sort_score_players
 
             players_pair = round.generate_pair(players)
@@ -122,17 +135,17 @@ class Controller:
                 player_one = player[0]
                 player_two = player[1]
                 print(f"match :", j)
-                print(f"joueur :", player_one["lastname"])
+                print(f"joueur :", player_one["last_name"])
                 score_player_one = self.round_view.prompt_set_score
                 player_one["score"] += score_player_one
-                print(f"joueur :", player_two["lastname"])
+                print(f"joueur :", player_two["last_name"])
                 score_player_two = self.round_view.prompt_set_score
                 player_two["score"] += score_player_two
                 match = Match(player_one, player_two, score_player_one, score_player_two)
-                round.append_list_matches(match.tuple_match)
+                round.append_list_matches(match.__str__)
                 j += 1
-        
-
+            tournament.append_list_rounds(round)  
+            print(tournament.__str__)
 
     @property
     def start_tournament(self):
@@ -161,15 +174,20 @@ class Controller:
         elif user_choice == 2:
             self.start_tournament
         elif user_choice == 0:
-            print(Fore.WHITE + "Merci d'avoir utilisé Chess Tournament, à bientôt !!")
+            print()
+            print(Fore.LIGHTYELLOW_EX + "************************************************************")
+            print(Fore.WHITE + "    Merci d'avoir utilisé Chess Tournament, à bientôt !!")
+            print(Fore.LIGHTYELLOW_EX + "************************************************************")
+            print()
             quit()
 
     @property
     def start_program(self):
         """Docstrings."""
-        print(Fore.LIGHTCYAN_EX + "========================================")
-        print("            CHESS TOURNAMENT            ")
-        print("========================================")
+        print()
+        print(Fore.LIGHTCYAN_EX + "============================================================")
+        print("                      CHESS TOURNAMENT                      ")
+        print("============================================================")
         print()
         user_choice = ""
         while user_choice != 0:

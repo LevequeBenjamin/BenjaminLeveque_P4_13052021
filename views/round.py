@@ -1,6 +1,7 @@
 """Round views."""
 
 from colorama import Fore
+from utils.utils import isfloat
 
 
 class RoundView:
@@ -15,9 +16,9 @@ class RoundView:
         """
         confirm = ""
         while confirm != "Y":
-            score = input(Fore.LIGHTCYAN_EX +
-                "entrez le score du joueur en caractère numerique: ")
-            if score.isnumeric() == False or not score:
+            score = float(input(Fore.LIGHTCYAN_EX +
+                "entrez le score du joueur en caractère numerique: "))
+            if isfloat(score) == False or not score and score != 0:
                 print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
                       "veuillez entrer le score du joueur en caractère numerique svp.")
             else:
@@ -31,4 +32,3 @@ class RoundView:
                     else:
                         print(Fore.LIGHTRED_EX +
                             "Je n'ai pas compris ce que vous voulez dire.")
-

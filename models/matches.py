@@ -12,6 +12,10 @@ class Match:
         self.tuple_match = ([player_one, score_players_one], [
                             player_two, score_players_two])
 
+    @property
+    def __str__(self):
+        return {"match": self.tuple_match}
+
     def get_tuple_match(self):
         return self.tuple_match
 
