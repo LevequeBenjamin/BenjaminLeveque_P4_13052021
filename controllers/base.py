@@ -94,7 +94,7 @@ class Controller:
                 print()
                 print(Fore.LIGHTYELLOW_EX +
                       f"Le joueur {last_name} a bien été ajouté !")
-                print("************************************************************")
+                print("*************************************************************")
                 print()
             except Exception as err:
                 logger.error("Oops! %s", err)
@@ -149,6 +149,7 @@ class Controller:
                 player_one = player[0]
                 player_two = player[1]
                 print(f"match :", j)
+                print(f"{player_one['last_name']} vs {player_two['last_name']}")
                 print(f"joueur :", player_one["last_name"])
                 score_player_one = self.round_view.prompt_set_score
                 player_one["score"] += score_player_one
@@ -159,20 +160,33 @@ class Controller:
                               score_player_one, score_player_two)
                 round.append_list_matches(match.__str__)
                 j += 1
-            tournament.append_list_rounds(round)
+                print()
+                print(Fore.LIGHTWHITE_EX +
+                      "************************************************************")
+                print()
+            print()
+            print(f"Tour {i} terminé.")
+            print(Fore.LIGHTWHITE_EX +
+                  "************************************************************")
+            print()
+            tournament.append_list_rounds(round.__str__)
         self.save_table_tournament(tournament)
 
     @property
     def start_tournament(self):
         """Start the tournament."""
         print()
-        print(Fore.LIGHTYELLOW_EX + "********** Créez un tournoi **********")
+        print(Fore.LIGHTYELLOW_EX +
+              "********************* Créez un tournoi *********************")
+        print()
         tournament = self.set_tournament
         print()
-        print(Fore.LIGHTYELLOW_EX + "********** Créez 8 joueurs **********")
-        self.set_list_players(tournament)
+        print(Fore.LIGHTYELLOW_EX +
+              "********************* Créez 8 joueurs *********************")
         print()
-        print(Fore.LIGHTYELLOW_EX + "********** Lancer le tournoi **********")
+        self.set_list_players(tournament)
+        print(Fore.LIGHTYELLOW_EX +
+              "********************* Lancer le tournoi *********************")
         self.start_rounds(tournament)
 
     def perform(self, user_choice):

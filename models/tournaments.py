@@ -21,7 +21,6 @@ class Tournament:
         Returns:
             dict: a dictionary of Round
         """
-        #toto serialize  rounds !!
         return {"name": self.name, "location": self.location,
                 "dated": self.dated, "rounds": self.rounds,
                 "players": self.players, "time_control": self.time_control,

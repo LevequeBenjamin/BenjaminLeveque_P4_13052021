@@ -10,6 +10,7 @@ class Round:
         self.name = name
         self.created_at = created_at
 
+    @property
     def __str__(self):
         """Serialize Round
 

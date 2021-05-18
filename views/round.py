@@ -24,7 +24,8 @@ class RoundView:
                       "veuillez entrer le score du joueur en caractère numerique svp.")
             else:
                 while confirm != "Y" or "N":
-                    confirm = input("Vous confirmez ? (Y/N) : ").upper()
+                    confirm = input(Fore.LIGHTCYAN_EX +
+                                    "Vous confirmez ? (Y/N) : ").upper()
                     if confirm == "Y":
                         return float(score)
                     elif confirm == "N":
