@@ -92,13 +92,21 @@ class TournamentView:
 
     @property
     def choice_time_control(self):
-        """Docstrings."""
+        """[summary]
+        """
         print(Fore.LIGHTWHITE_EX + "[1] Bullet.")
         print("[2] Blitz.")
         print("[3] Coup rapide.")
 
     def perform_time_control(self, choice):
-        """Docstrings."""
+        """Performs according to the user choice.
+
+        Args:
+            user_choice (int): user choice
+
+        Returns:
+
+        """
         if choice == 1:
             return "Bullet"
         elif choice == 2:
@@ -137,7 +145,6 @@ class TournamentView:
                                   "Je n'ai pas compris ce que vous voulez dire.")
             except (ValueError, TypeError):
                 print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
-
 
     @property
     def prompt_tournament_description(self) -> str:

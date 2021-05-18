@@ -22,3 +22,9 @@ class UserView:
                 logger.error("Oops! %s", err)
         return user_choice
 
+    @property
+    def menu(self):
+        """Print main menu."""
+        print(Fore.LIGHTWHITE_EX + "[1] Ajouter un nouveau joueur.")
+        print("[2] Créer un tournoi.")
+        print("[0] Quitter Chess Tournament.")
