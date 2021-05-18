@@ -13,8 +13,11 @@ class Player:
         self.score = 0
         self.ladder = 0
 
-    @property
     def __str__(self):
+        return f"nom: {self.last_name}, prénom: {self.first_name}"
+    
+    @property
+    def serialize(self):
         """Serialize Player
 
         Returns:

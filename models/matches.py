@@ -12,8 +12,11 @@ class Match:
         self.matches = ([player_one, score_players_one], [
                             player_two, score_players_two])
 
-    @property
     def __str__(self):
+        pass
+        
+    @property
+    def serialize(self):
         """Serialize matches
 
         Returns:

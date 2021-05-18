@@ -15,7 +15,7 @@ class Tournament:
         self.description = description
 
     @property
-    def __str__(self):
+    def serialize(self):
         """Serielize Round
 
         Returns:

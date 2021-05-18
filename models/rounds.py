@@ -11,7 +11,7 @@ class Round:
         self.created_at = created_at
 
     @property
-    def __str__(self):
+    def serialize(self):
         """Serialize Round
 
         Returns:

@@ -90,7 +90,7 @@ class Controller:
                 elo = self.player_view.prompt_player_elo
 
                 player = Player(last_name, first_name, birth_date, sex, elo)
-                tournament.append_list_players(player.__str__)
+                tournament.append_list_players(player.serialize)
                 print()
                 print(Fore.LIGHTYELLOW_EX +
                       f"Le joueur {last_name} a bien été ajouté !")
@@ -107,7 +107,7 @@ class Controller:
         """
         table = db.table("table_players")
         try:
-            table.insert(player.__str__)
+            table.insert(player.serialize)
         except Exception as err:
             logger.error("Oops! %s :", err)
 
@@ -119,7 +119,7 @@ class Controller:
         """
         table = db.table("table_tournaments")
         try:
-            table.insert(tournament.__str__)
+            table.insert(tournament.serialize)
         except Exception as err:
             logger.error("Oops! %s :", err)
 
@@ -134,7 +134,7 @@ class Controller:
             j = 1
             name = f"Round{i}"
             created_at = datetime.now()
-            round = Round(tournament.get_list_players, name, created_at)
+            round = Round(tournament.get_list_players, name, str(created_at))
             if i == 1:
                 print("Lancer le premier tour.")
                 players = round.sort_elo_players
@@ -158,7 +158,7 @@ class Controller:
                 player_two["score"] += score_player_two
                 match = Match(player_one, player_two,
                               score_player_one, score_player_two)
-                round.append_list_matches(match.__str__)
+                round.append_list_matches(match.serialize)
                 j += 1
                 print()
                 print(Fore.LIGHTWHITE_EX +
@@ -169,7 +169,7 @@ class Controller:
             print(Fore.LIGHTWHITE_EX +
                   "************************************************************")
             print()
-            tournament.append_list_rounds(round.__str__)
+            tournament.append_list_rounds(round.serialize)
         self.save_table_tournament(tournament)
 
     @property
