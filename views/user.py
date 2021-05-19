@@ -27,4 +27,4 @@ class UserView:
         """Print main menu."""
         print(Fore.LIGHTWHITE_EX + "[1] Ajouter un nouveau joueur.")
         print("[2] Créer un tournoi.")
-        print("[0] Quitter Chess Tournament.")
+        print("[0] Quitter Chess Tournament.\n")
