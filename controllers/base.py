@@ -119,8 +119,7 @@ class Controller:
         for player in table_players:
             if player["last_name"] == last_name and player["first_name"] == first_name:
                 return True
-            else:
-                False
+        return False
 
     def search_table_players(self, last_name, first_name):
         player_found = ""
@@ -151,6 +150,8 @@ class Controller:
         except Exception as err:
             logger.error("Oops! %s :", err)
 
+    
+    
     def start_rounds(self, tournament):
         """Start the rounds.
 
@@ -170,7 +171,7 @@ class Controller:
                 print(f"{i}ème tour.")
                 players = round.sort_score_players
 
-            players_pair = round.generate_pair(players)
+            players_pair = round.generate_pair(players, i)
             for player in players_pair:
                 player_one = player[0]
                 player_two = player[1]
