@@ -43,6 +43,10 @@ class Tournament:
             [type]: [description]
         """
         return self.players
+    
+    @property
+    def get_rounds(self):
+        return self.rounds
 
     def append_list_players(self, players):
         """[summary]

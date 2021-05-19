@@ -158,6 +158,7 @@ class Controller:
         Args:
             tournament (Object): Tournament instance
         """
+        current_matches = []
         for i in range(1, 5):
             j = 1
             name = f"Round{i}"
@@ -171,7 +172,7 @@ class Controller:
                 print(f"{i}ème tour.")
                 players = round.sort_score_players
 
-            players_pair = round.generate_pair(players, i)
+            players_pair = round.generate_pair(current_matches, players, i)
             for player in players_pair:
                 player_one = player[0]
                 player_two = player[1]
@@ -194,6 +195,7 @@ class Controller:
             print(Fore.LIGHTWHITE_EX +
                   "************************************************************\n")
             tournament.append_list_rounds(round.serialize)
+        del current_matches[:]
         self.save_table_tournament(tournament)
 
     @property
