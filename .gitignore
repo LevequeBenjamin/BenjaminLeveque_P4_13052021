@@ -1,2 +1,5 @@
 /env
-
+/controllers/__pycache__
+/models/__pycache__
+/utils/__pycache__
+/views/__pycache__
