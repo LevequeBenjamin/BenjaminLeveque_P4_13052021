@@ -17,7 +17,11 @@ class Round:
         Returns:
             dict: a dictionary of Round
         """
-        return {"round": self.name, "début tour": self.created_at, "liste match": self.list_matches}
+        return {
+            "round": self.name,
+            "début tour": self.created_at,
+            "liste match": self.list_matches,
+        }
 
     def get_elo(self, players):
         """[summary]
@@ -82,21 +86,43 @@ class Round:
         self.players.sort(key=self.get_score, reverse=True)
         return self.players
 
-    @property
-    def sort_rank_players(self):
-        """Docstrings."""
-        pass
-
     def check_already_current_players(self, current_players, lastname):
+        """[summary]
+
+        Args:
+            current_players ([type]): [description]
+            lastname ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
         for player in current_players:
             if lastname == player["last_name"]:
                 return True
         return False
 
-    def check_already_played(self, current_matches, lastname_player_one, lastname_player_two):
+    def check_already_played(
+        self, current_matches, lastname_player_one, lastname_player_two
+    ):
+        """[summary]
+
+        Args:
+            current_matches ([type]): [description]
+            lastname_player_one ([type]): [description]
+            lastname_player_two ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
         for matches in current_matches:
             for match_one, match_two in matches:
-                if lastname_player_one in [match_one["last_name"], match_two["last_name"]] and lastname_player_two in [match_one["last_name"], match_two["last_name"]]:
+                if lastname_player_one in [
+                    match_one["last_name"],
+                    match_two["last_name"],
+                ] and lastname_player_two in [
+                    match_one["last_name"],
+                    match_two["last_name"],
+                ]:
                     return True
         return False
 
@@ -104,7 +130,9 @@ class Round:
         """[summary]
 
         Args:
+            current_matches ([type]): [description]
             players ([type]): [description]
+            i ([type]): [description]
 
         Returns:
             [type]: [description]
@@ -124,14 +152,29 @@ class Round:
                 current_players.append(player_pair[1])
         else:
             while j in range(4):
-                if not self.check_already_played(current_matches, players_part_one[j]["last_name"],
-                                                 players_part_two[0]["last_name"]) and not self.check_already_current_players(current_players, players_part_two[0]["last_name"]):
+                if not self.check_already_played(
+                    current_matches,
+                    players_part_one[j]["last_name"],
+                    players_part_two[0]["last_name"],
+                ) and not self.check_already_current_players(
+                    current_players, players_part_two[0]["last_name"]
+                ):
                     player_pair = [players_part_one[j], players_part_two[0]]
-                elif not self.check_already_played(current_matches, players_part_one[j]["last_name"],
-                                                   players_part_two[1]["last_name"]) and not self.check_already_current_players(current_players, players_part_two[1]["last_name"]):
+                elif not self.check_already_played(
+                    current_matches,
+                    players_part_one[j]["last_name"],
+                    players_part_two[1]["last_name"],
+                ) and not self.check_already_current_players(
+                    current_players, players_part_two[1]["last_name"]
+                ):
                     player_pair = [players_part_one[j], players_part_two[1]]
-                elif not self.check_already_played(current_matches, players_part_one[j]["last_name"],
-                                                   players_part_two[2]["last_name"]) and not self.check_already_current_players(current_players, players_part_two[2]["last_name"]):
+                elif not self.check_already_played(
+                    current_matches,
+                    players_part_one[j]["last_name"],
+                    players_part_two[2]["last_name"],
+                ) and not self.check_already_current_players(
+                    current_players, players_part_two[2]["last_name"]
+                ):
                     player_pair = [players_part_one[j], players_part_two[2]]
                 else:
                     player_pair = [players_part_one[j], players_part_two[3]]
@@ -153,4 +196,9 @@ class Round:
 
     @property
     def get_list_matches(self):
+        """[summary]
+
+        Returns:
+            [type]: [description]
+        """
         return self.list_matches

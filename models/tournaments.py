@@ -21,10 +21,15 @@ class Tournament:
         Returns:
             dict: a dictionary of Round
         """
-        return {"name": self.name, "location": self.location,
-                "dated": self.dated, "rounds": self.rounds,
-                "players": self.players, "time_control": self.time_control,
-                "description": self.description}
+        return {
+            "name": self.name,
+            "location": self.location,
+            "dated": self.dated,
+            "rounds": self.rounds,
+            "players": self.players,
+            "time_control": self.time_control,
+            "description": self.description,
+        }
 
     @property
     def get_name(self):
@@ -43,9 +48,14 @@ class Tournament:
             [type]: [description]
         """
         return self.players
-    
+
     @property
     def get_rounds(self):
+        """[summary]
+
+        Returns:
+            [type]: [description]
+        """
         return self.rounds
 
     def append_list_players(self, players):

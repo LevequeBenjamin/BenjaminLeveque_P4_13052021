@@ -1,9 +1,6 @@
 """Define the players."""
 
 
-from os import SCHED_OTHER
-
-
 class Player:
     """Player class."""
 
@@ -24,9 +21,13 @@ class Player:
         Returns:
             dict: a dictionary of Player
         """
-        return {"last_name": self.last_name, "first_name": self.first_name,
-                "birth_date": self.birth_date, "sex": self.sex,
-                "elo": self.elo}
+        return {
+            "last_name": self.last_name,
+            "first_name": self.first_name,
+            "birth_date": self.birth_date,
+            "sex": self.sex,
+            "elo": self.elo,
+        }
 
 
 class Participant(Player):
@@ -47,9 +48,13 @@ class Participant(Player):
         Returns:
             dict: a dictionary of Participant
         """
-        return {"last_name": self.last_name, "first_name": self.first_name,
-                "birth_date": self.birth_date, "sex": self.sex,
-                "elo": self.elo}
+        return {
+            "last_name": self.last_name,
+            "first_name": self.first_name,
+            "birth_date": self.birth_date,
+            "sex": self.sex,
+            "elo": self.elo,
+        }
 
     @property
     def serialize(self):
@@ -58,7 +63,12 @@ class Participant(Player):
         Returns:
             dict: a dictionary of Participant
         """
-        return {"last_name": self.last_name, "first_name": self.first_name,
-                "birth_date": self.birth_date, "sex": self.sex,
-                "elo": self.elo, "score": self.score,
-                "ladder": self.ladder}
+        return {
+            "last_name": self.last_name,
+            "first_name": self.first_name,
+            "birth_date": self.birth_date,
+            "sex": self.sex,
+            "elo": self.elo,
+            "score": self.score,
+            "ladder": self.ladder,
+        }

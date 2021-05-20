@@ -1,10 +1,11 @@
 """Define the main controller."""
 
 # librairies
-from colorama import Fore
+import sys
 from datetime import datetime
-from tinydb import TinyDB, Query
 import logging
+from colorama import Fore
+from tinydb import TinyDB, Query
 
 # models
 from models.tournaments import Tournament
@@ -48,15 +49,15 @@ class Controller:
             time_control = self.tournament_view.prompt_tournament_time_control
             description = self.tournament_view.prompt_tournament_description
 
-            tournament = Tournament(name, location, dated, time_control,
-                                    description)
+            tournament = Tournament(name, location, dated,
+                                    time_control, description)
             return tournament
         except Exception as err:
             logger.error("Oops! %s", err)
 
     @property
     def set_new_player(self):
-        """Create a new Player instance and save it in the database. """
+        """Create a new Player instance and save it in the database."""
         try:
             last_name = self.player_view.prompt_player_lastname
             first_name = self.player_view.prompt_player_firstname
@@ -67,17 +68,24 @@ class Controller:
 
                 player = Player(last_name, first_name, birth_date, sex, elo)
                 self.save_table_players(player)
-                print(Fore.LIGHTYELLOW_EX +
-                      f"\nLe joueur {last_name} {first_name} a bien été ajouté !")
+                print(
+                    Fore.LIGHTYELLOW_EX +
+                    f"\nLe joueur {last_name} {first_name} "
+                    "a bien été ajouté !"
+                )
             else:
-                print(Fore.LIGHTRED_EX +
-                      f"\nLe joueur {last_name} {first_name} est déjà présent dans la base de données.")
-            print("************************************************************\n")
+                print(
+                    Fore.LIGHTRED_EX
+                    + f"\nLe joueur {last_name} {first_name} "
+                    "est déjà présent dans la base de données."
+                )
+            print("********************************************"
+                  "****************\n")
         except Exception as err:
             logger.error("Oops! %s", err)
 
     def set_list_players(self, tournament):
-        """Creates 8 Players instance, save in database and 
+        """Creates 8 Players instance, save in database and
         add to the list players in Tournament instance.
 
         Args:
@@ -100,28 +108,61 @@ class Controller:
                                          birth_date, sex, elo)
                     tournament.append_list_players(player.serialize)
                     self.save_table_players(player)
-                    print(Fore.LIGHTYELLOW_EX +
-                          f"\nLe joueur {last_name} {first_name} a bien été ajouté et enregistré dans la base de données!")
+                    print(
+                        Fore.LIGHTYELLOW_EX
+                        + f"\nLe joueur {last_name} {first_name} a bien "
+                        "été ajouté et enregistré dans la base de données!"
+                    )
                 else:
-                    player_found = self.search_table_players(
-                        last_name, first_name)
-                    player = Participant(player_found["last_name"], player_found["first_name"],
-                                         player_found["birth_date"], player_found["sex"], player_found["elo"])
+                    player_found = self.search_table_players(last_name,
+                                                             first_name)
+                    player = Participant(
+                        player_found["last_name"],
+                        player_found["first_name"],
+                        player_found["birth_date"],
+                        player_found["sex"],
+                        player_found["elo"],
+                    )
                     tournament.append_list_players(player.serialize)
-                    print(Fore.LIGHTYELLOW_EX +
-                          f"\nLe joueur {last_name} {first_name} a bien été ajouté!")
-                    print("Ses informations sont importés depuis la base de données.")
-                print("*************************************************************\n")
+                    print(
+                        Fore.LIGHTYELLOW_EX
+                        + f"\nLe joueur {last_name} {first_name} "
+                        "a bien été ajouté!"
+                    )
+                    print("Ses informations sont importés "
+                          "depuis la base de données.")
+                print("**********************************"
+                      "***************************\n")
             except Exception as err:
                 logger.error("Oops! %s", err)
 
     def check_table_players(self, last_name, first_name):
+        """Check if a player exist in the db.
+
+        Args:
+            last_name (str): player lastname
+            first_name (str): player firstname
+
+        Returns:
+            Bolean: return True if a player is 
+            found in the db or False
+        """
         for player in table_players:
             if player["last_name"] == last_name and player["first_name"] == first_name:
                 return True
         return False
 
     def search_table_players(self, last_name, first_name):
+        """Check if a player exist in the db.
+
+        Args:
+            last_name (str): player lastname
+            first_name (str): player firstname
+
+        Returns:
+            PLayer : return player if is 
+            found in the bd
+        """
         player_found = ""
         for player in table_players:
             if player["last_name"] == last_name and player["first_name"] == first_name:
@@ -150,8 +191,6 @@ class Controller:
         except Exception as err:
             logger.error("Oops! %s :", err)
 
-    
-    
     def start_rounds(self, tournament):
         """Start the rounds.
 
@@ -176,24 +215,32 @@ class Controller:
             for player in players_pair:
                 player_one = player[0]
                 player_two = player[1]
-                print(f"match :", j)
-                print(
-                    f"{player_one['last_name']} vs {player_two['last_name']}")
-                print(f"joueur :", player_one["last_name"])
+                print(f"match : {j}")
+                print(f'{player_one["last_name"]} vs '
+                      f'{player_two["last_name"]}')
+                print(f'joueur : {player_one["last_name"]}')
                 score_player_one = self.round_view.prompt_set_score
                 player_one["score"] += score_player_one
-                print(f"joueur :", player_two["last_name"])
+                print(f'joueur : {player_two["last_name"]}')
                 score_player_two = self.round_view.prompt_set_score
                 player_two["score"] += score_player_two
-                match = Match(player_one, player_two,
-                              score_player_one, score_player_two)
+                match = Match(
+                    player_one, player_two,
+                    score_player_one, score_player_two
+                )
                 round.append_list_matches(match.serialize)
                 j += 1
-                print(Fore.LIGHTWHITE_EX +
-                      "\n************************************************************\n")
+                print(
+                    Fore.LIGHTWHITE_EX
+                    + "\n*****************************"
+                    "*******************************\n"
+                )
             print(f"\nTour {i} terminé.")
-            print(Fore.LIGHTWHITE_EX +
-                  "************************************************************\n")
+            print(
+                Fore.LIGHTWHITE_EX
+                + "***********************************"
+                "*************************\n"
+            )
             tournament.append_list_rounds(round.serialize)
         del current_matches[:]
         self.save_table_tournament(tournament)
@@ -201,14 +248,23 @@ class Controller:
     @property
     def start_tournament(self):
         """Start the tournament."""
-        print(Fore.LIGHTYELLOW_EX +
-              "\n********************* Créez un tournoi *********************\n")
+        print(
+            Fore.LIGHTYELLOW_EX
+            + "\n********************* Créez un tournoi "
+            "*********************\n"
+        )
         tournament = self.set_tournament
-        print(Fore.LIGHTYELLOW_EX +
-              "\n********************* Créez 8 joueurs *********************\n")
+        print(
+            Fore.LIGHTYELLOW_EX
+            + "\n********************* Créez 8 joueurs "
+            "*********************\n"
+        )
         self.set_list_players(tournament)
-        print(Fore.LIGHTYELLOW_EX +
-              "********************* Lancer le tournoi *********************\n")
+        print(
+            Fore.LIGHTYELLOW_EX
+            + "********************* Lancer le tournoi "
+            "*********************\n"
+        )
         self.start_rounds(tournament)
 
     def perform(self, user_choice):
@@ -222,19 +278,29 @@ class Controller:
         elif user_choice == 2:
             self.start_tournament
         elif user_choice == 0:
-            print(Fore.LIGHTYELLOW_EX +
-                  "\n************************************************************")
-            print(Fore.WHITE +
-                  "    Merci d'avoir utilisé Chess Tournament, à bientôt !!")
-            print(Fore.LIGHTYELLOW_EX +
-                  "************************************************************\n")
-            quit()
+            print(
+                Fore.LIGHTYELLOW_EX
+                + "\n************************************"
+                "************************"
+            )
+            print(
+                Fore.WHITE + "    Merci d'avoir utilisé Chess "
+                "Tournament, à bientôt !!"
+            )
+            print(
+                Fore.LIGHTYELLOW_EX
+                + "*********************************************"
+                "***************\n"
+            )
+            sys.exit()
 
     @property
     def start_program(self):
         """Start the program."""
-        print(Fore.LIGHTCYAN_EX +
-              "\n============================================================")
+        print(
+            Fore.LIGHTCYAN_EX
+            + "\n============================================================"
+        )
         print("                      CHESS TOURNAMENT                      ")
         print("============================================================ \n")
         user_choice = ""
