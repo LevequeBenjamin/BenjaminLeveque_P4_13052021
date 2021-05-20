@@ -3,3 +3,4 @@ colorama==0.4.4
 pylint==2.8.2
 black==21.5b1
 flake8==3.9.2
+flake8-html==0.4.1

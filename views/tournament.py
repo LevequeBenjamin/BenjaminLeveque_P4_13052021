@@ -16,24 +16,28 @@ class TournamentView:
         """
         confirm = ""
         while confirm != "Y":
-            name = input(Fore.LIGHTCYAN_EX +
-                         "entrez le nom du tournoi : ").capitalize()
+            name = input(Fore.LIGHTCYAN_EX + "entrez le nom du tournoi : ").capitalize()
             if not name:
-                print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
-                      "veuillez entrer un nom svp")
+                print(
+                    Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
+                    "veuillez entrer un nom svp"
+                )
             else:
                 print(Fore.LIGHTGREEN_EX + f"Le nom du tournoi est: {name}")
                 while confirm != "Y" or "N":
-                    confirm = input(Fore.LIGHTCYAN_EX +
-                                    "Vous confirmez ? (Y/N) : ").upper()
+                    confirm = input(
+                        Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : "
+                    ).upper()
                     if confirm == "Y":
                         return name
                     elif confirm == "N":
                         print("Veuillez entrez un nouveau nom svp.")
                         break
                     else:
-                        print(Fore.LIGHTRED_EX +
-                              "Je n'ai pas compris ce que vous voulez dire.")
+                        print(
+                            Fore.LIGHTRED_EX
+                            + "Je n'ai pas compris ce que vous voulez dire."
+                        )
 
     @property
     def prompt_tournament_location(self) -> str:
@@ -44,25 +48,28 @@ class TournamentView:
         """
         confirm = ""
         while confirm != "Y":
-            location = input(Fore.LIGHTCYAN_EX +
-                             "entrez l'adresse du tournoi : ")
+            location = input(Fore.LIGHTCYAN_EX + "entrez l'adresse du tournoi : ")
             if not location:
-                print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
-                      "veuillez entrer l'adresse du tournoi svp")
+                print(
+                    Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
+                    "veuillez entrer l'adresse du tournoi svp"
+                )
             else:
-                print(Fore.LIGHTGREEN_EX +
-                      f"Le tournoi se passe à: {location}")
+                print(Fore.LIGHTGREEN_EX + f"Le tournoi se passe à: {location}")
                 while confirm != "Y" or "N":
-                    confirm = input(Fore.LIGHTCYAN_EX +
-                                    "Vous confirmez ? (Y/N) : ").upper()
+                    confirm = input(
+                        Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : "
+                    ).upper()
                     if confirm == "Y":
                         return location
                     elif confirm == "N":
                         print("Veuillez entrez une nouvelle adresse svp.")
                         break
                     else:
-                        print(Fore.LIGHTRED_EX +
-                              "Je n'ai pas compris ce que vous voulez dire.")
+                        print(
+                            Fore.LIGHTRED_EX
+                            + "Je n'ai pas compris ce que vous voulez dire."
+                        )
 
     @property
     def prompt_tournament_dated(self) -> str:
@@ -75,26 +82,30 @@ class TournamentView:
         while confirm != "Y":
             dated = input(Fore.LIGHTCYAN_EX + "entrez la date du tournoi : ")
             if not dated:
-                print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
-                      "veuillez entrer la date du tournoi svp")
+                print(
+                    Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
+                    "veuillez entrer la date du tournoi svp"
+                )
             else:
                 print(Fore.LIGHTGREEN_EX + f"Le tournoi se passe le: {dated}")
                 while confirm != "Y" or "N":
-                    confirm = input(Fore.LIGHTCYAN_EX +
-                                    "Vous confirmez ? (Y/N) : ").upper()
+                    confirm = input(
+                        Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : "
+                    ).upper()
                     if confirm == "Y":
                         return dated
                     elif confirm == "N":
                         print("Veuillez entrez une date svp.")
                         break
                     else:
-                        print(Fore.LIGHTRED_EX +
-                              "Je n'ai pas compris ce que vous voulez dire.")
+                        print(
+                            Fore.LIGHTRED_EX
+                            + "Je n'ai pas compris ce que vous voulez dire."
+                        )
 
     @property
     def choice_time_control(self):
-        """[summary]
-        """
+        """[summary]"""
         print(Fore.LIGHTWHITE_EX + "[1] Bullet.")
         print("[2] Blitz.")
         print("[3] Coup rapide.")
@@ -127,23 +138,29 @@ class TournamentView:
         confirm = ""
         while choice not in range(1, 4):
             try:
-                choice = int(input(Fore.LIGHTCYAN_EX +
-                             "Veuillez choisir parmis les 3 time control : "))
+                choice = int(
+                    input(
+                        Fore.LIGHTCYAN_EX
+                        + "Veuillez choisir parmis les 3 time control : "
+                    )
+                )
                 if choice not in range(1, 4):
-                    print(Fore.LIGHTRED_EX +
-                          "Oops! Je n'ai pas compris votre choix.")
+                    print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
                 elif choice in range(1, 4):
                     while confirm != "Y":
-                        confirm = input(Fore.LIGHTCYAN_EX +
-                                        "Vous confirmez ? (Y/N) : ").upper()
+                        confirm = input(
+                            Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : "
+                        ).upper()
                         if confirm == "Y":
                             return self.perform_time_control(choice)
                         elif confirm == "N":
                             choice = 0
                             break
                         else:
-                            print(Fore.LIGHTRED_EX +
-                                  "Je n'ai pas compris ce que vous voulez dire.")
+                            print(
+                                Fore.LIGHTRED_EX
+                                + "Je n'ai pas compris ce que vous voulez dire."
+                            )
             except (ValueError, TypeError):
                 print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
 
@@ -156,25 +173,30 @@ class TournamentView:
         """
         confirm = ""
         while confirm != "Y":
-            description = input(Fore.LIGHTCYAN_EX +
-                                "entrez une description pour ce tournoi : ")
+            description = input(
+                Fore.LIGHTCYAN_EX + "entrez une description pour ce tournoi : "
+            )
             if not description:
-                print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
-                      "veuillez entrer une description pour ce tournoi svp")
+                print(
+                    Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
+                    "veuillez entrer une description pour ce tournoi svp"
+                )
             else:
-                print(Fore.LIGHTGREEN_EX +
-                      f"Description du tournoi : {description}")
+                print(Fore.LIGHTGREEN_EX + f"Description du tournoi : {description}")
                 while confirm != "Y" or "N":
-                    confirm = input(Fore.LIGHTCYAN_EX +
-                                    "Vous confirmez ? (Y/N) : ").upper()
+                    confirm = input(
+                        Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : "
+                    ).upper()
                     if confirm == "Y":
                         return description
                     elif confirm == "N":
                         print("Veuillez entrez une description svp.")
                         break
                     else:
-                        print(Fore.LIGHTRED_EX +
-                              "Je n'ai pas compris ce que vous voulez dire.")
+                        print(
+                            Fore.LIGHTRED_EX
+                            + "Je n'ai pas compris ce que vous voulez dire."
+                        )
 
     # @property
     # def prompt_tournament_numberofplayers(self) -> int:

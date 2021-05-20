@@ -17,20 +17,26 @@ class RoundView:
         """
         confirm = ""
         while confirm != "Y":
-            score = input(Fore.LIGHTCYAN_EX +
-                          "entrez le score du joueur en caractère numerique: ")
+            score = input(
+                Fore.LIGHTCYAN_EX + "entrez le score du joueur en caractère numerique: "
+            )
             if not isfloat(score) or score is None:
-                print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
-                      "veuillez entrer le score du joueur en caractère numerique svp.")
+                print(
+                    Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
+                    "veuillez entrer le score du joueur en caractère numerique svp."
+                )
             else:
                 while confirm != "Y" or "N":
-                    confirm = input(Fore.LIGHTCYAN_EX +
-                                    "Vous confirmez ? (Y/N) : ").upper()
+                    confirm = input(
+                        Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : "
+                    ).upper()
                     if confirm == "Y":
                         return float(score)
                     elif confirm == "N":
                         print("Veuillez entrez le score du joueur svp.")
                         break
                     else:
-                        print(Fore.LIGHTRED_EX +
-                              "Je n'ai pas compris ce que vous voulez dire.")
+                        print(
+                            Fore.LIGHTRED_EX
+                            + "Je n'ai pas compris ce que vous voulez dire."
+                        )

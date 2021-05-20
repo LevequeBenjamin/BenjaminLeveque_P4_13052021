@@ -49,8 +49,7 @@ class Controller:
             time_control = self.tournament_view.prompt_tournament_time_control
             description = self.tournament_view.prompt_tournament_description
 
-            tournament = Tournament(name, location, dated,
-                                    time_control, description)
+            tournament = Tournament(name, location, dated, time_control, description)
             return tournament
         except Exception as err:
             logger.error("Oops! %s", err)
@@ -69,18 +68,15 @@ class Controller:
                 player = Player(last_name, first_name, birth_date, sex, elo)
                 self.save_table_players(player)
                 print(
-                    Fore.LIGHTYELLOW_EX +
-                    f"\nLe joueur {last_name} {first_name} "
+                    Fore.LIGHTYELLOW_EX + f"\nLe joueur {last_name} {first_name} "
                     "a bien été ajouté !"
                 )
             else:
                 print(
-                    Fore.LIGHTRED_EX
-                    + f"\nLe joueur {last_name} {first_name} "
+                    Fore.LIGHTRED_EX + f"\nLe joueur {last_name} {first_name} "
                     "est déjà présent dans la base de données."
                 )
-            print("********************************************"
-                  "****************\n")
+            print("************************************************************\n")
         except Exception as err:
             logger.error("Oops! %s", err)
 
@@ -104,18 +100,15 @@ class Controller:
                     sex = self.player_view.prompt_player_sex
                     elo = self.player_view.prompt_player_elo
 
-                    player = Participant(last_name, first_name,
-                                         birth_date, sex, elo)
+                    player = Participant(last_name, first_name, birth_date, sex, elo)
                     tournament.append_list_players(player.serialize)
                     self.save_table_players(player)
                     print(
-                        Fore.LIGHTYELLOW_EX
-                        + f"\nLe joueur {last_name} {first_name} a bien "
+                        Fore.LIGHTYELLOW_EX + f"\nLe joueur {last_name} {first_name} a bien "
                         "été ajouté et enregistré dans la base de données!"
                     )
                 else:
-                    player_found = self.search_table_players(last_name,
-                                                             first_name)
+                    player_found = self.search_table_players(last_name, first_name)
                     player = Participant(
                         player_found["last_name"],
                         player_found["first_name"],
@@ -125,14 +118,15 @@ class Controller:
                     )
                     tournament.append_list_players(player.serialize)
                     print(
-                        Fore.LIGHTYELLOW_EX
-                        + f"\nLe joueur {last_name} {first_name} "
+                        Fore.LIGHTYELLOW_EX + f"\nLe joueur {last_name} {first_name} "
                         "a bien été ajouté!"
                     )
-                    print("Ses informations sont importés "
-                          "depuis la base de données.")
-                print("**********************************"
-                      "***************************\n")
+                    print(
+                        "Ses informations sont importés depuis la base de données."
+                    )
+                print(
+                    "*************************************************************\n"
+                )
             except Exception as err:
                 logger.error("Oops! %s", err)
 
@@ -144,7 +138,7 @@ class Controller:
             first_name (str): player firstname
 
         Returns:
-            Bolean: return True if a player is 
+            Bolean: return True if a player is
             found in the db or False
         """
         for player in table_players:
@@ -160,7 +154,7 @@ class Controller:
             first_name (str): player firstname
 
         Returns:
-            PLayer : return player if is 
+            PLayer : return player if is
             found in the bd
         """
         player_found = ""
@@ -216,8 +210,7 @@ class Controller:
                 player_one = player[0]
                 player_two = player[1]
                 print(f"match : {j}")
-                print(f'{player_one["last_name"]} vs '
-                      f'{player_two["last_name"]}')
+                print(f'{player_one["last_name"]} vs ' f'{player_two["last_name"]}')
                 print(f'joueur : {player_one["last_name"]}')
                 score_player_one = self.round_view.prompt_set_score
                 player_one["score"] += score_player_one
@@ -225,20 +218,17 @@ class Controller:
                 score_player_two = self.round_view.prompt_set_score
                 player_two["score"] += score_player_two
                 match = Match(
-                    player_one, player_two,
-                    score_player_one, score_player_two
+                    player_one, player_two, score_player_one, score_player_two
                 )
                 round.append_list_matches(match.serialize)
                 j += 1
                 print(
-                    Fore.LIGHTWHITE_EX
-                    + "\n*****************************"
+                    Fore.LIGHTWHITE_EX + "\n*****************************"
                     "*******************************\n"
                 )
             print(f"\nTour {i} terminé.")
             print(
-                Fore.LIGHTWHITE_EX
-                + "***********************************"
+                Fore.LIGHTWHITE_EX + "***********************************"
                 "*************************\n"
             )
             tournament.append_list_rounds(round.serialize)
@@ -249,20 +239,17 @@ class Controller:
     def start_tournament(self):
         """Start the tournament."""
         print(
-            Fore.LIGHTYELLOW_EX
-            + "\n********************* Créez un tournoi "
+            Fore.LIGHTYELLOW_EX + "\n********************* Créez un tournoi "
             "*********************\n"
         )
         tournament = self.set_tournament
         print(
-            Fore.LIGHTYELLOW_EX
-            + "\n********************* Créez 8 joueurs "
+            Fore.LIGHTYELLOW_EX + "\n********************* Créez 8 joueurs "
             "*********************\n"
         )
         self.set_list_players(tournament)
         print(
-            Fore.LIGHTYELLOW_EX
-            + "********************* Lancer le tournoi "
+            Fore.LIGHTYELLOW_EX + "********************* Lancer le tournoi "
             "*********************\n"
         )
         self.start_rounds(tournament)
@@ -279,8 +266,7 @@ class Controller:
             self.start_tournament
         elif user_choice == 0:
             print(
-                Fore.LIGHTYELLOW_EX
-                + "\n************************************"
+                Fore.LIGHTYELLOW_EX + "\n************************************"
                 "************************"
             )
             print(
@@ -288,8 +274,7 @@ class Controller:
                 "Tournament, à bientôt !!"
             )
             print(
-                Fore.LIGHTYELLOW_EX
-                + "*********************************************"
+                Fore.LIGHTYELLOW_EX + "*********************************************"
                 "***************\n"
             )
             sys.exit()
@@ -298,8 +283,8 @@ class Controller:
     def start_program(self):
         """Start the program."""
         print(
-            Fore.LIGHTCYAN_EX
-            + "\n============================================================"
+            Fore.LIGHTCYAN_EX + "\n======================================"
+            "======================"
         )
         print("                      CHESS TOURNAMENT                      ")
         print("============================================================ \n")
