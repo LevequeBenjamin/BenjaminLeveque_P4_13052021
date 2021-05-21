@@ -23,6 +23,7 @@ class Tournament:
             dict: a dictionary of Round
         """
         return {
+            "current_round": self.current_round,
             "name": self.name,
             "location": self.location,
             "dated": self.dated,
@@ -31,6 +32,13 @@ class Tournament:
             "time_control": self.time_control,
             "description": self.description,
         }
+        
+    def add_id(self, id):
+        self.id = id 
+
+    @property
+    def get_id(self):
+        return self.id
 
     @property
     def get_name(self):

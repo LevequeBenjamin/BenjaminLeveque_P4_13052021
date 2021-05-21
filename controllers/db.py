@@ -62,11 +62,28 @@ class DbCtrlPlayer:
             table_players.insert(player.serialize_player)
         except Exception as err:
             logger.error("Oops! %s :", err)
+            
+    def update_table_players(self, player):
+        try:
+            table_players.update(player.serialize, doc_ids=[player.get_id])
+        except Exception as err:
+            logger.error("Oops! %s :", err)
 
 
 class DbCtrlTournament:
+    """[summary]
+    """
+
     def get_id_tournament(self, name):
-        tournament_found = self.search_table_players(name)
+        """[summary]
+
+        Args:
+            name ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
+        tournament_found = self.search_table_tournaments(name)
         if tournament_found:
             return tournament_found.doc_id
         return None
@@ -96,5 +113,11 @@ class DbCtrlTournament:
         """
         try:
             table_tournaments.insert(tournament.serialize)
+        except Exception as err:
+            logger.error("Oops! %s :", err)
+
+    def update_table_tournament(self, tournament):
+        try:
+            table_tournaments.update(tournament.serialize, doc_ids=[tournament.get_id])
         except Exception as err:
             logger.error("Oops! %s :", err)

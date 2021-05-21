@@ -32,6 +32,7 @@ class Round:
         Returns:
             [type]: [description]
         """
+        print(players)
         return players.get("elo")
 
     @property

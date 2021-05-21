@@ -5,6 +5,9 @@ import logging
 
 # models
 from models.tournaments import Tournament
+from models.players import Participant
+from models.rounds import Round
+from models.matches import Match
 
 # controller
 from controllers.players import PlayerCtrl
@@ -22,12 +25,20 @@ class Controller:
     """Main controller."""
 
     def __init__(self):
+        """[summary]
+        """
         # views
         self.user_view = UserView()
+        # controllers
         self.player_ctrl = PlayerCtrl()
         self.tournament_ctrl = TournamentCtrl()
-        
+
     def get_choice_menu_tournament(self, tournament):
+        """[summary]
+
+        Args:
+            tournament ([type]): [description]
+        """
         user_choice = ""
         while user_choice != 0:
             self.tournament_ctrl.tournament_view.menu(tournament)
@@ -62,11 +73,26 @@ class Controller:
                     tournament_found["description"],
                 )
                 if tournament_found["players"]:
-                    for player in tournament_found["players"]:
-                        tournament.append_list_players(player)
+                    for player_import in tournament_found["players"]:
+                        player = Participant(player_import["last_name"], player_import["first_name"],
+                                             player_import["birth_date"], player_import["sex"], player_import["elo"])
+                        player_id = self.player_ctrl.db_player.check_table_players(
+                            player_import["last_name"], player_import["first_name"])
+                        player.add_id(player_id)
+                        player.add_score(player_import["score"])
+                        player.add_ladder(player_import["ladder"])
+                        tournament.append_list_players(player.serialize)
                 if tournament_found["rounds"]:
-                    for round in tournament_found["rounds"]:
-                        tournament.append_list_rounds(round)
+                    for round_import in tournament_found["rounds"]:
+                        print(round_import)
+                        round = Round(round_import["liste match"], round_import["début tour"], round_import["round"])
+                        tournament.append_list_rounds(round.serialize)
+                        for match_import in round_import["liste match"]:
+                            match = Match(match_import["match"][0][0], match_import["match"][1][0],
+                                          match_import["match"][0][1], match_import["match"][1][1])
+                            round.append_list_matches(match.serialize)
+                        tournament.counter_round
+                tournament.add_id(tournament_found.doc_id)
                 self.get_choice_menu_tournament(tournament)
         else:
             self.user_view.user_print_err("Aucun tournoi en cours n'a été trouvé.")
@@ -105,7 +131,6 @@ class Controller:
                 pass
             if user_choice == 3:
                 self.start_program
-            
 
     def perform(self, user_choice):
         """Performs according to the user choice.

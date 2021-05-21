@@ -24,7 +24,6 @@ class TournamentCtrl:
         self.user_view = UserView()
         self.round_view = RoundView()
 
-    @property
     def set_tournament(self):
         """Creates a Tournament instance.
 
@@ -50,6 +49,8 @@ class TournamentCtrl:
                     name, location, dated, time_control, description
                 )
                 self.db.save_table_tournament(tournament)
+                tournament_id = self.db.get_id_tournament(name)
+                tournament.add_id(tournament_id)
                 self.user_view.user_print_green_msg(
                     f"Le tournoi {name} est créé avec succés !"
                 )
@@ -101,7 +102,7 @@ class TournamentCtrl:
             self.user_view.separator_white
             tournament.append_list_rounds(round.serialize)
             tournament.counter_round
-            # self.save_table_tournament(tournament) to do insert round
+            self.db.update_table_tournament(tournament)
             del current_matches[:]
         else:
             self.user_view.user_print_err("Ce tournoi est terminé !")

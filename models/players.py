@@ -58,7 +58,13 @@ class Participant(Player):
         }
     
     def add_id(self, id):
-        self.id = id 
+        self.id = id
+    
+    def add_score(self, score):
+        self.score = score
+    
+    def add_ladder(self, ladder):
+        self.ladder = ladder  
 
     @property
     def get_id(self):
