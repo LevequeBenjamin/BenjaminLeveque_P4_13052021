@@ -1,14 +1,18 @@
+"""Define the players controller."""
 
+# librairies
 from views.user import UserView
 from colorama import Fore
-
 import logging
 
+# models
 from models.players import Player
 from models.players import Participant
 
+# controller
 from controllers.db import DbCtrlPlayer, DbCtrlTournament
 
+# views
 from views.player import PlayerView
 
 # logger
@@ -17,7 +21,11 @@ logger = logging.getLogger(__name__)
 
 
 class PlayerCtrl:
+    """Main controller."""
+
     def __init__(self):
+        """[summary]
+        """
         self.db_player = DbCtrlPlayer()
         self.db_tournament = DbCtrlTournament()
         self.player_view = PlayerView()

@@ -1,3 +1,6 @@
+"""Define the db controller."""
+
+# librairies
 from tinydb import TinyDB, Query
 import logging
 
@@ -13,7 +16,17 @@ table_tournaments = db.table("table_tournaments")
 
 
 class DbCtrlPlayer:
+    """DbCtrlPlayer controller."""
     def get_id_player(self, last_name, first_name):
+        """[summary]
+
+        Args:
+            last_name ([type]): [description]
+            first_name ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
         player_found = self.search_table_players(last_name, first_name)
         if player_found:
             return player_found.doc_id
@@ -117,6 +130,11 @@ class DbCtrlTournament:
             logger.error("Oops! %s :", err)
 
     def update_table_tournament(self, tournament):
+        """[summary]
+
+        Args:
+            tournament ([type]): [description]
+        """
         try:
             table_tournaments.update(tournament.serialize, doc_ids=[tournament.get_id])
         except Exception as err:

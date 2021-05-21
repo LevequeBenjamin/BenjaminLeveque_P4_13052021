@@ -1,15 +1,20 @@
+"""Define the tournament controller."""
+
 # librairies
 from datetime import datetime
 import logging
-from views.round import RoundView
-from views.user import UserView
-from views.tournament import TournamentView
 
 # models
 from models.tournaments import Tournament
 from models.rounds import Round
 from models.matches import Match
 
+# views
+from views.round import RoundView
+from views.user import UserView
+from views.tournament import TournamentView
+
+# controllers
 from controllers.db import DbCtrlTournament
 
 # logger
@@ -18,7 +23,11 @@ logger = logging.getLogger(__name__)
 
 
 class TournamentCtrl:
+    """Main controller."""
+
     def __init__(self):
+        """[summary]
+        """
         self.db = DbCtrlTournament()
         self.tournament_view = TournamentView()
         self.user_view = UserView()
@@ -56,7 +65,8 @@ class TournamentCtrl:
                     f"Le tournoi {name} est créé avec succés !"
                 )
                 return tournament
-            else: return None
+            else:
+                return None
         except Exception as err:
             logger.error("Oops! %s", err)
 

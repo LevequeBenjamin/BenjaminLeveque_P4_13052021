@@ -1,9 +1,11 @@
 """User views."""
 
+# librairies
 from colorama import Fore
 import logging
 import sys
 
+# logger
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
@@ -13,6 +15,8 @@ class UserView:
 
     @property
     def header(self):
+        """[summary]
+        """
         print(
             Fore.LIGHTCYAN_EX + "\n======================================"
             "======================"
@@ -22,6 +26,11 @@ class UserView:
 
     @property
     def prompt_start_program(self):
+        """[summary]
+
+        Returns:
+            [type]: [description]
+        """
         user_choice = 4
         while user_choice not in range(0, 4):
             try:
@@ -44,6 +53,8 @@ class UserView:
 
     @property
     def exit_program(self):
+        """[summary]
+        """
         self.separator_yellow
         print(
             Fore.WHITE + "    Merci d'avoir utilisé Chess " "Tournament, à bientôt !!"
@@ -52,6 +63,11 @@ class UserView:
         sys.exit()
 
     def separator_title(self, title):
+        """[summary]
+
+        Args:
+            title ([type]): [description]
+        """
         print(
             Fore.LIGHTYELLOW_EX + f"\n********************* {title} "
             "*********************\n"
@@ -59,6 +75,8 @@ class UserView:
 
     @property
     def separator_yellow(self):
+        """[summary]
+        """
         print(
             Fore.LIGHTYELLOW_EX + "*********************************************"
             "***************\n"
@@ -66,25 +84,48 @@ class UserView:
 
     @property
     def separator_white(self):
+        """[summary]
+        """
         print(
             Fore.LIGHTWHITE_EX + "*********************************************"
             "***************\n"
         )
 
     def user_print_msg(self, message):
+        """[summary]
+
+        Args:
+            message ([type]): [description]
+        """
         print(f"{message}")
 
     def user_print_green_msg(self, message):
+        """[summary]
+
+        Args:
+            message ([type]): [description]
+        """
         print(Fore.LIGHTGREEN_EX + f"{message}")
 
     def user_print_err(self, message):
+        """[summary]
+
+        Args:
+            message ([type]): [description]
+        """
         print(Fore.LIGHTRED_EX + f"{message}")
 
     @property
     def prompt_confirm(self):
+        """[summary]
+
+        Returns:
+            [type]: [description]
+        """
         confirm = ""
         while confirm != "Y" or "N":
             confirm = input(Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : ").upper()
             if confirm not in ["Y", "N"]:
                 print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire.")
-            else: return confirm
+            else:
+                return confirm

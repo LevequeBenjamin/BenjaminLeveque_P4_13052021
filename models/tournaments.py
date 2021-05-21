@@ -5,6 +5,15 @@ class Tournament:
     """Tournament class."""
 
     def __init__(self, name, location, dated, time_control, description):
+        """[summary]
+
+        Args:
+            name ([type]): [description]
+            location ([type]): [description]
+            dated ([type]): [description]
+            time_control ([type]): [description]
+            description ([type]): [description]
+        """
         self.id = None
         self.name = name
         self.location = location
@@ -32,26 +41,46 @@ class Tournament:
             "time_control": self.time_control,
             "description": self.description,
         }
-     
+
     @property
     def serialize_players(self):
+        """[summary]
+
+        Returns:
+            [type]: [description]
+        """
         player_serialized = []
         for player in self.players:
             player_serialized.append(player.serialize)
         return player_serialized
-    
+
     @property
     def serialize_rounds(self):
+        """[summary]
+
+        Returns:
+            [type]: [description]
+        """
         round_serialized = []
         for round in self.rounds:
             round_serialized.append(round.serialize)
         return round_serialized
-       
+
     def add_id(self, id):
-        self.id = id 
+        """[summary]
+
+        Args:
+            id ([type]): [description]
+        """
+        self.id = id
 
     @property
     def get_id(self):
+        """[summary]
+
+        Returns:
+            [type]: [description]
+        """
         return self.id
 
     @property
@@ -96,11 +125,18 @@ class Tournament:
             rounds ([type]): [description]
         """
         self.rounds.append(round)
-     
+
     @property
     def get_current_round(self):
+        """[summary]
+
+        Returns:
+            [type]: [description]
+        """
         return self.current_round
-    
+
     @property
     def counter_round(self):
+        """[summary]
+        """
         self.current_round += 1

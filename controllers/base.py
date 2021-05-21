@@ -9,12 +9,13 @@ from models.players import Participant
 from models.rounds import Round
 from models.matches import Match
 
+# views
+from views.user import UserView
+
 # controller
 from controllers.players import PlayerCtrl
 from controllers.tournaments import TournamentCtrl
 
-# views
-from views.user import UserView
 
 # logger
 logging.basicConfig(level=logging.DEBUG)

@@ -5,6 +5,15 @@ class Player:
     """Player class."""
 
     def __init__(self, last_name, first_name, birth_date, sex, elo):
+        """[summary]
+
+        Args:
+            last_name ([type]): [description]
+            first_name ([type]): [description]
+            birth_date ([type]): [description]
+            sex ([type]): [description]
+            elo ([type]): [description]
+        """
         self.last_name = last_name
         self.first_name = first_name
         self.birth_date = birth_date
@@ -12,6 +21,11 @@ class Player:
         self.elo = elo
 
     def __str__(self):
+        """[summary]
+
+        Returns:
+            [type]: [description]
+        """
         return f"nom: {self.last_name}, prénom: {self.first_name}"
 
     @property
@@ -34,12 +48,26 @@ class Participant(Player):
     """Docstrings."""
 
     def __init__(self, last_name, first_name, birth_date, sex, elo):
+        """[summary]
+
+        Args:
+            last_name ([type]): [description]
+            first_name ([type]): [description]
+            birth_date ([type]): [description]
+            sex ([type]): [description]
+            elo ([type]): [description]
+        """
         self.id = None
         self.score = 0
         self.ladder = 0
         Player.__init__(self, last_name, first_name, birth_date, sex, elo)
 
     def __str__(self):
+        """[summary]
+
+        Returns:
+            [type]: [description]
+        """
         return f"nom: {self.last_name}, prénom: {self.first_name}"
 
     @property
@@ -56,18 +84,38 @@ class Participant(Player):
             "sex": self.sex,
             "elo": self.elo,
         }
-    
+
     def add_id(self, id):
+        """[summary]
+
+        Args:
+            id ([type]): [description]
+        """
         self.id = id
-    
+
     def add_score(self, score):
+        """[summary]
+
+        Args:
+            score ([type]): [description]
+        """
         self.score = score
-    
+
     def add_ladder(self, ladder):
-        self.ladder = ladder  
+        """[summary]
+
+        Args:
+            ladder ([type]): [description]
+        """
+        self.ladder = ladder
 
     @property
     def get_id(self):
+        """[summary]
+
+        Returns:
+            [type]: [description]
+        """
         return self.id
 
     @property
@@ -86,7 +134,12 @@ class Participant(Player):
             "score": self.score,
             "ladder": self.ladder,
         }
-        
+
     @property
     def get_elo(self):
+        """[summary]
+
+        Returns:
+            [type]: [description]
+        """
         return self.elo

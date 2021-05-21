@@ -4,6 +4,7 @@
 from colorama import Fore
 import logging
 
+# logger
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
@@ -203,7 +204,11 @@ class TournamentView:
                         )
 
     def menu(self, tournament):
-        """Print tournament menu."""
+        """Print tournament menu.
+
+        Args:
+            tournament ([type]): [description]
+        """
         if tournament.get_current_round < 5:
             if not tournament.get_list_players:
                 print(Fore.LIGHTWHITE_EX + "[1] Ajouter 8 nouveau joueur.")
@@ -216,10 +221,15 @@ class TournamentView:
         else:
             print(Fore.LIGHTWHITE_EX + "[1] Modifier un joueur.")
             print("[2] Afficher le classement.")
-            print("[0] Quitter le tournoi.\n")   
+            print("[0] Quitter le tournoi.\n")
 
     @property
     def prompt_choice_menu_tournament(self):
+        """[summary]
+
+        Returns:
+            [type]: [description]
+        """
         user_choice = 4
         while user_choice not in range(0, 4):
             try:

@@ -5,6 +5,13 @@ class Round:
     """Round class."""
 
     def __init__(self, players, name, created_at):
+        """[summary]
+
+        Args:
+            players ([type]): [description]
+            name ([type]): [description]
+            created_at ([type]): [description]
+        """
         self.list_matches = []
         self.players = players
         self.name = name
