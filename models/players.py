@@ -86,3 +86,7 @@ class Participant(Player):
             "score": self.score,
             "ladder": self.ladder,
         }
+        
+    @property
+    def get_elo(self):
+        return self.elo

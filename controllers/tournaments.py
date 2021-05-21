@@ -24,6 +24,7 @@ class TournamentCtrl:
         self.user_view = UserView()
         self.round_view = RoundView()
 
+    @property
     def set_tournament(self):
         """Creates a Tournament instance.
 
@@ -95,12 +96,12 @@ class TournamentCtrl:
                 match = Match(
                     player_one, player_two, score_player_one, score_player_two
                 )
-                round.append_list_matches(match.serialize)
+                round.append_list_matches(match)
                 j += 1
                 self.user_view.separator_white
             self.user_view.user_print_msg(f"\nTour {current_round} terminé.")
             self.user_view.separator_white
-            tournament.append_list_rounds(round.serialize)
+            tournament.append_list_rounds(round)
             tournament.counter_round
             self.db.update_table_tournament(tournament)
             del current_matches[:]

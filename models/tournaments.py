@@ -17,22 +17,36 @@ class Tournament:
 
     @property
     def serialize(self):
-        """Serielize Round
+        """Serielize Tournament
 
         Returns:
-            dict: a dictionary of Round
+            dict: a dictionary of Tournament
         """
         return {
             "current_round": self.current_round,
             "name": self.name,
             "location": self.location,
             "dated": self.dated,
-            "rounds": self.rounds,
-            "players": self.players,
+            "rounds": self.serialize_rounds,
+            "players": self.serialize_players,
             "time_control": self.time_control,
             "description": self.description,
         }
-        
+     
+    @property
+    def serialize_players(self):
+        player_serialized = []
+        for player in self.players:
+            player_serialized.append(player.serialize)
+        return player_serialized
+    
+    @property
+    def serialize_rounds(self):
+        round_serialized = []
+        for round in self.rounds:
+            round_serialized.append(round.serialize)
+        return round_serialized
+       
     def add_id(self, id):
         self.id = id 
 
@@ -67,21 +81,21 @@ class Tournament:
         """
         return self.rounds
 
-    def append_list_players(self, players):
+    def append_list_players(self, player):
         """[summary]
 
         Args:
             players ([type]): [description]
         """
-        self.players.append(players)
+        self.players.append(player)
 
-    def append_list_rounds(self, rounds):
+    def append_list_rounds(self, round):
         """[summary]
 
         Args:
             rounds ([type]): [description]
         """
-        self.rounds.append(rounds)
+        self.rounds.append(round)
      
     @property
     def get_current_round(self):

@@ -23,7 +23,7 @@ class Round:
             "liste match": self.list_matches,
         }
 
-    def get_elo(self, players):
+    def get_elo(self, player):
         """[summary]
 
         Args:
@@ -32,8 +32,7 @@ class Round:
         Returns:
             [type]: [description]
         """
-        print(players)
-        return players.get("elo")
+        return player.get_elo
 
     @property
     def sort_elo_players(self):
@@ -45,7 +44,7 @@ class Round:
         self.players.sort(key=self.get_elo, reverse=True)
         return self.players
 
-    def get_ladder(self, players):
+    def get_ladder(self, player):
         """[summary]
 
         Args:
@@ -54,7 +53,7 @@ class Round:
         Returns:
             [type]: [description]
         """
-        return players.get("ladder")
+        return player.get_ladder
 
     @property
     def sort_ladder_players(self):
@@ -66,7 +65,7 @@ class Round:
         self.players.sort(key=self.get_ladder)
         return self.players
 
-    def get_score(self, players):
+    def get_score(self, player):
         """[summary]
 
         Args:
@@ -75,7 +74,7 @@ class Round:
         Returns:
             [type]: [description]
         """
-        return players.get("score")
+        return player.get_score
 
     @property
     def sort_score_players(self):
