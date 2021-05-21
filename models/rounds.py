@@ -126,7 +126,7 @@ class Round:
                     return True
         return False
 
-    def generate_pair(self, current_matches, players, i):
+    def generate_pair(self, current_matches, players, current_round):
         """[summary]
 
         Args:
@@ -142,7 +142,7 @@ class Round:
         players_pair = []
         current_players = []
         j = 0
-        if i == 1:
+        if current_round == 1:
             while j in range(4):
                 player_pair = [players_part_one[j], players_part_two[j]]
 

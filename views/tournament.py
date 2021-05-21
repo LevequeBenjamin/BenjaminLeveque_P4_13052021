@@ -2,6 +2,10 @@
 
 # librairies
 from colorama import Fore
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 
 class TournamentView:
@@ -198,29 +202,32 @@ class TournamentView:
                             + "Je n'ai pas compris ce que vous voulez dire."
                         )
 
-    # @property
-    # def prompt_tournament_numberofplayers(self) -> int:
-    #     """prompt for get tournament number of players
+    def menu(self, tournament):
+        """Print tournament menu."""
+        if tournament.get_current_round < 5:
+            if not tournament.get_list_players:
+                print(Fore.LIGHTWHITE_EX + "[1] Ajouter 8 nouveau joueur.")
+                print("[2] Modifier un joueur.")
+                print("[0] Quitter le tournoi.\n")
+            else:
+                print(Fore.LIGHTWHITE_EX + f"[1] Démarrer le tour : {tournament.get_current_round}.")
+                print(Fore.LIGHTWHITE_EX + "[2] Modifier un joueur.")
+                print("[0] Quitter le tournoi.\n")
+        else:
+            print(Fore.LIGHTWHITE_EX + "[1] Modifier un joueur.")
+            print("[2] Afficher le classement.")
+            print("[0] Quitter le tournoi.\n")   
 
-    #     Returns:
-    #         str: number of players for class Tournament
-    #     """
-    #     confirm = ""
-    #     while confirm != "Y":
-    #         number_of_players = input(Fore.LIGHTCYAN_EX +
-    #             "entrez le nombre de joueurs pour ce tournoi en caractère numerique: ")
-    #         if number_of_players.isnumeric() == False or not number_of_players:
-    #             print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
-    #                   "veuillez entrer le nombre de joueurs pour ce tournoi en caractère numerique svp.")
-    #         else:
-    #             print(Fore.LIGHTGREEN_EX + f"Il y à {number_of_players} joueurs pour ce tournoi.")
-    #             while confirm != "Y" or "N":
-    #                 confirm = input("Vous confirmez ? (Y/N) : ").upper()
-    #                 if confirm == "Y":
-    #                     return number_of_players
-    #                 elif confirm == "N":
-    #                     print("Veuillez entrez le nombre de joueurs svp.")
-    #                     break
-    #                 else:
-    #                     print(Fore.LIGHTRED_EX +
-    #                         "Je n'ai pas compris ce que vous voulez dire.")
+    @property
+    def prompt_choice_menu_tournament(self):
+        user_choice = 4
+        while user_choice not in range(0, 4):
+            try:
+                user_choice = int(
+                    input(Fore.LIGHTBLUE_EX + "Que voulez-vous faire ? : ")
+                )
+            except (ValueError, TypeError):
+                print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
+            except Exception as err:
+                logger.error("Oops! %s", err)
+        return user_choice

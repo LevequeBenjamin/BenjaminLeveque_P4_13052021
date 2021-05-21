@@ -34,6 +34,7 @@ class Participant(Player):
     """Docstrings."""
 
     def __init__(self, last_name, first_name, birth_date, sex, elo):
+        self.id = None
         self.score = 0
         self.ladder = 0
         Player.__init__(self, last_name, first_name, birth_date, sex, elo)
@@ -55,6 +56,13 @@ class Participant(Player):
             "sex": self.sex,
             "elo": self.elo,
         }
+    
+    def add_id(self, id):
+        self.id = id 
+
+    @property
+    def get_id(self):
+        return self.id
 
     @property
     def serialize(self):

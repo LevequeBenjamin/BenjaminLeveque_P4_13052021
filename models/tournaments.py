@@ -5,10 +5,11 @@ class Tournament:
     """Tournament class."""
 
     def __init__(self, name, location, dated, time_control, description):
+        self.id = None
         self.name = name
         self.location = location
         self.dated = dated
-        self.number_of_rounds = 4
+        self.current_round = 1
         self.rounds = []
         self.players = []
         self.time_control = time_control
@@ -73,3 +74,11 @@ class Tournament:
             rounds ([type]): [description]
         """
         self.rounds.append(rounds)
+     
+    @property
+    def get_current_round(self):
+        return self.current_round
+    
+    @property
+    def counter_round(self):
+        self.current_round += 1
