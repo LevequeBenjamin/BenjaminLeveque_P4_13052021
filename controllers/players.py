@@ -35,16 +35,12 @@ class PlayerCtrl:
 
                 player = Player(last_name, first_name, birth_date, sex, elo)
                 self.db.save_table_players(player)
-                print(
-                    Fore.LIGHTYELLOW_EX + f"\nLe joueur {last_name} {first_name} "
-                    "a bien été ajouté !"
-                )
+                self.user_view.user_print_msg(Fore.LIGHTYELLOW_EX + f"\nLe joueur {last_name} {first_name} "
+                    "a bien été ajouté !")
             else:
-                print(
-                    Fore.LIGHTRED_EX + f"\nLe joueur {last_name} {first_name} "
-                    "est déjà présent dans la base de données."
-                )
-            print("************************************************************\n")
+                self.user_view.user_print_err(f"\nLe joueur {last_name} {first_name} "
+                    "est déjà présent dans la base de données.")
+            self.user_view.separator_white
         except Exception as err:
             logger.error("Oops! %s", err)
 
@@ -73,11 +69,9 @@ class PlayerCtrl:
                     self.db.save_table_players(player)
                     player_id = self.db.get_id_player(last_name, first_name)
                     player.add_id(player_id)
-                    print(
-                        Fore.LIGHTYELLOW_EX
+                    self.user_view.user_print_msg(Fore.LIGHTYELLOW_EX
                         + f"\nLe joueur {last_name} {first_name} a bien "
-                        "été ajouté et enregistré dans la base de données!"
-                    )
+                        "été ajouté et enregistré dans la base de données!")
                 else:
                     player_found = self.db.search_table_players(
                         last_name, first_name
@@ -91,11 +85,9 @@ class PlayerCtrl:
                     )
                     player.add_id(player_found.doc_id)
                     tournament.append_list_players(player.serialize)
-                    print(
-                        Fore.LIGHTYELLOW_EX + f"\nLe joueur {last_name} {first_name} "
-                        "a bien été ajouté!"
-                    )
-                    print("Ses informations sont importés depuis la base de données.")
-                print("*************************************************************\n")
+                    self.user_view.user_print_msg(Fore.LIGHTYELLOW_EX + f"\nLe joueur {last_name} {first_name} "
+                        "a bien été ajouté!")
+                    self.user_view.user_print_msg("Ses informations sont importés depuis la base de données.")
+                self.user_view.separator_white
             except Exception as err:
                 logger.error("Oops! %s", err)

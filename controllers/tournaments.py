@@ -72,23 +72,23 @@ class TournamentCtrl:
             created_at = datetime.now()
             round = Round(tournament.get_list_players, name, str(created_at))
             if current_round == 1:
-                print("Lancer le premier tour.")
+                self.user_view.user_print_msg("Lancer le premier tour.")
                 players = round.sort_elo_players
 
             else:
-                print(f"{current_round}ème tour.")
+                self.user_view.user_print_msg(f"{current_round}ème tour.")
                 players = round.sort_score_players
 
             players_pair = round.generate_pair(current_matches, players, current_round)
             for player in players_pair:
                 player_one = player[0]
                 player_two = player[1]
-                print(f"match : {j}")
-                print(f'{player_one["last_name"]} vs ' f'{player_two["last_name"]}')
-                print(f'joueur : {player_one["last_name"]}')
+                self.user_view.user_print_msg(f"match : {j}")
+                self.user_view.user_print_msg(f'{player_one["last_name"]} vs ' f'{player_two["last_name"]}')
+                self.user_view.user_print_msg(f'joueur : {player_one["last_name"]}')
                 score_player_one = self.round_view.prompt_set_score
                 player_one["score"] += score_player_one
-                print(f'joueur : {player_two["last_name"]}')
+                self.user_view.user_print_msg(f'joueur : {player_two["last_name"]}')
                 score_player_two = self.round_view.prompt_set_score
                 player_two["score"] += score_player_two
                 match = Match(
@@ -97,7 +97,7 @@ class TournamentCtrl:
                 round.append_list_matches(match.serialize)
                 j += 1
                 self.user_view.separator_white
-            print(f"\nTour {current_round} terminé.")
+            self.user_view.user_print_msg(f"\nTour {current_round} terminé.")
             self.user_view.separator_white
             tournament.append_list_rounds(round.serialize)
             tournament.counter_round
