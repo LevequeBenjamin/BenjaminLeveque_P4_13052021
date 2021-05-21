@@ -39,7 +39,7 @@ $ pip install -r requirements.txt
 Pour lancer le script utilisez la commande:
 
 ```
-$ python script.py
+$ python chess_tournament.py
 ```
 
 ### Générer un rapport flake8
