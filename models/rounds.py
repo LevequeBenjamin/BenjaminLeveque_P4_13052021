@@ -27,9 +27,16 @@ class Round:
         return {
             "round": self.name,
             "début tour": self.created_at,
-            "liste match": self.list_matches,
+            "liste match": self.serialize_match,
         }
 
+    @property
+    def serialize_match(self):
+        matches_serialized = []
+        for match in self.list_matches:
+            matches_serialized.append(match.serialize)
+        return matches_serialized
+            
     def get_elo(self, player):
         """[summary]
 

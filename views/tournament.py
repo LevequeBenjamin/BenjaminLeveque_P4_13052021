@@ -221,6 +221,7 @@ class TournamentView:
         else:
             print(Fore.LIGHTWHITE_EX + "[1] Modifier un joueur.")
             print("[2] Afficher le classement.")
+            print("[3] Afficher les matches.")
             print("[0] Quitter le tournoi.\n")
 
     @property

@@ -26,7 +26,7 @@ class Player:
         Returns:
             [type]: [description]
         """
-        return f"nom: {self.last_name}, prénom: {self.first_name}"
+        return f"{self.last_name}, {self.first_name}"
 
     @property
     def serialize_player(self):
@@ -68,7 +68,7 @@ class Participant(Player):
         Returns:
             [type]: [description]
         """
-        return f"nom: {self.last_name}, prénom: {self.first_name}"
+        return f"{self.last_name}, {self.first_name}"
 
     @property
     def serialize_player(self):
@@ -84,6 +84,10 @@ class Participant(Player):
             "sex": self.sex,
             "elo": self.elo,
         }
+    
+    @property
+    def serialize_player_match(self):
+        return {"last_name": self.last_name, "first_name": self.first_name}
 
     def add_id(self, id):
         """[summary]
@@ -143,3 +147,7 @@ class Participant(Player):
             [type]: [description]
         """
         return self.elo
+    
+    @property
+    def get_score(self):
+        return self.score

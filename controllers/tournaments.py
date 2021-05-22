@@ -92,19 +92,21 @@ class TournamentCtrl:
                 players = round.sort_score_players
 
             players_pair = round.generate_pair(current_matches, players, current_round)
+            self.round_view.print_players_pair(players_pair)
+            self.user_view.separator_white
             for player in players_pair:
                 player_one = player[0]
                 player_two = player[1]
                 self.user_view.user_print_msg(f"match : {j}")
-                self.user_view.user_print_msg(f'{player_one["last_name"]} vs ' f'{player_two["last_name"]}')
-                self.user_view.user_print_msg(f'joueur : {player_one["last_name"]}')
+                self.user_view.user_print_msg(f'{str(player_one)} vs ' f'{str(player_two)}')
+                self.user_view.user_print_msg(f'joueur : {str(player_one)}')
                 score_player_one = self.round_view.prompt_set_score
-                player_one["score"] += score_player_one
-                self.user_view.user_print_msg(f'joueur : {player_two["last_name"]}')
+                player_one.add_score(score_player_one)
+                self.user_view.user_print_msg(f'joueur : {str(player_two)}')
                 score_player_two = self.round_view.prompt_set_score
-                player_two["score"] += score_player_two
+                player_two.add_score(score_player_two)
                 match = Match(
-                    player_one, player_two, score_player_one, score_player_two
+                    player_one.serialize_player_match, player_two.serialize_player_match, score_player_one, score_player_two
                 )
                 round.append_list_matches(match)
                 j += 1
@@ -113,6 +115,8 @@ class TournamentCtrl:
             self.user_view.separator_white
             tournament.append_list_rounds(round)
             tournament.counter_round
+            print(f"test:  {tournament}")
+            print(f"serialized: {tournament.serialize}")
             self.db.update_table_tournament(tournament)
             del current_matches[:]
         else:

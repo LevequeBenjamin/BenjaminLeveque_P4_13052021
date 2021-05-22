@@ -40,3 +40,8 @@ class RoundView:
                             Fore.LIGHTRED_EX
                             + "Je n'ai pas compris ce que vous voulez dire."
                         )
+                        
+    def print_players_pair(self, players_pair):
+        print("Paires de joueurs : ")
+        for player_one, player_two in players_pair:
+            print(f"{str(player_one)} VS {str(player_two)}")
