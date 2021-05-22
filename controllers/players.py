@@ -10,7 +10,7 @@ from models.players import Player
 from models.players import Participant
 
 # controller
-from controllers.db import DbCtrlPlayer, DbCtrlTournament
+from controllers.db import DbControllerlPlayer, DbControllerTournament
 
 # views
 from views.player import PlayerView
@@ -20,14 +20,14 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
-class PlayerCtrl:
+class PlayerController:
     """Main controller."""
 
     def __init__(self):
         """[summary]
         """
-        self.db_player = DbCtrlPlayer()
-        self.db_tournament = DbCtrlTournament()
+        self.db_player = DbControllerlPlayer()
+        self.db_tournament = DbControllerTournament()
         self.player_view = PlayerView()
         self.user_view = UserView()
 

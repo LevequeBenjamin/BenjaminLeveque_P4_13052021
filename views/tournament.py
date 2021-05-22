@@ -211,7 +211,7 @@ class TournamentView:
         """
         if tournament.get_current_round < 5:
             if not tournament.get_list_players:
-                print(Fore.LIGHTWHITE_EX + "[1] Ajouter 8 nouveau joueur.")
+                print(Fore.LIGHTWHITE_EX + "[1] Ajouter 8 joueurs.")
                 print("[2] Modifier un joueur.")
                 print("[0] Quitter le tournoi.\n")
             else:

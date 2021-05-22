@@ -9,14 +9,15 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 # database
-db = TinyDB("db/db.json")
-User = Query()
-table_players = db.table("table_players")
-table_tournaments = db.table("table_tournaments")
+DB = TinyDB("db/db.json")
+USER = Query()
+PLAYERS = DB.table("PLAYERS")
+TOURNAMENTS = DB.table("TOURNAMENTS")
 
 
-class DbCtrlPlayer:
+class DbControllerlPlayer:
     """DbCtrlPlayer controller."""
+
     def get_id_player(self, last_name, first_name):
         """[summary]
 
@@ -43,7 +44,7 @@ class DbCtrlPlayer:
             Bolean: return True if a player is
             found in the db or False
         """
-        for player in table_players:
+        for player in PLAYERS:
             if player["last_name"] == last_name and player["first_name"] == first_name:
                 return True
         return False
@@ -60,7 +61,7 @@ class DbCtrlPlayer:
             found in the bd
         """
         player_found = ""
-        for player in table_players:
+        for player in PLAYERS:
             if player["last_name"] == last_name and player["first_name"] == first_name:
                 player_found = player
         return player_found
@@ -72,18 +73,18 @@ class DbCtrlPlayer:
             player (Object): Player instance
         """
         try:
-            table_players.insert(player.serialize_player)
+            PLAYERS.insert(player.serialize_player)
         except Exception as err:
             logger.error("Oops! %s :", err)
-            
+
     def update_table_players(self, player):
         try:
-            table_players.update(player.serialize, doc_ids=[player.get_id])
+            PLAYERS.update(player.serialize, doc_ids=[player.get_id])
         except Exception as err:
             logger.error("Oops! %s :", err)
 
 
-class DbCtrlTournament:
+class DbControllerTournament:
     """[summary]
     """
 
@@ -113,7 +114,7 @@ class DbCtrlTournament:
             found in the bd
         """
         tournament_found = ""
-        for tournament in table_tournaments:
+        for tournament in TOURNAMENTS:
             if tournament["name"] == name:
                 tournament_found = tournament
         return tournament_found
@@ -125,7 +126,7 @@ class DbCtrlTournament:
             tournament (Object): Tournament instance
         """
         try:
-            table_tournaments.insert(tournament.serialize)
+            TOURNAMENTS.insert(tournament.serialize)
         except Exception as err:
             logger.error("Oops! %s :", err)
 
@@ -136,6 +137,6 @@ class DbCtrlTournament:
             tournament ([type]): [description]
         """
         try:
-            table_tournaments.update(tournament.serialize, doc_ids=[tournament.get_id])
+            TOURNAMENTS.update(tournament.serialize, doc_ids=[tournament.get_id])
         except Exception as err:
             logger.error("Oops! %s :", err)
