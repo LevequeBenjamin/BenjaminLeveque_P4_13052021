@@ -28,7 +28,6 @@ class Player:
         """
         return f"{self.last_name}, {self.first_name}"
 
-    @property
     def serialize_player(self):
         """Serialize Player
 
@@ -70,7 +69,6 @@ class Participant(Player):
         """
         return f"{self.last_name}, {self.first_name}"
 
-    @property
     def serialize_player(self):
         """Serialize Participant
 
@@ -84,8 +82,24 @@ class Participant(Player):
             "sex": self.sex,
             "elo": self.elo,
         }
-    
-    @property
+
+    def serialize(self):
+        """Serialize Participant
+
+        Returns:
+            dict: a dictionary of Participant
+        """
+        return {
+            "last_name": self.last_name,
+            "first_name": self.first_name,
+            "birth_date": self.birth_date,
+            "sex": self.sex,
+            "elo": self.elo,
+            "score": self.score,
+            "ladder": self.ladder,
+            "id": self.id
+        }
+
     def serialize_player_match(self):
         return {"last_name": self.last_name, "first_name": self.first_name}
 
@@ -113,7 +127,6 @@ class Participant(Player):
         """
         self.ladder = ladder
 
-    @property
     def get_id(self):
         """[summary]
 
@@ -122,24 +135,6 @@ class Participant(Player):
         """
         return self.id
 
-    @property
-    def serialize(self):
-        """Serialize Participant
-
-        Returns:
-            dict: a dictionary of Participant
-        """
-        return {
-            "last_name": self.last_name,
-            "first_name": self.first_name,
-            "birth_date": self.birth_date,
-            "sex": self.sex,
-            "elo": self.elo,
-            "score": self.score,
-            "ladder": self.ladder,
-        }
-
-    @property
     def get_elo(self):
         """[summary]
 
@@ -147,7 +142,6 @@ class Participant(Player):
             [type]: [description]
         """
         return self.elo
-    
-    @property
+
     def get_score(self):
         return self.score

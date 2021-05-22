@@ -17,7 +17,7 @@ class Match:
     def __str__(self):
         pass
 
-    @property
+
     def serialize(self):
         """Serialize matches
 

@@ -10,11 +10,9 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
-
 class RoundView:
     """Round view"""
 
-    @property
     def prompt_set_score(self) -> float:
         """Prompt for set player score.
 
@@ -47,7 +45,6 @@ class RoundView:
                             + "Je n'ai pas compris ce que vous voulez dire."
                         )
 
-    @property
     def prompt_choice_menu_round(self):
         """[summary]
 
@@ -65,7 +62,16 @@ class RoundView:
             except Exception as err:
                 logger.error("Oops! %s", err)
         return user_choice
-   
+    
+    def menu(self):
+        """Print tournament menu.
+
+        Args:
+            tournament ([type]): [description]
+        """
+        print(Fore.LIGHTWHITE_EX + "[1] Inscrire les résultats.")
+        print("[0] Annuler et revenir au menu tournoi.\n")
+
     def print_players_pair(self, players_pair):
         print("Paires de joueurs : ")
         for player_one, player_two in players_pair:

@@ -13,7 +13,6 @@ logger = logging.getLogger(__name__)
 class UserView:
     """User view"""
 
-    @property
     def header(self):
         """[summary]
         """
@@ -24,7 +23,6 @@ class UserView:
         print("                      CHESS TOURNAMENT                      ")
         print("============================================================ \n")
 
-    @property
     def prompt_start_program(self):
         """[summary]
 
@@ -43,7 +41,6 @@ class UserView:
                 logger.error("Oops! %s", err)
         return user_choice
 
-    @property
     def menu(self):
         """Print main menu."""
         print(Fore.LIGHTWHITE_EX + "[1] Ajouter un nouveau joueur.")
@@ -51,15 +48,14 @@ class UserView:
         print("[3] Importer un tournoi.")
         print("[0] Quitter Chess Tournament.\n")
 
-    @property
     def exit_program(self):
         """[summary]
         """
-        self.separator_yellow
+        self.separator_yellow()
         print(
             Fore.WHITE + "    Merci d'avoir utilisé Chess " "Tournament, à bientôt !!"
         )
-        self.separator_yellow
+        self.separator_yellow()
         sys.exit()
 
     def separator_title(self, title):
@@ -73,7 +69,6 @@ class UserView:
             "*********************\n"
         )
 
-    @property
     def separator_yellow(self):
         """[summary]
         """
@@ -82,7 +77,6 @@ class UserView:
             "***************\n"
         )
 
-    @property
     def separator_white(self):
         """[summary]
         """
@@ -115,7 +109,6 @@ class UserView:
         """
         print(Fore.LIGHTRED_EX + f"{message}")
 
-    @property
     def prompt_confirm(self):
         """[summary]
 

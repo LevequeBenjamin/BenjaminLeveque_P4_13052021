@@ -7,7 +7,6 @@ from colorama import Fore
 class PlayerView:
     """User view"""
 
-    @property
     def prompt_player_lastname(self) -> str:
         """Prompt for get player last name.
 
@@ -41,7 +40,6 @@ class PlayerView:
                             + "Je n'ai pas compris ce que vous voulez dire."
                         )
 
-    @property
     def prompt_player_firstname(self) -> str:
         """Prompt for get player first name.
 
@@ -75,7 +73,6 @@ class PlayerView:
                             + "Je n'ai pas compris ce que vous voulez dire."
                         )
 
-    @property
     def prompt_player_birthdate(self) -> str:
         """Prompt for get player birth date.
 
@@ -109,7 +106,6 @@ class PlayerView:
                             + "Je n'ai pas compris ce que vous voulez dire."
                         )
 
-    @property
     def prompt_player_sex(self) -> str:
         """Prompt for get player sex.
 
@@ -144,7 +140,6 @@ class PlayerView:
                             + "Je n'ai pas compris ce que vous voulez dire."
                         )
 
-    @property
     def prompt_player_elo(self) -> int:
         """prompt for get player elo
 

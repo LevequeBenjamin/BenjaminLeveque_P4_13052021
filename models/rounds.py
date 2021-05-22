@@ -16,8 +16,9 @@ class Round:
         self.players = players
         self.name = name
         self.created_at = created_at
+        self.finished_at = None
+        self.start = True
 
-    @property
     def serialize(self):
         """Serialize Round
 
@@ -26,15 +27,16 @@ class Round:
         """
         return {
             "round": self.name,
-            "début tour": self.created_at,
-            "liste match": self.serialize_match,
+            "created_at": self.created_at,
+            "finished_at" : self.finished_at,
+            "round_in_progress": self.start,
+            "list_matches": self.serialize_match(),
         }
 
-    @property
     def serialize_match(self):
         matches_serialized = []
         for match in self.list_matches:
-            matches_serialized.append(match.serialize)
+            matches_serialized.append(match.serialize())
         return matches_serialized
             
     def get_elo(self, player):
@@ -46,9 +48,8 @@ class Round:
         Returns:
             [type]: [description]
         """
-        return player.get_elo
+        return player.get_elo()
 
-    @property
     def sort_elo_players(self):
         """Sort the list from high elo to low
 
@@ -67,9 +68,8 @@ class Round:
         Returns:
             [type]: [description]
         """
-        return player.get_ladder
+        return player.get_ladder()
 
-    @property
     def sort_ladder_players(self):
         """[summary]
 
@@ -88,9 +88,8 @@ class Round:
         Returns:
             [type]: [description]
         """
-        return player.get_score
+        return player.get_score()
 
-    @property
     def sort_score_players(self):
         """[summary]
 
@@ -208,7 +207,6 @@ class Round:
         """
         self.list_matches.append(match)
 
-    @property
     def get_list_matches(self):
         """[summary]
 
@@ -216,3 +214,16 @@ class Round:
             [type]: [description]
         """
         return self.list_matches
+    
+    def add_finished(self, finished_at):
+        """[summary]
+
+        Args:
+            finished_at ([type]): [description]
+        """
+        self.finished_at = finished_at
+        
+    def add_start(self):
+        """[summary]
+        """
+        self.start = False

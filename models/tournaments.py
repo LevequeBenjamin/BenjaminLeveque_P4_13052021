@@ -14,7 +14,7 @@ class Tournament:
             time_control ([type]): [description]
             description ([type]): [description]
         """
-        self.id = None
+        self.id = 0
         self.name = name
         self.location = location
         self.dated = dated
@@ -24,7 +24,6 @@ class Tournament:
         self.time_control = time_control
         self.description = description
 
-    @property
     def serialize(self):
         """Serielize Tournament
 
@@ -36,13 +35,12 @@ class Tournament:
             "name": self.name,
             "location": self.location,
             "dated": self.dated,
-            "rounds": self.serialize_rounds,
-            "players": self.serialize_players,
+            "rounds": self.serialize_rounds(),
+            "players": self.serialize_players(),
             "time_control": self.time_control,
             "description": self.description,
         }
 
-    @property
     def serialize_players(self):
         """[summary]
 
@@ -51,10 +49,9 @@ class Tournament:
         """
         player_serialized = []
         for player in self.players:
-            player_serialized.append(player.serialize)
+            player_serialized.append(player.serialize())
         return player_serialized
 
-    @property
     def serialize_rounds(self):
         """[summary]
 
@@ -63,7 +60,7 @@ class Tournament:
         """
         round_serialized = []
         for round in self.rounds:
-            round_serialized.append(round.serialize)
+            round_serialized.append(round.serialize())
         return round_serialized
 
     def add_id(self, id):
@@ -74,7 +71,6 @@ class Tournament:
         """
         self.id = id
 
-    @property
     def get_id(self):
         """[summary]
 
@@ -83,7 +79,6 @@ class Tournament:
         """
         return self.id
 
-    @property
     def get_name(self):
         """[summary]
 
@@ -92,7 +87,6 @@ class Tournament:
         """
         return self.name
 
-    @property
     def get_list_players(self):
         """[summary]
 
@@ -101,7 +95,6 @@ class Tournament:
         """
         return self.players
 
-    @property
     def get_rounds(self):
         """[summary]
 
@@ -126,7 +119,6 @@ class Tournament:
         """
         self.rounds.append(round)
 
-    @property
     def get_current_round(self):
         """[summary]
 
@@ -135,7 +127,6 @@ class Tournament:
         """
         return self.current_round
 
-    @property
     def counter_round(self):
         """[summary]
         """

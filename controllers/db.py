@@ -73,13 +73,13 @@ class DbControllerlPlayer:
             player (Object): Player instance
         """
         try:
-            PLAYERS.insert(player.serialize_player)
+            PLAYERS.insert(player.serialize_player())
         except Exception as err:
             logger.error("Oops! %s :", err)
 
     def update_table_players(self, player):
         try:
-            PLAYERS.update(player.serialize, doc_ids=[player.get_id])
+            PLAYERS.update(player.serialize(), doc_ids=[player.get_id()])
         except Exception as err:
             logger.error("Oops! %s :", err)
 
@@ -126,7 +126,7 @@ class DbControllerTournament:
             tournament (Object): Tournament instance
         """
         try:
-            TOURNAMENTS.insert(tournament.serialize)
+            TOURNAMENTS.insert(tournament.serialize())
         except Exception as err:
             logger.error("Oops! %s :", err)
 
@@ -137,6 +137,6 @@ class DbControllerTournament:
             tournament ([type]): [description]
         """
         try:
-            TOURNAMENTS.update(tournament.serialize, doc_ids=[tournament.get_id])
+            TOURNAMENTS.update(tournament.serialize(), doc_ids=[tournament.get_id()])
         except Exception as err:
             logger.error("Oops! %s :", err)

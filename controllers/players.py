@@ -31,16 +31,15 @@ class PlayerController:
         self.player_view = PlayerView()
         self.user_view = UserView()
 
-    @property
     def set_new_player(self):
         """Create a new Player instance and save it in the database."""
         try:
-            last_name = self.player_view.prompt_player_lastname
-            first_name = self.player_view.prompt_player_firstname
+            last_name = self.player_view.prompt_player_lastname()
+            first_name = self.player_view.prompt_player_firstname()
             if not self.db_player.check_table_players(last_name, first_name):
-                birth_date = self.player_view.prompt_player_birthdate
-                sex = self.player_view.prompt_player_sex
-                elo = self.player_view.prompt_player_elo
+                birth_date = self.player_view.prompt_player_birthdate()
+                sex = self.player_view.prompt_player_sex()
+                elo = self.player_view.prompt_player_elo()
 
                 player = Player(last_name, first_name, birth_date, sex, elo)
                 self.db_player.save_table_players(player)
@@ -49,7 +48,7 @@ class PlayerController:
             else:
                 self.user_view.user_print_err(f"\nLe joueur {last_name} {first_name} "
                                               "est déjà présent dans la base de données.")
-            self.user_view.separator_white
+            self.user_view.separator_white()
         except Exception as err:
             logger.error("Oops! %s", err)
 
@@ -68,13 +67,13 @@ class PlayerController:
             else:
                 print(f"Créez le {j}eme joueur.")
             try:
-                last_name = self.player_view.prompt_player_lastname
-                first_name = self.player_view.prompt_player_firstname
+                last_name = self.player_view.prompt_player_lastname()
+                first_name = self.player_view.prompt_player_firstname()
                 if [last_name, first_name] not in current_players:
                     if not self.db_player.check_table_players(last_name, first_name):
-                        birth_date = self.player_view.prompt_player_birthdate
-                        sex = self.player_view.prompt_player_sex
-                        elo = self.player_view.prompt_player_elo
+                        birth_date = self.player_view.prompt_player_birthdate()
+                        sex = self.player_view.prompt_player_sex()
+                        elo = self.player_view.prompt_player_elo()
 
                         player = Participant(last_name, first_name, birth_date, sex, elo)
                         tournament.append_list_players(player)
@@ -95,12 +94,13 @@ class PlayerController:
                             player_found["sex"],
                             player_found["elo"],
                         )
+                        print(player_found.doc_id)
                         player.add_id(player_found.doc_id)
                         tournament.append_list_players(player)
                         self.user_view.user_print_msg(Fore.LIGHTYELLOW_EX + f"\nLe joueur {last_name} {first_name} "
                                                       "a bien été ajouté!")
                         self.user_view.user_print_msg("Ses informations sont importés depuis la base de données.")
-                    self.user_view.separator_white
+                    self.user_view.separator_white()
                     current_players.append([last_name, first_name])
                     j += 1
                 else:

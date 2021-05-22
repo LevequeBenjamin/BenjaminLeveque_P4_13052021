@@ -12,7 +12,6 @@ logger = logging.getLogger(__name__)
 class TournamentView:
     """User view"""
 
-    @property
     def prompt_tournament_name(self) -> str:
         """Prompt for get tournament name.
 
@@ -44,7 +43,6 @@ class TournamentView:
                             + "Je n'ai pas compris ce que vous voulez dire."
                         )
 
-    @property
     def prompt_tournament_location(self) -> str:
         """prompt for get tournament location
 
@@ -76,7 +74,6 @@ class TournamentView:
                             + "Je n'ai pas compris ce que vous voulez dire."
                         )
 
-    @property
     def prompt_tournament_dated(self) -> str:
         """prompt for get tournament dated
 
@@ -108,7 +105,6 @@ class TournamentView:
                             + "Je n'ai pas compris ce que vous voulez dire."
                         )
 
-    @property
     def choice_time_control(self):
         """[summary]"""
         print(Fore.LIGHTWHITE_EX + "[1] Bullet.")
@@ -131,14 +127,13 @@ class TournamentView:
         elif choice == 3:
             return "Coup rapide"
 
-    @property
     def prompt_tournament_time_control(self) -> str:
         """prompt for get tournament time control
 
         Returns:
             str: time control for class Tournament
         """
-        self.choice_time_control
+        self.choice_time_control()
         choice = 0
         confirm = ""
         while choice not in range(1, 4):
@@ -169,7 +164,6 @@ class TournamentView:
             except (ValueError, TypeError):
                 print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
 
-    @property
     def prompt_tournament_description(self) -> str:
         """prompt for get tournament description
 
@@ -209,13 +203,13 @@ class TournamentView:
         Args:
             tournament ([type]): [description]
         """
-        if tournament.get_current_round < 5:
-            if not tournament.get_list_players:
+        if tournament.get_current_round() < 5:
+            if not tournament.get_list_players():
                 print(Fore.LIGHTWHITE_EX + "[1] Ajouter 8 joueurs.")
                 print("[2] Modifier un joueur.")
                 print("[0] Quitter le tournoi.\n")
             else:
-                print(Fore.LIGHTWHITE_EX + f"[1] Démarrer le tour : {tournament.get_current_round}.")
+                print(Fore.LIGHTWHITE_EX + f"[1] Démarrer le tour : {tournament.get_current_round()}.")
                 print(Fore.LIGHTWHITE_EX + "[2] Modifier un joueur.")
                 print("[0] Quitter le tournoi.\n")
         else:
@@ -224,7 +218,6 @@ class TournamentView:
             print("[3] Afficher les matches.")
             print("[0] Quitter le tournoi.\n")
 
-    @property
     def prompt_choice_menu_tournament(self):
         """[summary]
 
