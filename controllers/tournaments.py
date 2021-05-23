@@ -3,6 +3,7 @@
 # librairies
 from datetime import datetime
 import logging
+from colorama import Fore
 
 # models
 from models.tournaments import Tournament
@@ -34,6 +35,12 @@ class TournamentController:
         self.tournament_view = TournamentView()
         self.user_view = UserView()
         self.round_view = RoundView()
+        
+    def print_tournaments(self):
+        self.user_view.header()
+        self.tournament_view.menu_tournois()
+        tournois = self.db_tournament.get_tournois()
+        self.tournament_view.print_tournois(tournois)
 
     def set_tournament(self):
         """Creates a Tournament instance.
@@ -74,19 +81,11 @@ class TournamentController:
 
     def import_tournament(self):
         """Start a tournament in progress"""
-        name = self.tournament_view.prompt_tournament_name()
-        tournament_found = self.db_tournament.search_table_tournaments(name)
+        id = self.tournament_view.prompt_tournament_id()
+        tournament_found = self.db_tournament.search_table_tournament_with_id(id)
+        print(tournament_found)
         if tournament_found:
-            self.user_view.separator_white()
-            self.user_view.user_print_msg(f"tournoi : {tournament_found['name']}")
-            self.user_view.user_print_msg(f"adresse : {tournament_found['location']}")
-            self.user_view.user_print_msg(f"date : {tournament_found['dated']}")
-            self.user_view.user_print_msg(
-                f"time control : {tournament_found['time_control']}"
-            )
-            self.user_view.user_print_msg(
-                f"description : {tournament_found['description']}"
-            )
+            self.tournament_view.print_one_tournament(tournament_found)
             confirm = self.user_view.prompt_confirm()
             if confirm == "Y":
                 tournament = Tournament(
@@ -120,7 +119,7 @@ class TournamentController:
                         tournament.counter_round
                 tournament.add_id(tournament_found.doc_id)
                 self.user_view.user_print_green_msg(
-                    f"\nLe tournoi {name} est importé avec succés !"
+                    f"\nLe tournoi {tournament.get_name()} est importé avec succés !"
                 )
                 self.user_view.separator_white()
                 return tournament

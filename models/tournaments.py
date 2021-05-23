@@ -86,6 +86,15 @@ class Tournament:
             [type]: [description]
         """
         return self.name
+    
+    def get_location(self):
+        return self.location
+    
+    def get_dated(self):
+        return self.dated
+
+    def get_time_control(self):
+        return self.time_control
 
     def get_list_players(self):
         """[summary]

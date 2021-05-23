@@ -28,7 +28,7 @@ class Player:
         """
         return f"{self.last_name}, {self.first_name}"
 
-    def serialize_player(self):
+    def serialize(self):
         """Serialize Player
 
         Returns:
@@ -41,6 +41,14 @@ class Player:
             "sex": self.sex,
             "elo": self.elo,
         }
+
+    def update_elo(self, elo):
+        """[summary]
+
+        Args:
+            elo ([type]): [description]
+        """
+        self.elo = elo
 
 
 class Participant(Player):

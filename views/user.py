@@ -1,6 +1,8 @@
 """User views."""
 
 # librairies
+import os
+import sys
 from colorama import Fore
 import logging
 import sys
@@ -16,12 +18,22 @@ class UserView:
     def header(self):
         """[summary]
         """
-        print(
-            Fore.LIGHTCYAN_EX + "\n======================================"
-            "======================"
-        )
-        print("                      CHESS TOURNAMENT                      ")
-        print("============================================================ \n")
+        if sys.platform.startswith('linux'):
+            os.system('clear')
+        elif sys.platform.startswith('win32'):
+            os.system('cls')
+        elif sys.platform.startswith('darwin'):
+            os.system('clear')
+        print("\n")
+        print(Fore.LIGHTYELLOW_EX + f"   @ @@ @", " ".center(98), " @ @@ @")
+        print(f"   @@@@@@", " ".center(98), " @@@@@@")
+        print(f"     @@", " ".center(102),   " @@")
+        print(f"    @@@@", " ".center(100),  " @@@@")
+        print(f"   @@@@@@", " ".center(98), " @@@@@@")
+        print(f"  @@@@@@@@", " ".center(97), "@@@@@@@@")
+        print(Fore.CYAN + f'*** -*- CHESS TOURNAMENT -*- ***'.center(119))
+        print("\n")
+        print(f'{"=" * 119}')
 
     def prompt_start_program(self):
         """[summary]
@@ -29,11 +41,11 @@ class UserView:
         Returns:
             [type]: [description]
         """
-        user_choice = 4
-        while user_choice not in range(0, 4):
+        user_choice = 6
+        while user_choice not in range(0, 6):
             try:
                 user_choice = int(
-                    input(Fore.LIGHTBLUE_EX + "Que voulez-vous faire ? : ")
+                    input(Fore.LIGHTBLUE_EX + "\nQue voulez-vous faire ? >> ")
                 )
             except (ValueError, TypeError):
                 print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
@@ -43,19 +55,33 @@ class UserView:
 
     def menu(self):
         """Print main menu."""
-        print(Fore.LIGHTWHITE_EX + "[1] Ajouter un nouveau joueur.")
-        print("[2] Créer un tournoi.")
-        print("[3] Importer un tournoi.")
-        print("[0] Quitter Chess Tournament.\n")
+        self.header()
+        print(Fore.LIGHTWHITE_EX + f'{"* MENU *"}'.center(119))
+        print('\n' * 1)
+        print("::[1] Ajouter un nouveau joueur")
+        print("::[2] Créer un tournoi")
+        print("::[3] Importer un tournoi")
+        print("::[4] Liste des joueurs")
+        print("::[5] Liste des tournois")
+        print("::[0] Quitter -*-CHESS TOURNAMENT-*-\n")
+        print(Fore.CYAN + f'{"=" * 119}')
+        
+    def title_h2(self, title):
+        print(Fore.LIGHTWHITE_EX + f"{'*' * 60}".center(119))
+        print(f"{title}".center(119))
+        print(f"{'*' * 60}\n".center(122))
+        print("Veuillez remplir les champs svp.\n")
 
     def exit_program(self):
         """[summary]
         """
-        self.separator_yellow()
+        print(Fore.LIGHTYELLOW_EX + f'{"*" * 119}')
+        print(f'\n' * 2)
         print(
-            Fore.WHITE + "    Merci d'avoir utilisé Chess " "Tournament, à bientôt !!"
+            Fore.WHITE + "Merci d'avoir utilisé -*-CHESS TOURNAMENT-*-, à bientôt !!".center(119)
         )
-        self.separator_yellow()
+        print('\n' * 2)
+        print(Fore.LIGHTYELLOW_EX + f'{"*" * 119}')
         sys.exit()
 
     def separator_title(self, title):

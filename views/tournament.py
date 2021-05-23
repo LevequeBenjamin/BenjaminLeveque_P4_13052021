@@ -1,6 +1,7 @@
 """Tournament views."""
 
 # librairies
+from views.user import UserView
 from colorama import Fore
 import logging
 
@@ -11,6 +12,9 @@ logger = logging.getLogger(__name__)
 
 class TournamentView:
     """User view"""
+
+    def __init__(self):
+        self.user_views = UserView()
 
     def prompt_tournament_name(self) -> str:
         """Prompt for get tournament name.
@@ -196,6 +200,40 @@ class TournamentView:
                             Fore.LIGHTRED_EX
                             + "Je n'ai pas compris ce que vous voulez dire."
                         )
+                        
+    def prompt_tournament_id(self) -> int:
+        """[summary]
+
+        Returns:
+            int: [description]
+        """
+        confirm = ""
+        while confirm != "Y":
+            id = input(
+                Fore.LIGHTCYAN_EX
+                + "\nentrez l'id du tournoi que vous voulez importer : "
+            )
+            if not id.isnumeric() or not id:
+                print(
+                    Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
+                    "veuillez entrer l'id du tournoi en caractère numerique svp."
+                )
+            else:
+                print(Fore.LIGHTGREEN_EX + f"L'id du tournoi est: {id}")
+                while confirm != "Y" or "N":
+                    confirm = input(
+                        Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : "
+                    ).upper()
+                    if confirm == "Y":
+                        return int(id)
+                    elif confirm == "N":
+                        print("Veuillez entrez l'id du tournoi svp.")
+                        break
+                    else:
+                        print(
+                            Fore.LIGHTRED_EX
+                            + "Je n'ai pas compris ce que vous voulez dire."
+                        )
 
     def menu(self, tournament):
         """Print tournament menu.
@@ -203,8 +241,10 @@ class TournamentView:
         Args:
             tournament ([type]): [description]
         """
+        self.user_views.header()
+        print(Fore.LIGHTWHITE_EX + f'{"* MENU TOURNAMENT*"}'.center(119))
         if tournament.get_current_round() < 5:
-            if not tournament.get_list_players():
+            if not tournament.get_list_players() or len(tournament.serialize_players()) < 8:
                 print(Fore.LIGHTWHITE_EX + "[1] Ajouter 8 joueurs.")
                 print("[2] Modifier un joueur.")
                 print("[0] Quitter le tournoi.\n")
@@ -217,6 +257,7 @@ class TournamentView:
             print("[2] Afficher le classement.")
             print("[3] Afficher les matches.")
             print("[0] Quitter le tournoi.\n")
+        print(Fore.CYAN + f'{"=" * 119}')
 
     def prompt_choice_menu_tournament(self):
         """[summary]
@@ -235,3 +276,76 @@ class TournamentView:
             except Exception as err:
                 logger.error("Oops! %s", err)
         return user_choice
+
+    def menu_tournois(self):
+        """[summary]
+        """
+        print(Fore.LIGHTWHITE_EX + f'{"* MENU TOURNAMENTS*"}'.center(119))
+        print(Fore.LIGHTWHITE_EX + "[1] Importez un tournoi.")
+        print("[2] Afficher les résultats d'un tournoi.")
+        print("[0] Retour au menu principal.\n")
+        print(Fore.CYAN + f'{"=" * 119}')
+
+    def prompt_menu_tournaments(self):
+        """[summary]
+
+        Returns:
+            [type]: [description]
+        """
+        user_choice = 3
+        while user_choice not in range(0, 3):
+            try:
+                user_choice = int(
+                    input(Fore.LIGHTBLUE_EX + "\nQue voulez-vous faire ? >> ")
+                )
+            except (ValueError, TypeError):
+                print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
+            except Exception as err:
+                logger.error("Oops! %s", err)
+        return user_choice
+
+    def print_tournois(self, tournois):
+        print(f"{'ID'.center(10)} | "
+              f"{'Nom'.center(25)} | "
+              f"{'Lieu'.center(25)} | "
+              f"{'Date'.center(20)} | "
+              f"{'Time control'.center(25)}"
+              f"\n{'°' * 119}")
+
+        for tournoi in tournois:
+            print(f"{str(tournoi.doc_id).center(10)} | "
+                  f"{tournoi['name'].center(25)} | "
+                  f"{tournoi['location'].center(25)} | "
+                  f"{tournoi['dated'].center(20)} | "
+                  f"{tournoi['time_control'].center(25)}"
+                  f"\n{'-' * 119}")
+
+    def print_one_tournament(self, tournoi):
+        print(f"{'ID'.center(10)} | "
+              f"{'Nom'.center(25)} | "
+              f"{'Lieu'.center(25)} | "
+              f"{'Date'.center(20)} | "
+              f"{'Time control'.center(25)}"
+              f"\n{'°' * 119}")
+
+        print(f"{str(tournoi.doc_id).center(10)} | "
+              f"{tournoi['name'].center(25)} | "
+              f"{tournoi['location'].center(25)} | "
+              f"{tournoi['dated'].center(20)} | "
+              f"{tournoi['time_control'].center(25)}"
+              f"\n{'-' * 119}")
+        
+    def print_current_tournament(self, tournoi):
+        print(f"{'Ronde en cours'.center(20)} | "
+              f"{'Nom'.center(22)} | "
+              f"{'Lieu'.center(22)} | "
+              f"{'Date'.center(22)} | "
+              f"{'Time control'.center(22)}"
+              f"\n{'°' * 119}")
+
+        print(f"{str(tournoi.get_current_round()).center(20)} | "
+              f"{tournoi.get_name().center(22)} | "
+              f"{tournoi.get_location().center(22)} | "
+              f"{tournoi.get_dated().center(22)} | "
+              f"{tournoi.get_time_control().center(22)}"
+              f"\n{'-' * 119}")

@@ -17,6 +17,14 @@ TOURNAMENTS = DB.table("TOURNAMENTS")
 
 class DbControllerlPlayer:
     """DbCtrlPlayer controller."""
+    
+    def get_players(self):
+        """[summary]
+
+        Returns:
+            [type]: [description]
+        """
+        return PLAYERS
 
     def get_id_player(self, last_name, first_name):
         """[summary]
@@ -66,6 +74,29 @@ class DbControllerlPlayer:
                 player_found = player
         return player_found
 
+    def search_table_players_with_id(self, id):
+        """Check if a player exist in the db.
+
+        Args:
+            last_name (str): player lastname
+            first_name (str): player firstname
+
+        Returns:
+            PLayer : return player if is
+            found in the bd
+        """
+        player_found = ""
+        for player in PLAYERS:
+            if player.doc_id == id:
+                player_found = player
+        return player_found
+    
+    def update_player(self, player, id):
+        try:
+            PLAYERS.update(player.serialize(), doc_ids=[id])
+        except Exception as err:
+            logger.error("Oops! %s :", err)
+
     def save_table_players(self, player):
         """Save player in database.
 
@@ -88,6 +119,14 @@ class DbControllerTournament:
     """[summary]
     """
 
+    def get_tournois(self):
+        """[summary]
+
+        Returns:
+            [type]: [description]
+        """
+        return TOURNAMENTS
+    
     def get_id_tournament(self, name):
         """[summary]
 
@@ -116,6 +155,23 @@ class DbControllerTournament:
         tournament_found = ""
         for tournament in TOURNAMENTS:
             if tournament["name"] == name:
+                tournament_found = tournament
+        return tournament_found
+    
+    def search_table_tournament_with_id(self, id):
+        """Check if a player exist in the db.
+
+        Args:
+            last_name (str): player lastname
+            first_name (str): player firstname
+
+        Returns:
+            PLayer : return player if is
+            found in the bd
+        """
+        tournament_found = ""
+        for tournament in TOURNAMENTS:
+            if tournament.doc_id == id:
                 tournament_found = tournament
         return tournament_found
 
