@@ -1,5 +1,8 @@
 """Define the rounds."""
 
+import operator
+import time
+
 
 class Round:
     """Round class."""
@@ -28,7 +31,7 @@ class Round:
         return {
             "round": self.name,
             "created_at": self.created_at,
-            "finished_at" : self.finished_at,
+            "finished_at": self.finished_at,
             "round_in_progress": self.start,
             "list_matches": self.serialize_match(),
         }
@@ -38,7 +41,7 @@ class Round:
         for match in self.list_matches:
             matches_serialized.append(match.serialize())
         return matches_serialized
-            
+
     def get_elo(self, player):
         """[summary]
 
@@ -96,10 +99,10 @@ class Round:
         Returns:
             [type]: [description]
         """
-        self.players.sort(key=self.get_score, reverse=True)
-        return self.players
+        players = sorted(self.players, key=lambda i: (self.get_score(i), self.get_elo(i)), reverse=True)
+        return players
 
-    def check_already_current_players(self, current_players, lastname):
+    def check_already_current_players(self, current_players, id):
         """[summary]
 
         Args:
@@ -109,13 +112,14 @@ class Round:
         Returns:
             [type]: [description]
         """
+        
         for player in current_players:
-            if lastname == player["last_name"]:
+            if id == player.get_id():
                 return True
         return False
 
     def check_already_played(
-        self, current_matches, lastname_player_one, lastname_player_two
+        self, current_matches, id_player_one, id_player_two
     ):
         """[summary]
 
@@ -129,12 +133,12 @@ class Round:
         """
         for matches in current_matches:
             for match_one, match_two in matches:
-                if lastname_player_one in [
-                    match_one["last_name"],
-                    match_two["last_name"],
-                ] and lastname_player_two in [
-                    match_one["last_name"],
-                    match_two["last_name"],
+                if id_player_one in [
+                    match_one["id"],
+                    match_two["id"],
+                ] and id_player_two in [
+                    match_one["id"],
+                    match_two["id"],
                 ]:
                     return True
         return False
@@ -167,26 +171,26 @@ class Round:
             while j in range(4):
                 if not self.check_already_played(
                     current_matches,
-                    players_part_one[j]["last_name"],
-                    players_part_two[0]["last_name"],
+                    players_part_one[j].get_id(),
+                    players_part_two[0].get_id(),
                 ) and not self.check_already_current_players(
-                    current_players, players_part_two[0]["last_name"]
+                    current_players, players_part_two[0].get_id()
                 ):
                     player_pair = [players_part_one[j], players_part_two[0]]
                 elif not self.check_already_played(
                     current_matches,
-                    players_part_one[j]["last_name"],
-                    players_part_two[1]["last_name"],
+                    players_part_one[j].get_id(),
+                    players_part_two[1].get_id(),
                 ) and not self.check_already_current_players(
-                    current_players, players_part_two[1]["last_name"]
+                    current_players, players_part_two[1].get_id()
                 ):
                     player_pair = [players_part_one[j], players_part_two[1]]
                 elif not self.check_already_played(
                     current_matches,
-                    players_part_one[j]["last_name"],
-                    players_part_two[2]["last_name"],
+                    players_part_one[j].get_id(),
+                    players_part_two[2].get_id(),
                 ) and not self.check_already_current_players(
-                    current_players, players_part_two[2]["last_name"]
+                    current_players, players_part_two[2].get_id()
                 ):
                     player_pair = [players_part_one[j], players_part_two[2]]
                 else:
@@ -214,7 +218,7 @@ class Round:
             [type]: [description]
         """
         return self.list_matches
-    
+
     def add_finished(self, finished_at):
         """[summary]
 
@@ -222,7 +226,7 @@ class Round:
             finished_at ([type]): [description]
         """
         self.finished_at = finished_at
-        
+
     def add_start(self):
         """[summary]
         """

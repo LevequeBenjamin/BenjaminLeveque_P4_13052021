@@ -109,7 +109,7 @@ class Participant(Player):
         }
 
     def serialize_player_match(self):
-        return {"last_name": self.last_name, "first_name": self.first_name}
+        return {"last_name": self.last_name, "first_name": self.first_name, "id": self.id}
 
     def add_id(self, id):
         """[summary]
@@ -125,7 +125,7 @@ class Participant(Player):
         Args:
             score ([type]): [description]
         """
-        self.score = score
+        self.score += score
 
     def add_ladder(self, ladder):
         """[summary]
@@ -153,3 +153,9 @@ class Participant(Player):
 
     def get_score(self):
         return self.score
+
+    def get_last_name(self):
+        return self.last_name
+
+    def get_first_name(self):
+        return self.first_name

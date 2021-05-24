@@ -52,27 +52,56 @@ class RoundView:
             [type]: [description]
         """
         user_choice = 2
-        while user_choice not in range(0, 1):
+        while user_choice not in range(0, 2):
             try:
                 user_choice = int(
-                    input(Fore.LIGHTBLUE_EX + "Que voulez-vous faire ? : ")
+                    input(Fore.LIGHTBLUE_EX + "\nQue voulez-vous faire ? : ")
                 )
             except (ValueError, TypeError):
                 print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
             except Exception as err:
                 logger.error("Oops! %s", err)
         return user_choice
-    
+
     def menu(self):
         """Print tournament menu.
 
         Args:
             tournament ([type]): [description]
         """
-        print(Fore.LIGHTWHITE_EX + "[1] Inscrire les résultats.")
+        print(Fore.LIGHTWHITE_EX + f'{"* MENU RONDE *"}'.center(119))
+        print('\n' * 1)
+        print(Fore.LIGHTWHITE_EX + "\n[1] Inscrire les résultats.")
         print("[0] Annuler et revenir au menu tournoi.\n")
+        print(Fore.CYAN + f'{"=" * 119}')
 
     def print_players_pair(self, players_pair):
-        print("Paires de joueurs : ")
+        print(Fore.LIGHTBLUE_EX + f"{'Nom'.center(24)} | "
+              f"{'Prénom'.center(24)} | "
+              f"{'VS'.center(10)} | "
+              f"{'Nom'.center(24)} | "
+              f"{'Prenom'.center(24)}"
+              f"\n{'°' * 119}")
         for player_one, player_two in players_pair:
-            print(f"{str(player_one)} VS {str(player_two)}")
+            print(Fore.LIGHTWHITE_EX + f"{player_one.get_last_name().center(24)} | "
+                  f"{player_one.get_first_name().center(24)}"
+                  + Fore.LIGHTYELLOW_EX + f" | {'*'.center(10)} | "
+                  + Fore.LIGHTWHITE_EX + f"{player_two.get_last_name().center(24)} | "
+                  f"{player_two.get_first_name().center(24)}"
+                  f"\n{'-' * 119}")
+            
+    def print_players_pair_test(self, player_one, player_two):
+        print(Fore.LIGHTBLUE_EX + f"{'Nom'.center(24)} | "
+              f"{'Prénom'.center(24)} | "
+              f"{'VS'.center(10)} | "
+              f"{'Nom'.center(24)} | "
+              f"{'Prenom'.center(24)}"
+              f"\n{'°' * 119}")
+        print(Fore.LIGHTWHITE_EX + f"{player_one.get_last_name().center(24)} | "
+                f"{player_one.get_first_name().center(24)}"
+                + Fore.LIGHTYELLOW_EX + f" | {'*'.center(10)} | "
+                + Fore.LIGHTWHITE_EX + f"{player_two.get_last_name().center(24)} | "
+                f"{player_two.get_first_name().center(24)}"
+                f"\n{'-' * 119}")
+            
+    

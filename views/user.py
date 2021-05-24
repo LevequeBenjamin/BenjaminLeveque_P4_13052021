@@ -65,12 +65,11 @@ class UserView:
         print("::[5] Liste des tournois")
         print("::[0] Quitter -*-CHESS TOURNAMENT-*-\n")
         print(Fore.CYAN + f'{"=" * 119}')
-        
+
     def title_h2(self, title):
         print(Fore.LIGHTWHITE_EX + f"{'*' * 60}".center(119))
         print(f"{title}".center(119))
         print(f"{'*' * 60}\n".center(122))
-        print("Veuillez remplir les champs svp.\n")
 
     def exit_program(self):
         """[summary]

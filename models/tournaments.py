@@ -1,5 +1,7 @@
 """Define the tournaments."""
 
+import operator
+
 
 class Tournament:
     """Tournament class."""
@@ -86,10 +88,10 @@ class Tournament:
             [type]: [description]
         """
         return self.name
-    
+
     def get_location(self):
         return self.location
-    
+
     def get_dated(self):
         return self.dated
 
@@ -140,3 +142,34 @@ class Tournament:
         """[summary]
         """
         self.current_round += 1
+
+    def get_elo(self, player):
+        """[summary]
+
+        Args:
+            players ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
+        return player.get_elo()
+
+    def get_score(self, player):
+        """[summary]
+
+        Args:
+            players ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
+        return player.get_score()
+
+    def sort_score_players(self):
+        """[summary]
+
+        Returns:
+            [type]: [description]
+        """
+        players = sorted(self.players, key=lambda i: (self.get_score(i), self.get_elo(i)), reverse=True)
+        return players

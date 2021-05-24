@@ -200,7 +200,7 @@ class TournamentView:
                             Fore.LIGHTRED_EX
                             + "Je n'ai pas compris ce que vous voulez dire."
                         )
-                        
+
     def prompt_tournament_id(self) -> int:
         """[summary]
 
@@ -246,11 +246,9 @@ class TournamentView:
         if tournament.get_current_round() < 5:
             if not tournament.get_list_players() or len(tournament.serialize_players()) < 8:
                 print(Fore.LIGHTWHITE_EX + "[1] Ajouter 8 joueurs.")
-                print("[2] Modifier un joueur.")
                 print("[0] Quitter le tournoi.\n")
             else:
                 print(Fore.LIGHTWHITE_EX + f"[1] Démarrer le tour : {tournament.get_current_round()}.")
-                print(Fore.LIGHTWHITE_EX + "[2] Modifier un joueur.")
                 print("[0] Quitter le tournoi.\n")
         else:
             print(Fore.LIGHTWHITE_EX + "[1] Modifier un joueur.")
@@ -334,7 +332,7 @@ class TournamentView:
               f"{tournoi['dated'].center(20)} | "
               f"{tournoi['time_control'].center(25)}"
               f"\n{'-' * 119}")
-        
+
     def print_current_tournament(self, tournoi):
         print(f"{'Ronde en cours'.center(20)} | "
               f"{'Nom'.center(22)} | "
@@ -349,3 +347,35 @@ class TournamentView:
               f"{tournoi.get_dated().center(22)} | "
               f"{tournoi.get_time_control().center(22)}"
               f"\n{'-' * 119}")
+
+    def print_confirm_tournament(self, name, location, dated, time_control, description):
+        print(f"{'Nom'.center(25)} | "
+              f"{'Lieu'.center(35)} | "
+              f"{'Date'.center(25)} | "
+              f"{'Time control'.center(25)}"
+              f"\n{'°' * 119}")
+
+        print(f"{name.center(25)} | "
+              f"{location.center(35)} | "
+              f"{dated.center(25)} | "
+              f"{time_control.center(25)}"
+              f"\n{'-' * 119}")
+
+        print(f"description : {description}"
+              f"\n{'-' * 119}")
+
+    def print_result_tournament(self, players):
+        print(f"{'Classement'.center(10)} | "
+              f"{'Nom'.center(25)} | "
+              f"{'Prénom'.center(25)} | "
+              f"{'Score'.center(10)} | "
+              f"{'Elo'.center(10)}"
+              f"\n{'°' * 119}")
+
+        for player in players:
+            print(f"{player.get_last_name().center(25)} | "
+                  f"{player.get_first_name().center(25)} | "
+                  f"{player.get_last_name().center(20)} | "
+                  f"{str(player.get_score()).center(10)} | "
+                  f"{str(player.get_elo()).center(10)}"
+                  f"\n{'-' * 119}")

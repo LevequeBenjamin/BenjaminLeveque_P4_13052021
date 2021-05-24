@@ -34,16 +34,22 @@ class Controller:
         # controllers
         self.player_controller = PlayerController()
         self.tournament_controller = TournamentController()
-    
+
     def print_players(self):
-        self.player_controller.print_players()
-        user_choice = self.player_controller.player_view.prompt_menu_players()
-        self.players_perform(user_choice)
-        
+        players = self.player_controller.print_players()
+        if players:
+            user_choice = self.player_controller.player_view.prompt_menu_players()
+            self.players_perform(user_choice)
+        else:
+            return None
+
     def print_tournaments(self):
-        self.tournament_controller.print_tournaments()
-        user_choice = self.tournament_controller.tournament_view.prompt_menu_tournaments()
-        self.tournaments_perform(user_choice)
+        tournaments = self.tournament_controller.print_tournaments()
+        if tournaments:
+            user_choice = self.tournament_controller.tournament_view.prompt_menu_tournaments()
+            self.tournaments_perform(user_choice)
+        else:
+            return None
 
     def get_choice_menu_tournament(self, tournament):
         """[summary]
@@ -68,7 +74,6 @@ class Controller:
         tournament = self.tournament_controller.import_tournament()
         if tournament:
             self.get_choice_menu_tournament(tournament)
-
 
     def start_tournament(self):
         """Start the tournament."""
@@ -100,12 +105,12 @@ class Controller:
             user_choice = ""
         else:
             if user_choice == 1:
-                pass
+                self.tournament_controller.print_result_tournament(tournament)
             if user_choice == 2:
                 pass
             if user_choice == 3:
                 self.start_program()
-  
+
     def tournaments_perform(self, user_choice):
         """Performs according to the user choice.
 
@@ -120,7 +125,7 @@ class Controller:
             pass
         elif user_choice == 0:
             self.start_program()
-                
+
     def players_perform(self, user_choice):
         """Performs according to the user choice.
 
