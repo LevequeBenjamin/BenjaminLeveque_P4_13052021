@@ -28,7 +28,7 @@ class Player:
         """
         return f"{self.last_name}, {self.first_name}"
 
-    def serialize(self):
+    def serialize_player(self):
         """Serialize Player
 
         Returns:
@@ -159,3 +159,6 @@ class Participant(Player):
 
     def get_first_name(self):
         return self.first_name
+    
+    def get_ladder(self):
+        return self.ladder

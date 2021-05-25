@@ -251,9 +251,8 @@ class TournamentView:
                 print(Fore.LIGHTWHITE_EX + f"[1] Démarrer le tour : {tournament.get_current_round()}.")
                 print("[0] Quitter le tournoi.\n")
         else:
-            print(Fore.LIGHTWHITE_EX + "[1] Modifier un joueur.")
-            print("[2] Afficher le classement.")
-            print("[3] Afficher les matches.")
+            print(Fore.LIGHTWHITE_EX + "[1] Afficher le classement.")
+            print("[2] Afficher les matches.")
             print("[0] Quitter le tournoi.\n")
         print(Fore.CYAN + f'{"=" * 119}')
 
@@ -365,17 +364,17 @@ class TournamentView:
               f"\n{'-' * 119}")
 
     def print_result_tournament(self, players):
-        print(f"{'Classement'.center(10)} | "
-              f"{'Nom'.center(25)} | "
-              f"{'Prénom'.center(25)} | "
-              f"{'Score'.center(10)} | "
-              f"{'Elo'.center(10)}"
+        print(f"{'Classement'.center(15)} | "
+              f"{'Nom'.center(30)} | "
+              f"{'Prénom'.center(30)} | "
+              f"{'Score'.center(15)} | "
+              f"{'Elo'.center(15)}"
               f"\n{'°' * 119}")
 
         for player in players:
-            print(f"{player.get_last_name().center(25)} | "
-                  f"{player.get_first_name().center(25)} | "
-                  f"{player.get_last_name().center(20)} | "
-                  f"{str(player.get_score()).center(10)} | "
-                  f"{str(player.get_elo()).center(10)}"
+            print(f"{str(player.get_ladder()).center(15)} | "
+                  f"{player.get_first_name().center(30)} | "
+                  f"{player.get_last_name().center(30)} | "
+                  f"{str(player.get_score()).center(15)} | "
+                  f"{str(player.get_elo()).center(15)}"
                   f"\n{'-' * 119}")

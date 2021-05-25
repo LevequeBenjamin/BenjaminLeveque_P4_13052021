@@ -147,3 +147,17 @@ class UserView:
                 print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire.")
             else:
                 return confirm
+
+    def prompt_return(self):
+        """[summary]
+
+        Returns:
+            [type]: [description]
+        """
+        confirm = ""
+        while confirm != "Y":
+            confirm = input(Fore.LIGHTCYAN_EX + "\n::[Y] pour retourner au menu >> ").upper()
+            if confirm not in ["Y", "N"]:
+                print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire.")
+            else:
+                return confirm

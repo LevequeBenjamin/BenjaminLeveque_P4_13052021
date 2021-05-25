@@ -51,8 +51,13 @@ class TournamentController:
 
     def print_result_tournament(self, tournament):
         players = tournament.sort_score_players()
+        #self.tournament_view.menu(tournament)
+        self.tournament_view.print_current_tournament(tournament)
+        self.user_view.title_h2("Résultat du tournoi")
         self.tournament_view.print_result_tournament(players)
-        time.sleep(10)
+        confirm = self.user_view.prompt_return()
+        if confirm == "Y":
+            pass
 
     def set_tournament(self):
         """Creates a Tournament instance.
@@ -80,7 +85,6 @@ class TournamentController:
                 self.user_view.user_print_green_msg(
                     f"\nLe tournoi {name} est créé avec succés !"
                 )
-                self.user_view.separator_white()
                 time.sleep(2.0)
                 return tournament
             else:
@@ -108,7 +112,7 @@ class TournamentController:
                     for player_import in tournament_found["players"]:
                         player = Participant(player_import["last_name"], player_import["first_name"],
                                              player_import["birth_date"], player_import["sex"], player_import["elo"])
-                        player_id = self.db_player.check_table_players(
+                        player_id = self.db_player.get_id_player(
                             player_import["last_name"], player_import["first_name"])
                         player.add_id(player_id)
                         player.add_score(player_import["score"])
@@ -141,7 +145,6 @@ class TournamentController:
         Args:
             tournament (Object): Tournament instance
         """
-        current_matches = []
         current_round = tournament.get_current_round()
         if current_round < 5:
             j = 1
@@ -156,19 +159,19 @@ class TournamentController:
             else:
                 self.user_view.title_h2(f"{current_round}ème tour.\n")
                 players = round.sort_score_players()
-            players_pair = round.generate_pair(current_matches, players, current_round)
+            players_pair = round.generate_pair_test(tournament, players, current_round)
             self.round_view.print_players_pair(players_pair)
             user_choice = self.round_view.prompt_choice_menu_round()
             if user_choice == 1:
                 self.user_view.header()
-                self.start_round(round, players_pair, tournament, current_round, current_matches, j)
+                self.start_round(round, players_pair, tournament, current_round, j)
             else:
                 return None
         else:
             self.user_view.user_print_err("Ce tournoi est terminé !")
             time.sleep(2.0)
 
-    def start_round(self, round, players_pair, tournament, current_round, current_matches, j):
+    def start_round(self, round, players_pair, tournament, current_round, j):
         for player_one, player_two in players_pair:
             self.user_view.title_h2(f"MATCH : {j}")
             self.round_view.print_players_pair_test(player_one, player_two)
@@ -185,13 +188,17 @@ class TournamentController:
             j += 1
         tournament.append_list_rounds(round)
         tournament.counter_round()
-        del current_matches[:]
         finished_at = datetime.now()
         round.add_finished(str(finished_at))
         round.add_start()
-        self.db_tournament.update_table_tournament(tournament)
-        if tournament.get_current_round() == 4:
+        if tournament.get_current_round() == 5:
+            ladder = 1
+            players = tournament.sort_score_players()
+            for player in players:
+                player.add_ladder(ladder)
+                ladder += 1
             self.user_view.user_print_green_msg("TOURNOI TERMINÉ! Vous pouvez dés à present afficher les résultats.")
         else:
             self.user_view.user_print_green_msg(f"\nTOUR {current_round} TERMINÉ.")
+        self.db_tournament.update_table_tournament(tournament)
         time.sleep(2.0)

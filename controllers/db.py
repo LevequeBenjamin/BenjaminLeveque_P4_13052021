@@ -104,7 +104,7 @@ class DbControllerlPlayer:
             player (Object): Player instance
         """
         try:
-            PLAYERS.insert(player.serialize())
+            PLAYERS.insert(player.serialize_player())
         except Exception as err:
             logger.error("Oops! %s :", err)
 
