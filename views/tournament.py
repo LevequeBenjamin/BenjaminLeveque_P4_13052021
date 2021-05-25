@@ -339,13 +339,20 @@ class TournamentView:
               f"{'Date'.center(22)} | "
               f"{'Time control'.center(22)}"
               f"\n{'°' * 119}")
-
-        print(f"{str(tournoi.get_current_round()).center(20)} | "
-              f"{tournoi.get_name().center(22)} | "
-              f"{tournoi.get_location().center(22)} | "
-              f"{tournoi.get_dated().center(22)} | "
-              f"{tournoi.get_time_control().center(22)}"
-              f"\n{'-' * 119}")
+        if tournoi.get_current_round() == 5:
+            print(f"{str(tournoi.get_current_round()).center(20)} | "
+                f"{tournoi.get_name().center(22)} | "
+                f"{tournoi.get_location().center(22)} | "
+                f"{tournoi.get_dated().center(22)} | "
+                f"{tournoi.get_time_control().center(22)}"
+                f"\n{'-' * 119}")
+        else:
+            print(f"{tournoi.get_current_tournament().center(20)} | "
+                f"{tournoi.get_name().center(22)} | "
+                f"{tournoi.get_location().center(22)} | "
+                f"{tournoi.get_dated().center(22)} | "
+                f"{tournoi.get_time_control().center(22)}"
+                f"\n{'-' * 119}")
 
     def print_confirm_tournament(self, name, location, dated, time_control, description):
         print(f"{'Nom'.center(25)} | "

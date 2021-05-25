@@ -51,7 +51,7 @@ class TournamentController:
 
     def print_result_tournament(self, tournament):
         players = tournament.sort_score_players()
-        #self.tournament_view.menu(tournament)
+        # self.tournament_view.menu(tournament)
         self.tournament_view.print_current_tournament(tournament)
         self.user_view.title_h2("Résultat du tournoi")
         self.tournament_view.print_result_tournament(players)
@@ -130,7 +130,9 @@ class TournamentController:
                             match = Match(match_import["match"][0][0], match_import["match"][1][0],
                                           match_import["match"][0][1], match_import["match"][1][1])
                             round.append_list_matches(match)
-                        tournament.counter_round()
+                            tournament.counter_round()
+                        if tournament.get_current_round() == 5:
+                            tournament.finished_tournament()
                 tournament.add_id(tournament_found.doc_id)
                 self.user_view.user_print_green_msg(
                     f"\nLe tournoi {tournament.get_name()} est importé avec succés !"
@@ -148,7 +150,7 @@ class TournamentController:
             tournament (Object): Tournament instance
         """
         current_round = tournament.get_current_round()
-        if current_round < 5:
+        if current_round <= 4:
             j = 1
             name = f"Round{current_round}"
             created_at = datetime.now()
@@ -200,6 +202,7 @@ class TournamentController:
                 player.add_ladder(ladder)
                 ladder += 1
             self.user_view.user_print_green_msg("TOURNOI TERMINÉ! Vous pouvez dés à present afficher les résultats.")
+            tournament.finished_tournament()
         else:
             self.user_view.user_print_green_msg(f"\nTOUR {current_round} TERMINÉ.")
         self.db_tournament.update_table_tournament(tournament)

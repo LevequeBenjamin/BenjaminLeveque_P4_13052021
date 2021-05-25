@@ -25,6 +25,7 @@ class Tournament:
         self.players = []
         self.time_control = time_control
         self.description = description
+        self.current_tournament = ""
 
     def serialize(self):
         """Serielize Tournament
@@ -41,6 +42,7 @@ class Tournament:
             "players": self.serialize_players(),
             "time_control": self.time_control,
             "description": self.description,
+            "current_tournament": self.current_tournament
         }
 
     def serialize_players(self):
@@ -142,6 +144,12 @@ class Tournament:
         """[summary]
         """
         self.current_round += 1
+    
+    def finished_tournament(self):
+        self.current_tournament = "Tournoi terminé"
+    
+    def get_current_tournament(self):
+        return self.current_tournament
 
     def get_elo(self, player):
         """[summary]

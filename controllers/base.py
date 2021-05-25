@@ -85,7 +85,7 @@ class Controller:
 
     def tournament_perform(self, user_choice, tournament):
         self.user_view.header()
-        if tournament.get_current_round() < 5:
+        if tournament.get_current_round() <= 4:
             if not tournament.get_list_players() or len(tournament.serialize_players()) < 8:
                 if user_choice == 1:
                     self.user_view.title_h2("Créez 8 joueur.")
