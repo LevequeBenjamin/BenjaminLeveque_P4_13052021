@@ -2,13 +2,6 @@
 
 # librairies
 import logging
-from colorama import Fore
-
-# models
-from models.tournaments import Tournament
-from models.players import Participant
-from models.rounds import Round
-from models.matches import Match
 
 # views
 from views.user import UserView
@@ -36,20 +29,27 @@ class Controller:
         self.tournament_controller = TournamentController()
 
     def print_players(self):
+        """[summary]
+
+        Returns:
+            [type]: [description]
+        """
         players = self.player_controller.print_players()
         if players:
             user_choice = self.player_controller.player_view.prompt_menu_players()
             self.players_perform(user_choice)
-        else:
-            return None
 
     def print_tournaments(self):
+        """[summary]
+
+        Returns:
+            [type]: [description]
+        """
         tournaments = self.tournament_controller.print_tournaments()
         if tournaments:
             user_choice = self.tournament_controller.tournament_view.prompt_menu_tournaments()
             self.tournaments_perform(user_choice)
-        else:
-            return None
+
 
     def get_choice_menu_tournament(self, tournament):
         """[summary]
@@ -84,6 +84,12 @@ class Controller:
             self.get_choice_menu_tournament(tournament)
 
     def tournament_perform(self, user_choice, tournament):
+        """[summary]
+
+        Args:
+            user_choice ([type]): [description]
+            tournament ([type]): [description]
+        """
         self.user_view.header()
         if tournament.get_current_round() <= 4:
             if not tournament.get_list_players() or len(tournament.serialize_players()) < 8:
@@ -120,9 +126,6 @@ class Controller:
         self.user_view.header()
         if user_choice == 1:
             self.start_import_tournament()
-        elif user_choice == 2:
-            self.user_view.title_h2("Afficher les résultats d'un tournoi.")
-            pass
         elif user_choice == 0:
             self.start_program()
 

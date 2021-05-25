@@ -1,8 +1,9 @@
 """Define the db controller."""
 
 # librairies
-from tinydb import TinyDB, Query
 import logging
+from os import EX_CANTCREAT
+from tinydb import TinyDB, Query
 
 # logger
 logging.basicConfig(level=logging.DEBUG)
@@ -17,14 +18,18 @@ TOURNAMENTS = DB.table("TOURNAMENTS")
 
 class DbControllerlPlayer:
     """DbCtrlPlayer controller."""
-    
-    def get_players(self):
+
+    @staticmethod
+    def get_players():
         """[summary]
 
         Returns:
             [type]: [description]
         """
-        return PLAYERS
+        try:
+            return PLAYERS
+        except Exception as err:
+            logger.error("Oops! %s :", err)
 
     def get_id_player(self, last_name, first_name):
         """[summary]
@@ -36,12 +41,14 @@ class DbControllerlPlayer:
         Returns:
             [type]: [description]
         """
-        player_found = self.search_table_players(last_name, first_name)
-        if player_found:
+        try:
+            player_found = self.search_table_players(last_name, first_name)
             return player_found.doc_id
-        return None
+        except Exception as err:
+            logger.error("Oops! %s :", err)
 
-    def check_table_players(self, last_name, first_name):
+    @staticmethod
+    def check_table_players(last_name, first_name):
         """Check if a player exist in the db.
 
         Args:
@@ -57,7 +64,8 @@ class DbControllerlPlayer:
                 return True
         return False
 
-    def search_table_players(self, last_name, first_name):
+    @staticmethod
+    def search_table_players(last_name, first_name):
         """Check if a player exist in the db.
 
         Args:
@@ -74,7 +82,8 @@ class DbControllerlPlayer:
                 player_found = player
         return player_found
 
-    def search_table_players_with_id(self, id):
+    @staticmethod
+    def search_table_players_with_id(player_id):
         """Check if a player exist in the db.
 
         Args:
@@ -87,17 +96,25 @@ class DbControllerlPlayer:
         """
         player_found = ""
         for player in PLAYERS:
-            if player.doc_id == id:
+            if player.doc_id == player_id:
                 player_found = player
         return player_found
-    
-    def update_player(self, player, id):
+
+    @staticmethod
+    def update_player(player, player_id):
+        """[summary]
+
+        Args:
+            player ([type]): [description]
+            player_id ([type]): [description]
+        """
         try:
-            PLAYERS.update(player.serialize(), doc_ids=[id])
+            PLAYERS.update(player.serialize(), doc_ids=[player_id])
         except Exception as err:
             logger.error("Oops! %s :", err)
 
-    def save_table_players(self, player):
+    @staticmethod
+    def save_table_players(player):
         """Save player in database.
 
         Args:
@@ -108,7 +125,13 @@ class DbControllerlPlayer:
         except Exception as err:
             logger.error("Oops! %s :", err)
 
-    def update_table_players(self, player):
+    @staticmethod
+    def update_table_players(player):
+        """[summary]
+
+        Args:
+            player ([type]): [description]
+        """
         try:
             PLAYERS.update(player.serialize(), doc_ids=[player.get_id()])
         except Exception as err:
@@ -119,14 +142,15 @@ class DbControllerTournament:
     """[summary]
     """
 
-    def get_tournois(self):
+    @staticmethod
+    def get_tournois():
         """[summary]
 
         Returns:
             [type]: [description]
         """
         return TOURNAMENTS
-    
+
     def get_id_tournament(self, name):
         """[summary]
 
@@ -141,7 +165,8 @@ class DbControllerTournament:
             return tournament_found.doc_id
         return None
 
-    def search_table_tournaments(self, name):
+    @staticmethod
+    def search_table_tournaments(name):
         """Check if a player exist in the db.
 
         Args:
@@ -157,8 +182,9 @@ class DbControllerTournament:
             if tournament["name"] == name:
                 tournament_found = tournament
         return tournament_found
-    
-    def search_table_tournament_with_id(self, id):
+
+    @staticmethod
+    def search_table_tournament_with_id(tournament_id):
         """Check if a player exist in the db.
 
         Args:
@@ -171,11 +197,12 @@ class DbControllerTournament:
         """
         tournament_found = ""
         for tournament in TOURNAMENTS:
-            if tournament.doc_id == id:
+            if tournament.doc_id == tournament_id:
                 tournament_found = tournament
         return tournament_found
 
-    def save_table_tournament(self, tournament):
+    @staticmethod
+    def save_table_tournament(tournament):
         """Save tournament in database.
 
         Args:
@@ -186,7 +213,8 @@ class DbControllerTournament:
         except Exception as err:
             logger.error("Oops! %s :", err)
 
-    def update_table_tournament(self, tournament):
+    @staticmethod
+    def update_table_tournament(tournament):
         """[summary]
 
         Args:

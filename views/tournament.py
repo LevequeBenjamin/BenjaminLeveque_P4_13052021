@@ -278,8 +278,7 @@ class TournamentView:
         """[summary]
         """
         print(Fore.LIGHTWHITE_EX + f'{"* MENU TOURNAMENTS*"}'.center(119))
-        print(Fore.LIGHTWHITE_EX + "[1] Importez un tournoi.")
-        print("[2] Afficher les résultats d'un tournoi.")
+        print("[1] Importez un tournoi.")
         print("[0] Retour au menu principal.\n")
         print(Fore.CYAN + f'{"=" * 119}')
 

@@ -1,9 +1,8 @@
 """Define the players controller."""
 
 # librairies
-from views.user import UserView
-from colorama import Fore
 import logging
+from colorama import Fore
 import time
 
 # models
@@ -14,6 +13,7 @@ from models.players import Participant
 from controllers.db import DbControllerlPlayer, DbControllerTournament
 
 # views
+from views.user import UserView
 from views.player import PlayerView
 
 # logger
@@ -33,6 +33,11 @@ class PlayerController:
         self.user_view = UserView()
 
     def print_players(self):
+        """[summary]
+
+        Returns:
+            [type]: [description]
+        """
         self.user_view.header()
         players = self.db_player.get_players()
         if players:
@@ -128,6 +133,8 @@ class PlayerController:
         time.sleep(2.0)
 
     def update_players_elo(self):
+        """[summary]
+        """
         players = self.db_player.get_players()
         self.player_view.print_players(players)
         id = self.player_view.prompt_player_id()
