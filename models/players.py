@@ -67,6 +67,7 @@ class Participant(Player):
         self.id = None
         self.score = 0
         self.ladder = 0
+        self.opponents = []
         Player.__init__(self, last_name, first_name, birth_date, sex, elo)
 
     def __str__(self):
@@ -105,7 +106,8 @@ class Participant(Player):
             "elo": self.elo,
             "score": self.score,
             "ladder": self.ladder,
-            "id": self.id
+            "id": self.id,
+            "opponents": self.opponents
         }
 
     def serialize_player_match(self):
@@ -159,6 +161,17 @@ class Participant(Player):
 
     def get_first_name(self):
         return self.first_name
-    
+
     def get_ladder(self):
         return self.ladder
+
+    def append_list_opponents(self, id):
+        """[summary]
+
+        Args:
+            players ([type]): [description]
+        """
+        self.opponents.append(id)
+
+    def get_opponents(self):
+        return self.opponents

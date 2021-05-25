@@ -141,7 +141,7 @@ class Round:
                 ]:
                     return True
         return False
-
+    
     def generate_pair(self, tournament, players, current_round):
         """[summary]
 
@@ -156,48 +156,40 @@ class Round:
         players_part_one = players[0:4]
         players_part_two = players[4:]
         players_pair = []
-        current_players = []
         j = 0
         if current_round == 1:
-            while j in range(4):
+            for j in range(4):
                 player_pair = [players_part_one[j], players_part_two[j]]
-
-                j += 1
                 players_pair.append(player_pair)
-                current_players.append(player_pair[0])
-                current_players.append(player_pair[1])
+                players_part_one[j].append_list_opponents(players_part_two[j].get_id())
+                players_part_two[j].append_list_opponents(players_part_one[j].get_id())
+                j += 1
         else:
-            while j in range(4):
-                if not self.check_already_played(tournament,
-                                                 players_part_one[j].get_id(),
-                                                 players_part_two[0].get_id()
-                                                 ) and not self.check_already_current_players(
-                    current_players, players_part_two[0].get_id()
-                ):
-                    player_pair = [players_part_one[j], players_part_two[0]]
-                elif not self.check_already_played(tournament,
-                                                   players_part_one[j].get_id(),
-                                                   players_part_two[1].get_id()
-                                                   ) and not self.check_already_current_players(
-                    current_players, players_part_two[1].get_id(
-                    )
-                ):
-                    player_pair = [players_part_one[j], players_part_two[1]]
-                elif not self.check_already_played(tournament,
-                                                   players_part_one[j].get_id(),
-                                                   players_part_two[2].get_id()
-                                                   ) and not self.check_already_current_players(
-                    current_players, players_part_two[2].get_id(
-                    )
-                ):
-                    player_pair = [players_part_one[j], players_part_two[2]]
+            for j in range(4):
+                x = 1
+                if players[x].get_id() not in players[0].get_opponents():
+                    player_pair = [players[0], players[x]]
+                    players[0].append_list_opponents(players[x].get_id())
+                    players[x].append_list_opponents(players[0].get_id())
+                    del players[x]
+                    del players[0]
+                    x += 1
+                elif len(players) == 2:
+                    player_pair = [players[0], players[1]]
+                    players[0].append_list_opponents(players[1].get_id())
+                    players[1].append_list_opponents(players[0].get_id())
+                    del players[1]
+                    del players[0]
+                    x += 1
                 else:
-                    player_pair = [players_part_one[j], players_part_two[3]]
+                    player_pair = [players[0], players[x]]
+                    players[0].append_list_opponents(players[x].get_id())
+                    players[x].append_list_opponents(players[0].get_id())
+                    del players[x]
+                    del players[0]
+                    x += 1
                 j += 1
                 players_pair.append(player_pair)
-                current_players.append(player_pair[0])
-                current_players.append(player_pair[1])
-        del current_players[:]
         return players_pair
 
     def append_list_matches(self, match):
@@ -228,48 +220,3 @@ class Round:
         """[summary]
         """
         self.start = False
-
-    def generate_pair_test(self, tournament, players, current_round):
-        """[summary]
-
-        Args:
-            current_matches ([type]): [description]
-            players ([type]): [description]
-            i ([type]): [description]
-
-        Returns:
-            [type]: [description]
-        """
-        players_part_one = players[0:4]
-        players_part_two = players[4:]
-        players_pair = []
-        j = 0
-        if current_round == 1:
-            while j in range(4):
-                player_pair = [players_part_one[j], players_part_two[j]]
-
-                j += 1
-                players_pair.append(player_pair)
-        else:
-            while j in range(4):
-                x = 1
-                if not self.check_already_played(tournament,
-                                                 players[0].get_id(),
-                                                 players[x].get_id()
-                                                 ):
-                    player_pair = [players[0], players[x]]
-                    del players[0:x]
-                elif self.check_already_played(tournament,
-                                                    players[0].get_id(),
-                                                    players[x].get_id()
-                                                    ):
-                    while self.check_already_played(tournament,
-                                                    players[0].get_id(),
-                                                    players[x].get_id()
-                                                    ):
-                        x += 1
-                    player_pair = [players[0], players[x]]
-                    del players[0:x]
-                j += 1
-                players_pair.append(player_pair)
-        return players_pair

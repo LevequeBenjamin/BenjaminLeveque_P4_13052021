@@ -117,6 +117,8 @@ class TournamentController:
                         player.add_id(player_id)
                         player.add_score(player_import["score"])
                         player.add_ladder(player_import["ladder"])
+                        for opponent in player_import['opponents']:
+                            player.append_list_opponents(opponent)
                         tournament.append_list_players(player)
                 if tournament_found["rounds"]:
                     for round_import in tournament_found["rounds"]:
@@ -159,7 +161,7 @@ class TournamentController:
             else:
                 self.user_view.title_h2(f"{current_round}ème tour.\n")
                 players = round.sort_score_players()
-            players_pair = round.generate_pair_test(tournament, players, current_round)
+            players_pair = round.generate_pair(tournament, players, current_round)
             self.round_view.print_players_pair(players_pair)
             user_choice = self.round_view.prompt_choice_menu_round()
             if user_choice == 1:
