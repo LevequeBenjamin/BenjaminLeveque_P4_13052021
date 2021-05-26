@@ -10,112 +10,17 @@ logger = logging.getLogger(__name__)
 
 
 class PlayerView:
-    """User view"""
+    """Player view"""
 
-    def prompt_player_lastname(self) -> str:
-        """Prompt for get player last name.
-
-        Returns:
-            str: last name for class Player
-        """
-        confirm = ""
-        while confirm != "Y":
-            last_name = input(
-                Fore.LIGHTCYAN_EX + "entrez le nom du joueur : "
-            ).capitalize()
-            if not last_name:
-                print(
-                    Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
-                    "veuillez entrer un nom svp"
-                )
-            else:
-                print(Fore.LIGHTGREEN_EX + f"Le nom du joueur est : {last_name}")
-                while confirm != "Y" or "N":
-                    confirm = input(
-                        Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : "
-                    ).upper()
-                    if confirm == "Y":
-                        return last_name
-                    elif confirm == "N":
-                        print("Veuillez entrez le nom du joueur svp.")
-                        break
-                    else:
-                        print(
-                            Fore.LIGHTRED_EX
-                            + "Je n'ai pas compris ce que vous voulez dire."
-                        )
-
-    def prompt_player_firstname(self) -> str:
-        """Prompt for get player first name.
-
-        Returns:
-            str: first name for class Player
-        """
-        confirm = ""
-        while confirm != "Y":
-            first_name = input(
-                Fore.LIGHTCYAN_EX + "entrez le prénom du joueur : "
-            ).capitalize()
-            if not first_name:
-                print(
-                    Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
-                    "veuillez entrer un prénom svp"
-                )
-            else:
-                print(Fore.LIGHTGREEN_EX + f"Le prénom du joueur est : {first_name}")
-                while confirm != "Y" or "N":
-                    confirm = input(
-                        Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : "
-                    ).upper()
-                    if confirm == "Y":
-                        return first_name
-                    elif confirm == "N":
-                        print("Veuillez entrez le prenom du joueur svp.")
-                        break
-                    else:
-                        print(
-                            Fore.LIGHTRED_EX
-                            + "Je n'ai pas compris ce que vous voulez dire."
-                        )
-
-    def prompt_player_birthdate(self) -> str:
-        """Prompt for get player birth date.
-
-        Returns:
-            str: birth date for class Player
-        """
-        confirm = ""
-        while confirm != "Y":
-            birth_date = input(
-                Fore.LIGHTCYAN_EX + "entrez la date de naissance du joueur : "
-            )
-            if not birth_date:
-                print(
-                    Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
-                    "veuillez entrer un nom svp"
-                )
-            else:
-                print(Fore.LIGHTGREEN_EX + f"Le nom du joueur est : {birth_date}")
-                while confirm != "Y" or "N":
-                    confirm = input(
-                        Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : "
-                    ).upper()
-                    if confirm == "Y":
-                        return birth_date
-                    elif confirm == "N":
-                        print("Veuillez entrez la date de naissance du joueur svp.")
-                        break
-                    else:
-                        print(
-                            Fore.LIGHTRED_EX
-                            + "Je n'ai pas compris ce que vous voulez dire."
-                        )
+    # - - - - - - - - - - - #
+    # methods               #
+    # - - - - - - - - - - - #
 
     def prompt_player_sex(self) -> str:
         """Prompt for get player sex.
 
         Returns:
-            str: sex for class Player
+            sex (str): sex for create player instance.
         """
         confirm = ""
         while confirm != "Y":
@@ -146,10 +51,10 @@ class PlayerView:
                         )
 
     def prompt_player_elo(self) -> int:
-        """prompt for get player elo
+        """Prompt for get player elo.
 
         Returns:
-            str: elo for class Player
+            elo (int): elo for create Player instance.
         """
         confirm = ""
         while confirm != "Y":
@@ -179,54 +84,19 @@ class PlayerView:
                             + "Je n'ai pas compris ce que vous voulez dire."
                         )
 
-    def prompt_player_id(self) -> int:
-        """prompt for get player elo
-
-        Returns:
-            str: elo for class Player
-        """
-        confirm = ""
-        while confirm != "Y":
-            id = input(
-                Fore.LIGHTCYAN_EX
-                + "\nentrez l'id du joueur que vous voulez modifier : "
-            )
-            if not id.isnumeric() or not id:
-                print(
-                    Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
-                    "veuillez entrer l'id du joueur en caractère numerique svp."
-                )
-            else:
-                print(Fore.LIGHTGREEN_EX + f"L'id du joueur est: {id}")
-                while confirm != "Y" or "N":
-                    confirm = input(
-                        Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : "
-                    ).upper()
-                    if confirm == "Y":
-                        return int(id)
-                    elif confirm == "N":
-                        print("Veuillez entrez l'id du joueur svp.")
-                        break
-                    else:
-                        print(
-                            Fore.LIGHTRED_EX
-                            + "Je n'ai pas compris ce que vous voulez dire."
-                        )
-
-    def menu(self):
-        """[summary]
-        """
+    def menu(self) -> None:
+        """Show players menu."""
         print(Fore.LIGHTWHITE_EX + f'{"* MENU PLAYERS*"}'.center(119))
         print(Fore.LIGHTWHITE_EX + "[1] Ajouter un joueur.")
         print("[2] Modifier le classement Elo d'un joueur.")
         print("[0] Retour au menu principal.\n")
         print(Fore.CYAN + f'{"=" * 119}')
 
-    def prompt_menu_players(self):
-        """[summary]
+    def prompt_menu_players(self) -> int:
+        """Prompt for get user choice for menu players.
 
         Returns:
-            [type]: [description]
+            user_choice (int): a user choice.
         """
         user_choice = 3
         while user_choice not in range(0, 3):
@@ -240,56 +110,31 @@ class PlayerView:
                 logger.error("Oops! %s", err)
         return user_choice
 
-    def print_players(self, players):
-        print(f"{'ID'.center(10)} | "
-              f"{'Nom'.center(25)} | "
-              f"{'Prénom'.center(25)} | "
-              f"{'Date de naissance'.center(20)} | "
-              f"{'Sexe'.center(10)} | "
-              f"{'Elo'.center(10)}"
-              f"\n{'°' * 119}")
+    @staticmethod
+    def print_header_player_array():
+        print(
+            f"{'ID'.center(10)} | "
+            f"{'Nom'.center(25)} | "
+            f"{'Prénom'.center(25)} | "
+            f"{'Date de naissance'.center(20)} | "
+            f"{'Sexe'.center(10)} | "
+            f"{'Elo'.center(10)}"
+            f"\n{'°' * 119}"
+        )
 
-        for player in players:
-            print(f"{str(player.doc_id).center(10)} | "
-                  f"{player['last_name'].center(25)} | "
-                  f"{player['first_name'].center(25)} | "
-                  f"{player['birth_date'].center(20)} | "
-                  f"{player['sex'].center(10)} | "
-                  f"{str(player['elo']).center(10)}"
-                  f"\n{'-' * 119}")
+    @staticmethod
+    def print_player(player_id, last_name, first_name, birth_date, sex, elo) -> None:
+        """Display a array with information of player dict.
 
-    def print_one_player(self, player):
-        print(f"{'ID'.center(10)} | "
-              f"{'Nom'.center(25)} | "
-              f"{'Prénom'.center(25)} | "
-              f"{'Date de naissance'.center(20)} | "
-              f"{'Sexe'.center(10)} | "
-              f"{'Elo'.center(10)}"
-              f"\n{'°' * 119}")
-
-        print(f"{str(player.doc_id).center(10)} | "
-              f"{player['last_name'].center(25)} | "
-              f"{player['first_name'].center(25)} | "
-              f"{player['birth_date'].center(20)} | "
-              f"{player['sex'].center(10)} | "
-              f"{str(player['elo']).center(10)}"
-              f"\n{'-' * 119}")
-
-    def print_current_players(self, players):
-        print(f"{'ID'.center(10)} | "
-              f"{'Nom'.center(25)} | "
-              f"{'Prénom'.center(25)} | "
-              f"{'Date de naissance'.center(20)} | "
-              f"{'Sexe'.center(10)} | "
-              f"{'Elo'.center(10)}"
-              f"\n{'°' * 119}")
-
-        for player in players:
-            print(f"{str(player['id']).center(10)} | "
-                  f"{player['last_name'].center(25)} | "
-                  f"{player['first_name'].center(25)} | "
-                  f"{player['birth_date'].center(20)} | "
-                  f"{player['sex'].center(10)} | "
-                  f"{str(player['elo']).center(10)}"
-                  f"\n{'-' * 119}")
-
+        Args:
+            player (dict): a dict of player.
+        """
+        print(
+            f"{str(player_id).center(10)} | "
+            f"{last_name.center(25)} | "
+            f"{first_name.center(25)} | "
+            f"{birth_date.center(20)} | "
+            f"{sex.center(10)} | "
+            f"{str(elo).center(10)}"
+            f"\n{'-' * 119}"
+        )

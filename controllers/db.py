@@ -2,7 +2,6 @@
 
 # librairies
 import logging
-from os import EX_CANTCREAT
 from tinydb import TinyDB, Query
 
 # logger
@@ -17,29 +16,42 @@ TOURNAMENTS = DB.table("TOURNAMENTS")
 
 
 class DbControllerlPlayer:
-    """DbCtrlPlayer controller."""
+    """DbControllerPlayer controller."""
 
-    @staticmethod
-    def get_players():
-        """[summary]
+    # - - - - - - - - - - - #
+    # special methods       #
+    # - - - - - - - - - - - #
+
+    def __init__(self):
+        """Inits DbControllerPlayer"""
+        self.players = PLAYERS
+
+    # - - - - - - - - - - - #
+    # properties            #
+    # - - - - - - - - - - - #
+
+    @property
+    def get_players(self) -> list:
+        """Returns the list of players in the PLAYERS table
 
         Returns:
-            [type]: [description]
+            DbControllerPlayer.players (list): a players list
         """
-        try:
-            return PLAYERS
-        except Exception as err:
-            logger.error("Oops! %s :", err)
+        return self.players
 
-    def get_id_player(self, last_name, first_name):
-        """[summary]
+    # - - - - - - - - - - - #
+    # methods               #
+    # - - - - - - - - - - - #
+
+    def get_id_player(self, last_name: str, first_name: str) -> int:
+        """Method used to find the player id in the PLAYERS table
 
         Args:
-            last_name ([type]): [description]
-            first_name ([type]): [description]
+            last_name (str): contains the last name entered by the user,
+            first_name (str): contains the first name entered by the user,
 
         Returns:
-            [type]: [description]
+            player_found.doc_id (int): a player id in the PLAYERS table
         """
         try:
             player_found = self.search_table_players(last_name, first_name)
@@ -47,180 +59,163 @@ class DbControllerlPlayer:
         except Exception as err:
             logger.error("Oops! %s :", err)
 
-    @staticmethod
-    def check_table_players(last_name, first_name):
-        """Check if a player exist in the db.
+    def search_table_players(self, last_name: str, first_name: str) -> dict:
+        """Method used to check if a player exist in the db.
 
         Args:
-            last_name (str): player lastname
-            first_name (str): player firstname
+            last_name (str): contains the last name entered by the user,
+            first_name (str): contains the first name entered by the user,
 
         Returns:
-            Bolean: return True if a player is
-            found in the db or False
+            player_found (dict): a player found in the bd
         """
-        for player in PLAYERS:
-            if player["last_name"] == last_name and player["first_name"] == first_name:
-                return True
-        return False
-
-    @staticmethod
-    def search_table_players(last_name, first_name):
-        """Check if a player exist in the db.
-
-        Args:
-            last_name (str): player lastname
-            first_name (str): player firstname
-
-        Returns:
-            PLayer : return player if is
-            found in the bd
-        """
-        player_found = ""
-        for player in PLAYERS:
+        for player in self.players:
             if player["last_name"] == last_name and player["first_name"] == first_name:
                 player_found = player
-        return player_found
+                return player_found
+        return None
 
-    @staticmethod
-    def search_table_players_with_id(player_id):
-        """Check if a player exist in the db.
+    def search_table_players_with_id(self, player_id: id) -> dict:
+        """Method used to check if a player exist in the database.
 
         Args:
-            last_name (str): player lastname
-            first_name (str): player firstname
+            player_id (int): contains the player id.
 
         Returns:
             PLayer : return player if is
             found in the bd
         """
-        player_found = ""
-        for player in PLAYERS:
+        for player in self.players:
             if player.doc_id == player_id:
                 player_found = player
-        return player_found
+                return player_found
+        return None
 
-    @staticmethod
-    def update_player(player, player_id):
-        """[summary]
+    def update_player(self, player: object, player_id: int) -> None:
+        """Method used to modify a player in the database.
 
         Args:
-            player ([type]): [description]
-            player_id ([type]): [description]
+            player (PLayer): a Player instance
+            player_id (int): contains the player id.
         """
         try:
-            PLAYERS.update(player.serialize(), doc_ids=[player_id])
+            self.players.update(player.serialize_player(), doc_ids=[player_id])
         except Exception as err:
             logger.error("Oops! %s :", err)
 
-    @staticmethod
-    def save_table_players(player):
-        """Save player in database.
+    def save_table_players(self, player: object) -> None:
+        """Method used to save player in database.
 
         Args:
-            player (Object): Player instance
+            player (Player): a Player instance
         """
         try:
-            PLAYERS.insert(player.serialize_player())
+            self.players.insert(player.serialize_player())
         except Exception as err:
             logger.error("Oops! %s :", err)
 
-    @staticmethod
-    def update_table_players(player):
-        """[summary]
+    # def update_table_players(self, player):
+    #     """[summary]
 
-        Args:
-            player ([type]): [description]
-        """
-        try:
-            PLAYERS.update(player.serialize(), doc_ids=[player.get_id()])
-        except Exception as err:
-            logger.error("Oops! %s :", err)
+    #     Args:
+    #         player ([type]): [description]
+    #     """
+    #     try:
+    #         self.players.update(player.serialize(), doc_ids=[player.get_id])
+    #     except Exception as err:
+    #         logger.error("Oops! %s :", err)
 
 
 class DbControllerTournament:
-    """[summary]
-    """
+    """DbControllerTournament controller."""
 
-    @staticmethod
-    def get_tournois():
-        """[summary]
+    # - - - - - - - - - - - #
+    # special methods       #
+    # - - - - - - - - - - - #
+
+    def __init__(self):
+        """Inits DbControllerTournament"""
+        self.tournaments = TOURNAMENTS
+
+    # - - - - - - - - - - - #
+    # properties            #
+    # - - - - - - - - - - - #
+
+    @property
+    def get_tournois(self):
+        """Returns the list of tournaments in the TOURNAMENTS table
 
         Returns:
-            [type]: [description]
+            DbControllerTournament.tournaments (list): a tournament list
         """
-        return TOURNAMENTS
+        return self.tournaments
 
-    def get_id_tournament(self, name):
-        """[summary]
+    # - - - - - - - - - - - #
+    # methods               #
+    # - - - - - - - - - - - #
+
+    def get_id_tournament(self, name: str) -> int:
+        """Method used to find the tournament id in the PLAYERS table
 
         Args:
-            name ([type]): [description]
+            name (string): contains the name entered by the user.
 
         Returns:
-            [type]: [description]
+            tournament_found.doc_id (int): a tournament id in the PLAYERS table
         """
         tournament_found = self.search_table_tournaments(name)
         if tournament_found:
             return tournament_found.doc_id
         return None
 
-    @staticmethod
-    def search_table_tournaments(name):
-        """Check if a player exist in the db.
+    def search_table_tournaments(self, name: str) -> dict:
+        """Method used to check if a tournament exist in the db.
 
         Args:
-            last_name (str): player lastname
-            first_name (str): player firstname
+            name (string): contains the name entered by the user.
 
         Returns:
-            PLayer : return player if is
-            found in the bd
+            tournament_found (dict) : contains the tournament found in the bd
         """
         tournament_found = ""
-        for tournament in TOURNAMENTS:
+        for tournament in self.tournaments:
             if tournament["name"] == name:
                 tournament_found = tournament
         return tournament_found
 
-    @staticmethod
-    def search_table_tournament_with_id(tournament_id):
-        """Check if a player exist in the db.
+    def search_table_tournament_with_id(self, tournament_id: int) -> dict:
+        """Method used to check if a tournament exist in the db.
 
         Args:
-            last_name (str): player lastname
-            first_name (str): player firstname
+            tournament_id (int): contains the tournament id
 
         Returns:
-            PLayer : return player if is
-            found in the bd
+            tournament_found (dict) : contains the tournament found in the bd
         """
         tournament_found = ""
-        for tournament in TOURNAMENTS:
+        for tournament in self.tournaments:
             if tournament.doc_id == tournament_id:
                 tournament_found = tournament
         return tournament_found
 
-    @staticmethod
-    def save_table_tournament(tournament):
-        """Save tournament in database.
+    def save_table_tournament(self, tournament: object) -> None:
+        """Method used to save tournament in database.
 
         Args:
-            tournament (Object): Tournament instance
+            tournament (Tournament): a Tournament instance
         """
         try:
-            TOURNAMENTS.insert(tournament.serialize())
+            self.tournaments.insert(tournament.serialize())
         except Exception as err:
             logger.error("Oops! %s :", err)
 
-    @staticmethod
-    def update_table_tournament(tournament):
-        """[summary]
+    def update_table_tournament(self, tournament: object) -> None:
+        """Method used to modify a tournament in the database
 
         Args:
-            tournament ([type]): [description]
+            tournament (Tournament): a Tournament instance
         """
         try:
-            TOURNAMENTS.update(tournament.serialize(), doc_ids=[tournament.get_id()])
+            self.tournaments.update(tournament.serialize(), doc_ids=[tournament.get_id])
         except Exception as err:
             logger.error("Oops! %s :", err)

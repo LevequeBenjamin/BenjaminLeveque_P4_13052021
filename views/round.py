@@ -13,11 +13,15 @@ logger = logging.getLogger(__name__)
 class RoundView:
     """Round view"""
 
+    # - - - - - - - - - - - #
+    # methods               #
+    # - - - - - - - - - - - #
+
     def prompt_set_score(self) -> float:
-        """Prompt for set player score.
+        """Prompt for get player score.
 
         Returns:
-            float: score for player (0.5, 1.0 or 2.0)
+            score (float): score for player
         """
         confirm = ""
         while confirm != "Y":
@@ -45,11 +49,11 @@ class RoundView:
                             + "Je n'ai pas compris ce que vous voulez dire."
                         )
 
-    def prompt_choice_menu_round(self):
-        """[summary]
+    def prompt_choice_menu_round(self) -> int:
+        """Prompt for get user choice for menu players.
 
         Returns:
-            [type]: [description]
+            user_choice (int): a user choice.
         """
         user_choice = 2
         while user_choice not in range(0, 2):
@@ -63,45 +67,40 @@ class RoundView:
                 logger.error("Oops! %s", err)
         return user_choice
 
-    def menu(self):
-        """Print tournament menu.
-
-        Args:
-            tournament ([type]): [description]
-        """
+    def menu(self) -> None:
+        """Show rounds menu."""
         print(Fore.LIGHTWHITE_EX + f'{"* MENU RONDE *"}'.center(119))
-        print('\n' * 1)
+        print("\n" * 1)
         print(Fore.LIGHTWHITE_EX + "\n[1] Inscrire les résultats.")
         print("[0] Annuler et revenir au menu tournoi.\n")
         print(Fore.CYAN + f'{"=" * 119}')
 
-    def print_players_pair(self, players_pair):
-        print(Fore.LIGHTBLUE_EX + f"{'Nom'.center(24)} | "
-              f"{'Prénom'.center(24)} | "
-              f"{'VS'.center(10)} | "
-              f"{'Nom'.center(24)} | "
-              f"{'Prenom'.center(24)}"
-              f"\n{'°' * 119}")
-        for player_one, player_two in players_pair:
-            print(Fore.LIGHTWHITE_EX + f"{player_one.get_last_name().center(24)} | "
-                  f"{player_one.get_first_name().center(24)}"
-                  + Fore.LIGHTYELLOW_EX + f" | {'*'.center(10)} | "
-                  + Fore.LIGHTWHITE_EX + f"{player_two.get_last_name().center(24)} | "
-                  f"{player_two.get_first_name().center(24)}"
-                  f"\n{'-' * 119}")
-            
-    def print_players_pair_test(self, player_one, player_two):
-        print(Fore.LIGHTBLUE_EX + f"{'Nom'.center(24)} | "
-              f"{'Prénom'.center(24)} | "
-              f"{'VS'.center(10)} | "
-              f"{'Nom'.center(24)} | "
-              f"{'Prenom'.center(24)}"
-              f"\n{'°' * 119}")
-        print(Fore.LIGHTWHITE_EX + f"{player_one.get_last_name().center(24)} | "
-                f"{player_one.get_first_name().center(24)}"
-                + Fore.LIGHTYELLOW_EX + f" | {'*'.center(10)} | "
-                + Fore.LIGHTWHITE_EX + f"{player_two.get_last_name().center(24)} | "
-                f"{player_two.get_first_name().center(24)}"
-                f"\n{'-' * 119}")
-            
-    
+    @staticmethod
+    def print_header_players_pair_array():
+        print(
+            Fore.LIGHTBLUE_EX + f"{'Nom'.center(24)} | "
+            f"{'Prénom'.center(24)} | "
+            f"{'VS'.center(10)} | "
+            f"{'Nom'.center(24)} | "
+            f"{'Prenom'.center(24)}"
+            f"\n{'°' * 119}"
+        )
+
+    @staticmethod
+    def print_players_pair(player_one: object, player_two: object) -> None:
+        """Display a array with information of player one et two.
+
+        Args:
+            player_one (object): a Participant instance.
+            player_two (object): a Participant instance.
+        """
+        print(
+            Fore.LIGHTWHITE_EX + f"{player_one.get_last_name.center(24)} | "
+            f"{player_one.get_first_name.center(24)}"
+            + Fore.LIGHTYELLOW_EX
+            + f" | {'*'.center(10)} | "
+            + Fore.LIGHTWHITE_EX
+            + f"{player_two.get_last_name.center(24)} | "
+            f"{player_two.get_first_name.center(24)}"
+            f"\n{'-' * 119}"
+        )

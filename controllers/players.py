@@ -22,92 +22,132 @@ logger = logging.getLogger(__name__)
 
 
 class PlayerController:
-    """Main controller."""
+    """PlayerController controller."""
+
+    # - - - - - - - - - - - #
+    # special methods       #
+    # - - - - - - - - - - - #
 
     def __init__(self):
-        """[summary]
-        """
+        """Inits PlayerController"""
+        # controllers
         self.db_player = DbControllerlPlayer()
         self.db_tournament = DbControllerTournament()
+        # views
         self.player_view = PlayerView()
         self.user_view = UserView()
 
-    def print_players(self):
-        """[summary]
+    # - - - - - - - - - - - #
+    # methods               #
+    # - - - - - - - - - - - #
+
+    def print_players(self) -> list:
+        """Method used to display all players in the database
 
         Returns:
-            [type]: [description]
+            players (list): a list of players found in the database
         """
         self.user_view.header()
-        players = self.db_player.get_players()
+        players = self.db_player.get_players
         if players:
             self.player_view.menu()
-            self.player_view.print_players(players)
+            self.player_view.print_header_player_array()
+            for player in players:
+                self.player_view.print_player(
+                    player.doc_id,
+                    player["last_name"],
+                    player["first_name"],
+                    player["birth_date"],
+                    player["sex"],
+                    player["elo"],
+                )
             return players
         else:
-            self.user_view.user_print_msg(Fore.LIGHTRED_EX + "Aucun joueur n'a été trouvé dans la base de données.")
+            self.user_view.user_print_msg(
+                Fore.LIGHTRED_EX
+                + "Aucun joueur n'a été trouvé dans la base de données."
+            )
             time.sleep(2.0)
             return None
 
     def set_new_player(self):
         """Create a new Player instance and save it in the database."""
         try:
-            last_name = self.player_view.prompt_player_lastname()
-            first_name = self.player_view.prompt_player_firstname()
-            if not self.db_player.check_table_players(last_name, first_name):
-                birth_date = self.player_view.prompt_player_birthdate()
+            last_name = self.user_view.prompt_string("joueur", "le nom")
+            first_name = self.user_view.prompt_string("joueur", "le prénom")
+            if not self.db_player.search_table_players(last_name, first_name):
+                birth_date = self.user_view.prompt_string(
+                    "joueur", "la date de naissance"
+                )
                 sex = self.player_view.prompt_player_sex()
                 elo = self.player_view.prompt_player_elo()
 
                 player = Player(last_name, first_name, birth_date, sex, elo)
                 self.db_player.save_table_players(player)
-                self.user_view.user_print_msg(Fore.LIGHTYELLOW_EX + f"\nLe joueur {last_name} {first_name} "
-                                              "a bien été ajouté !")
+                self.user_view.user_print_msg(Fore.LIGHTYELLOW_EX + f"\n{str(player)}")
             else:
-                self.user_view.user_print_err(f"\nLe joueur {last_name} {first_name} "
-                                              "est déjà présent dans la base de données.")
+                self.user_view.user_print_err(
+                    f"\nLe joueur {last_name} {first_name} "
+                    "est déjà présent dans la base de données."
+                )
             time.sleep(2.0)
         except Exception as err:
             logger.error("Oops! %s", err)
 
-    def set_list_players(self, tournament):
-        """Creates 8 Players instance, save in database and
-        add to the list players in Tournament instance.
+    def set_list_players(self, tournament: object) -> None:
+        """Creates 8 players, if a player is present in the database,
+        the method imports it. If a player is already present in the
+        tournament players list the method returns an error. And if a
+        player is not present in the database, the method records it.
+        And add to the list players in Tournament instance.
 
         Args:
-            tournament (Object): Tournament instance
+            tournament (Tournament): Tournament instance
         """
         current_players = []
         j = len(tournament.serialize_players())
         while j in range(0, 7):
             j = len(tournament.serialize_players())
             self.user_view.header()
-            self.player_view.print_current_players(tournament.serialize_players())
+            self.player_view.print_header_player_array()
+            for player in tournament.players:
+                self.player_view.print_player(
+                    player.get_id,
+                    player.get_last_name,
+                    player.get_first_name,
+                    player.get_birth_date,
+                    player.get_sex,
+                    player.get_elo,
+                )
             if j == 0:
                 self.user_view.title_h2(f"Créez le {j+1}er joueur.")
             else:
                 self.user_view.title_h2(f"Créez le {j+1}eme joueur.")
             try:
-                last_name = self.player_view.prompt_player_lastname()
-                first_name = self.player_view.prompt_player_firstname()
+                last_name = self.user_view.prompt_string("joueur", "le nom")
+                first_name = self.user_view.prompt_string("joueur", "le prénom")
                 if [last_name, first_name] not in current_players:
-                    if not self.db_player.check_table_players(last_name, first_name):
-                        birth_date = self.player_view.prompt_player_birthdate()
+                    player_found = self.db_player.search_table_players(last_name, first_name)
+                    if not player_found:
+                        birth_date = self.user_view.prompt_string(
+                            "joueur", "la date de naissance"
+                        )
                         sex = self.player_view.prompt_player_sex()
                         elo = self.player_view.prompt_player_elo()
 
-                        player = Participant(last_name, first_name, birth_date, sex, elo)
+                        player = Participant(
+                            last_name, first_name, birth_date, sex, elo
+                        )
                         tournament.append_list_players(player)
                         self.db_player.save_table_players(player)
-                        player_id = self.db_player.get_id_player(last_name, first_name)
-                        player.add_id(player_id)
-                        self.user_view.user_print_msg(Fore.LIGHTYELLOW_EX
-                                                      + f"\nLe joueur {last_name} {first_name} a bien "
-                                                      "été ajouté et enregistré dans la base de données!")
-                    else:
-                        player_found = self.db_player.search_table_players(
-                            last_name, first_name
+                        player_found = self.db_player.search_table_players(last_name, first_name)
+                        #player_id = self.db_player.get_id_player(last_name, first_name)
+                        player.add_id(player_found.doc_id)
+                        self.user_view.user_print_msg(
+                            Fore.LIGHTYELLOW_EX + f"\nLe joueur {str(player)} a bien "
+                            "été ajouté et enregistré dans la base de données!"
                         )
+                    else:
                         player = Participant(
                             player_found["last_name"],
                             player_found["first_name"],
@@ -115,38 +155,68 @@ class PlayerController:
                             player_found["sex"],
                             player_found["elo"],
                         )
-                        print(player_found.doc_id)
                         player.add_id(player_found.doc_id)
                         tournament.append_list_players(player)
-                        self.user_view.user_print_msg(Fore.LIGHTYELLOW_EX + f"\nLe joueur {last_name} {first_name} "
-                                                      "a bien été ajouté!")
-                        self.user_view.user_print_msg("Ses informations sont importés depuis la base de données.")
+                        self.user_view.user_print_msg(
+                            Fore.LIGHTYELLOW_EX + f"\nLe joueur {str(player)} "
+                            "a bien été ajouté!"
+                        )
+                        self.user_view.user_print_msg(
+                            "Ses informations sont importés depuis la base de données."
+                        )
                     current_players.append([last_name, first_name])
                 else:
                     self.user_view.user_print_err(
-                        f"\nLe joueur {last_name} {first_name} est déjà présent dans le tournoi !")
+                        f"\nLe joueur {last_name} {first_name} est déjà présent dans le tournoi !"
+                    )
                 self.db_tournament.update_table_tournament(tournament)
                 time.sleep(2.0)
             except Exception as err:
                 logger.error("Oops! %s", err)
-        self.user_view.user_print_green_msg("Les 8 joueurs ont été créés, le tounoi peut commencer.")
+        self.user_view.user_print_green_msg(
+            "Les 8 joueurs ont été créés, le tounoi peut commencer."
+        )
         time.sleep(2.0)
 
-    def update_players_elo(self):
-        """[summary]
-        """
-        players = self.db_player.get_players()
-        self.player_view.print_players(players)
-        id = self.player_view.prompt_player_id()
-        player_found = self.db_player.search_table_players_with_id(id)
+    def update_players_elo(self) -> None:
+        """Method used to modify the elo rank of a player
+        if the player exists in the database, else returns an error."""
+        players = self.db_player.get_players
+        self.player_view.print_header_player_array()
+        for player in players:
+            self.player_view.print_player(
+                player.doc_id,
+                player["last_name"],
+                player["first_name"],
+                player["birth_date"],
+                player["sex"],
+                player["elo"],
+            )
+        player_id = self.user_view.prompt_id("joueur", "l'id")
+        player_found = self.db_player.search_table_players_with_id(player_id)
         if player_found:
-            player = Player(player_found["last_name"], player_found["first_name"],
-                            player_found["birth_date"], player_found["sex"], player_found["elo"])
-            self.player_view.print_one_player(player_found)
+            player = Player(
+                player_found["last_name"],
+                player_found["first_name"],
+                player_found["birth_date"],
+                player_found["sex"],
+                player_found["elo"],
+            )
+            self.player_view.print_header_player_array()
+            self.player_view.print_player(
+                player_found.doc_id,
+                player_found["last_name"],
+                player_found["first_name"],
+                player_found["birth_date"],
+                player_found["sex"],
+                player_found["elo"],
+            )
             elo = self.player_view.prompt_player_elo()
             player.update_elo(elo)
-            self.db_player.update_player(player, id)
-            self.user_view.user_print_msg(Fore.LIGHTYELLOW_EX + f"Le joueur {str(player)} a bien été modifié.")
+            self.db_player.update_player(player, player_id)
+            self.user_view.user_print_msg(
+                Fore.LIGHTYELLOW_EX + f"Le joueur {str(player)} a bien été modifié."
+            )
             time.sleep(2.0)
         else:
             self.user_view.user_print_err("Aucun joueur avec cet ID n'a été trouvé.")

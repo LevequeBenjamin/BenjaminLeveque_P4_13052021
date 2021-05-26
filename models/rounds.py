@@ -1,19 +1,20 @@
 """Define the rounds."""
 
-import operator
-import time
-
 
 class Round:
-    """Round class."""
+    """It is a class allowing to create a Round."""
 
-    def __init__(self, players, name, created_at):
-        """[summary]
+    # - - - - - - - - - - - #
+    # special methods       #
+    # - - - - - - - - - - - #
+
+    def __init__(self, players: list, name: str, created_at: str) -> None:
+        """Inits Round.
 
         Args:
-            players ([type]): [description]
-            name ([type]): [description]
-            created_at ([type]): [description]
+            players (Participant): contains a list of Participant intance,
+            name (string): contains the name of the round,
+            created_at (string): time retrieved from lib time,
         """
         self.list_matches = []
         self.players = players
@@ -22,11 +23,58 @@ class Round:
         self.finished_at = None
         self.start = True
 
-    def serialize(self):
-        """Serialize Round
+    # - - - - - - - - - - - #
+    # properties            #
+    # - - - - - - - - - - - #
+
+    @property
+    def sort_elo_players(self) -> list:
+        """Sort the list from high elo to low
 
         Returns:
-            dict: a dictionary of Round
+            Round.players [list]: a sorted list
+        """
+        self.players.sort(key=self.get_elo, reverse=True)
+        return self.players
+
+    @property
+    def sort_score_players(self) -> list:
+        """Sort the list from high score to low and high elo to low
+
+        Returns:
+            Round.players [list]: a sorted list
+        """
+        sorted(
+            self.players,
+            key=lambda i: (self.get_score(i), self.get_elo(i)),
+            reverse=True,
+        )
+        return self.players
+
+    @property
+    def get_list_matches(self) -> list:
+        """Return the matches list
+
+        Returns:
+            Round.matches [list]: contains the list of all matches.
+        """
+        return self.list_matches
+
+    # - - - - - - - - - - - #
+    # methods               #
+    # - - - - - - - - - - - #
+
+    def serialize(self) -> dict:
+        """Method used to serialize a round before saving
+        it in the table TOURNAMENTS.
+
+        Returns:
+            a dictionary of Round:
+                "round": self.name,
+                "created_at": self.created_at,
+                "finished_at": self.finished_at,
+                "round_in_progress": self.start,
+                "list_matches": self.serialize_match(),
         """
         return {
             "round": self.name,
@@ -36,187 +84,123 @@ class Round:
             "list_matches": self.serialize_match(),
         }
 
-    def serialize_match(self):
+    def serialize_match(self) -> list:
+        """Method used to serialize a list of Match instance before saving
+        it in the table TOURNAMENTS.
+
+        Returns:
+            matches_serialized (list): contains a list of Match instances serialized
+        """
         matches_serialized = []
         for match in self.list_matches:
             matches_serialized.append(match.serialize())
         return matches_serialized
 
-    def get_elo(self, player):
-        """[summary]
+    @staticmethod
+    def get_elo(player: object) -> int:
+        """Return the player elo
 
         Args:
-            players ([type]): [description]
+            player (Player): a Participant instance
 
         Returns:
-            [type]: [description]
+            Participant.elo (float): contains the elo classement entered by the user.
         """
-        return player.get_elo()
+        return player.get_elo
 
-    def sort_elo_players(self):
-        """Sort the list from high elo to low
-
-        Returns:
-            Round.players [list]: a sorted list
-        """
-        self.players.sort(key=self.get_elo, reverse=True)
-        return self.players
-
-    def get_ladder(self, player):
-        """[summary]
+    @staticmethod
+    def get_score(player: object) -> float:
+        """Return the player score
 
         Args:
-            players ([type]): [description]
+            player (Player): a Participant instance
 
         Returns:
-            [type]: [description]
+            Participant.score (float): contains the elo classement entered by the user.
         """
-        return player.get_ladder()
+        return player.get_score
 
-    def sort_ladder_players(self):
-        """[summary]
-
-        Returns:
-            [type]: [description]
-        """
-        self.players.sort(key=self.get_ladder)
-        return self.players
-
-    def get_score(self, player):
-        """[summary]
+    @staticmethod
+    def generate_pair_first_round(players: list) -> list:
+        """Method allows to generate pairs of players according
+        to the Swiss tournament system.
 
         Args:
-            players ([type]): [description]
+            players [list]: a list of Participant instance.
+            Tournament.current_round (int): contains the current round.
 
         Returns:
-            [type]: [description]
-        """
-        return player.get_score()
-
-    def sort_score_players(self):
-        """[summary]
-
-        Returns:
-            [type]: [description]
-        """
-        players = sorted(self.players, key=lambda i: (self.get_score(i), self.get_elo(i)), reverse=True)
-        return players
-
-    def check_already_current_players(self, current_players, id):
-        """[summary]
-
-        Args:
-            current_players ([type]): [description]
-            lastname ([type]): [description]
-
-        Returns:
-            [type]: [description]
-        """
-        for player in current_players:
-            if id == player.get_id():
-                return True
-        return False
-
-    def check_already_played(self, tournament,
-                             id_player_one, id_player_two
-                             ):
-        """[summary]
-
-        Args:
-            current_matches ([type]): [description]
-            lastname_player_one ([type]): [description]
-            lastname_player_two ([type]): [description]
-
-        Returns:
-            [type]: [description]
-        """
-        for round in tournament.serialize_rounds():
-            for matches in round['list_matches']:
-                if id_player_one in [
-                    matches['match'][0][0]['id'],
-                    matches['match'][1][0]['id'],
-                ] and id_player_two in [
-                    matches['match'][0][0]['id'],
-                    matches['match'][1][0]['id'],
-                ]:
-                    return True
-        return False
-    
-    def generate_pair(self, tournament, players, current_round):
-        """[summary]
-
-        Args:
-            current_matches ([type]): [description]
-            players ([type]): [description]
-            i ([type]): [description]
-
-        Returns:
-            [type]: [description]
+            players_pair (list): return a list of Participant instance pairs
         """
         players_part_one = players[0:4]
         players_part_two = players[4:]
         players_pair = []
         j = 0
-        if current_round == 1:
-            for j in range(4):
-                player_pair = [players_part_one[j], players_part_two[j]]
-                players_pair.append(player_pair)
-                players_part_one[j].append_list_opponents(players_part_two[j].get_id())
-                players_part_two[j].append_list_opponents(players_part_one[j].get_id())
-                j += 1
-        else:
-            for j in range(4):
-                x = 1
-                if players[x].get_id() not in players[0].get_opponents():
-                    player_pair = [players[0], players[x]]
-                    players[0].append_list_opponents(players[x].get_id())
-                    players[x].append_list_opponents(players[0].get_id())
-                    del players[x]
-                    del players[0]
-                    x += 1
-                elif len(players) == 2:
-                    player_pair = [players[0], players[1]]
-                    players[0].append_list_opponents(players[1].get_id())
-                    players[1].append_list_opponents(players[0].get_id())
-                    del players[1]
-                    del players[0]
-                    x += 1
-                else:
-                    player_pair = [players[0], players[x]]
-                    players[0].append_list_opponents(players[x].get_id())
-                    players[x].append_list_opponents(players[0].get_id())
-                    del players[x]
-                    del players[0]
-                    x += 1
-                j += 1
-                players_pair.append(player_pair)
+        for j in range(4):
+            player_pair = [players_part_one[j], players_part_two[j]]
+            players_pair.append(player_pair)
+            players_part_one[j].append_list_opponents(players_part_two[j].get_id)
+            players_part_two[j].append_list_opponents(players_part_one[j].get_id)
+            j += 1
         return players_pair
 
-    def append_list_matches(self, match):
-        """[summary]
+    @staticmethod
+    def generate_pair(players: list) -> list:
+        """Method allows to generate pairs of players according
+        to the Swiss tournament system.
 
         Args:
-            match ([type]): [description]
+            players [list]: a list of Participant instance.
+            Tournament.current_round (int): contains the current round.
+
+        Returns:
+            players_pair (list): return a list of Participant instance pairs
+        """
+        players_pair = []
+        j = 0
+        for j in range(4):
+            x = 1
+            if players[x].get_id not in players[0].get_opponents:
+                player_pair = [players[0], players[x]]
+                players[0].append_list_opponents(players[x].get_id)
+                players[x].append_list_opponents(players[0].get_id)
+                del players[x]
+                del players[0]
+                x += 1
+            elif len(players) == 2:
+                player_pair = [players[0], players[1]]
+                players[0].append_list_opponents(players[1].get_id)
+                players[1].append_list_opponents(players[0].get_id)
+                del players[1]
+                del players[0]
+                x += 1
+            else:
+                player_pair = [players[0], players[x]]
+                players[0].append_list_opponents(players[x].get_id)
+                players[x].append_list_opponents(players[0].get_id)
+                del players[x]
+                del players[0]
+                x += 1
+            j += 1
+            players_pair.append(player_pair)
+        return players_pair
+
+    def append_list_matches(self, match: object) -> None:
+        """Method used to add a Match instance in the matches list.
+
+        Args:
+            match (Match): a Match instance
         """
         self.list_matches.append(match)
 
-    def get_list_matches(self):
-        """[summary]
-
-        Returns:
-            [type]: [description]
-        """
-        return self.list_matches
-
-    def add_finished(self, finished_at):
-        """[summary]
+    def add_finished(self, finished_at: str) -> None:
+        """Method used to define the end of the round.
 
         Args:
-            finished_at ([type]): [description]
+            finished_at (string): time retrieved from lib time,
         """
         self.finished_at = finished_at
 
-    def add_start(self):
-        """[summary]
-        """
+    def add_start(self) -> None:
+        """Method used to define the round is not started."""
         self.start = False
