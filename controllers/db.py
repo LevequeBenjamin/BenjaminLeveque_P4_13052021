@@ -27,19 +27,6 @@ class DbControllerlPlayer:
         self.players = PLAYERS
 
     # - - - - - - - - - - - #
-    # properties            #
-    # - - - - - - - - - - - #
-
-    @property
-    def get_players(self) -> list:
-        """Returns the list of players in the PLAYERS table
-
-        Returns:
-            DbControllerPlayer.players (list): a players list
-        """
-        return self.players
-
-    # - - - - - - - - - - - #
     # methods               #
     # - - - - - - - - - - - #
 
@@ -53,11 +40,10 @@ class DbControllerlPlayer:
         Returns:
             player_found.doc_id (int): a player id in the PLAYERS table
         """
-        try:
-            player_found = self.search_table_players(last_name, first_name)
+        player_found = self.search_table_players(last_name, first_name)
+        if player_found:
             return player_found.doc_id
-        except Exception as err:
-            logger.error("Oops! %s :", err)
+        return None
 
     def search_table_players(self, last_name: str, first_name: str) -> dict:
         """Method used to check if a player exist in the db.
@@ -99,8 +85,9 @@ class DbControllerlPlayer:
             player_id (int): contains the player id.
         """
         try:
-            self.players.update(player.serialize_player(), doc_ids=[player_id])
-        except Exception as err:
+            res = self.players.update(player.serialize_player(), doc_ids=[player_id])
+            res.raise_for_status()
+        except res.exceptions as err:
             logger.error("Oops! %s :", err)
 
     def save_table_players(self, player: object) -> None:
@@ -110,20 +97,10 @@ class DbControllerlPlayer:
             player (Player): a Player instance
         """
         try:
-            self.players.insert(player.serialize_player())
-        except Exception as err:
+            res = self.players.insert(player.serialize_player())
+            res.raise_for_status()
+        except res.exceptions as err:
             logger.error("Oops! %s :", err)
-
-    # def update_table_players(self, player):
-    #     """[summary]
-
-    #     Args:
-    #         player ([type]): [description]
-    #     """
-    #     try:
-    #         self.players.update(player.serialize(), doc_ids=[player.get_id])
-    #     except Exception as err:
-    #         logger.error("Oops! %s :", err)
 
 
 class DbControllerTournament:
@@ -136,19 +113,6 @@ class DbControllerTournament:
     def __init__(self):
         """Inits DbControllerTournament"""
         self.tournaments = TOURNAMENTS
-
-    # - - - - - - - - - - - #
-    # properties            #
-    # - - - - - - - - - - - #
-
-    @property
-    def get_tournois(self):
-        """Returns the list of tournaments in the TOURNAMENTS table
-
-        Returns:
-            DbControllerTournament.tournaments (list): a tournament list
-        """
-        return self.tournaments
 
     # - - - - - - - - - - - #
     # methods               #
@@ -205,8 +169,9 @@ class DbControllerTournament:
             tournament (Tournament): a Tournament instance
         """
         try:
-            self.tournaments.insert(tournament.serialize())
-        except Exception as err:
+            res = self.tournaments.insert(tournament.serialize())
+            res.raise_for_status()
+        except res.exceptions as err:
             logger.error("Oops! %s :", err)
 
     def update_table_tournament(self, tournament: object) -> None:
@@ -216,8 +181,9 @@ class DbControllerTournament:
             tournament (Tournament): a Tournament instance
         """
         try:
-            self.tournaments.update(
+            res = self.tournaments.update(
                 tournament.serialize(), doc_ids=[tournament.tournament_id]
             )
-        except Exception as err:
+            res.raise_for_status()
+        except res.exceptions as err:
             logger.error("Oops! %s :", err)
