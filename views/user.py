@@ -69,7 +69,6 @@ class UserView:
         )
         print("\n" * 2)
         print(Fore.LIGHTYELLOW_EX + "*" * 119)
-        sys.exit()
 
     @staticmethod
     def separator_title(title):

@@ -69,6 +69,7 @@ class PlayerController:
 
     def set_new_player(self):
         """Create a new Player instance and save it in the database."""
+        self.user_view.title_h2("Créez un joueur.")
         last_name = self.user_view.prompt_string("joueur", "le nom")
         first_name = self.user_view.prompt_string("joueur", "le prénom")
         if not self.db_player.search_table_players(last_name, first_name):

@@ -110,7 +110,7 @@ class TournamentView:
                 print("[0] Quitter le tournoi.\n")
         else:
             print(Fore.LIGHTWHITE_EX + "[1] Afficher le classement.")
-            print("[2] Afficher les matches.")
+            #print("[2] Afficher les matches.")
             print("[0] Quitter le tournoi.\n")
         print(Fore.CYAN + f'{"=" * 119}')
 
@@ -139,7 +139,7 @@ class TournamentView:
         )
         if tournament.current_round == 5:
             print(
-                f"{str(tournament.current_round).center(20)} | "
+                f"{tournament.current_tournament.center(20)} | "
                 f"{tournament.name.center(22)} | "
                 f"{tournament.location.center(22)} | "
                 f"{tournament.dated.center(22)} | "
@@ -148,7 +148,7 @@ class TournamentView:
             )
         else:
             print(
-                f"{tournament.current_tournament.center(20)} | "
+                f"{str(tournament.current_round).center(20)} | "
                 f"{tournament.name.center(22)} | "
                 f"{tournament.location.center(22)} | "
                 f"{tournament.dated.center(22)} | "

@@ -171,12 +171,12 @@ class TournamentController:
                                 match_import["match"][1][1],
                             )
                             round_game.matches.append(match)
-                        if tournament.current_round == 5:
-                            tournament.current_tournament = "Tournoi terminé"
                 if tournament_found["current_players"]:
                     for player in tournament_found["current_players"]:
                         tournament.current_players.append(player)
                 tournament.current_round = tournament_found["current_round"]
+                if tournament.current_round == 5:
+                    tournament.current_tournament = "Tournoi terminé"
                 tournament.tournament_id = tournament_found.doc_id
                 self.user_view.user_print_msg(
                     Fore.LIGHTGREEN_EX
@@ -184,12 +184,12 @@ class TournamentController:
                 )
                 time.sleep(2.0)
                 return tournament
-        else:
-            self.user_view.user_print_msg(
-                Fore.LIGHTRED_EX + "Aucun tournoi en cours n'a été trouvé."
-            )
-            time.sleep(2.0)
             return None
+        self.user_view.user_print_msg(
+            Fore.LIGHTRED_EX + "Aucun tournoi en cours n'a été trouvé."
+        )
+        time.sleep(2.0)
+        return None
 
     def start_rounds(self, tournament: object) -> None:
         """Start the rounds.
@@ -216,16 +216,15 @@ class TournamentController:
             for player_one, player_two in players_pair:
                 self.round_view.print_players_pair(player_one, player_two)
             user_choice = self.user_view.prompt_choice_menu(2)
-            #user_choice = self.round_view.prompt_choice_menu_round()
             if user_choice == 1:
                 self.user_view.header()
                 self.start_round(round_game, players_pair, tournament, j)
             else:
-                return None
+                return
         else:
             self.user_view.user_print_msg(Fore.LIGHTRED_EX + "Ce tournoi est terminé !")
             time.sleep(2.0)
-            return None
+            return
 
     def start_round(
         self,
