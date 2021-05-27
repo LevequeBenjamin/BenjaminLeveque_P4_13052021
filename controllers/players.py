@@ -48,11 +48,10 @@ class PlayerController:
             players (list): a list of players found in the database
         """
         self.user_view.header()
-        players = self.db_player.get_players
-        if players:
+        if self.db_player.players:
             self.player_view.menu()
             self.player_view.print_header_player_array()
-            for player in players:
+            for player in self.db_player.players:
                 self.player_view.print_player(
                     player.doc_id,
                     player["last_name"],
@@ -61,7 +60,7 @@ class PlayerController:
                     player["sex"],
                     player["elo"],
                 )
-            return players
+            return self.db_player.players
         else:
             self.user_view.user_print_msg(
                 Fore.LIGHTRED_EX
@@ -104,7 +103,6 @@ class PlayerController:
         Args:
             tournament (Tournament): Tournament instance
         """
-        current_players = []
         j = len(tournament.serialize_players())
         while j in range(0, 7):
             j = len(tournament.serialize_players())
@@ -112,12 +110,12 @@ class PlayerController:
             self.player_view.print_header_player_array()
             for player in tournament.players:
                 self.player_view.print_player(
-                    player.get_id,
-                    player.get_last_name,
-                    player.get_first_name,
-                    player.get_birth_date,
-                    player.get_sex,
-                    player.get_elo,
+                    player.player_id,
+                    player.last_name,
+                    player.first_name,
+                    player.birth_date,
+                    player.sex,
+                    player.elo,
                 )
             if j == 0:
                 self.user_view.title_h2(f"Créez le {j+1}er joueur.")
@@ -126,8 +124,10 @@ class PlayerController:
             try:
                 last_name = self.user_view.prompt_string("joueur", "le nom")
                 first_name = self.user_view.prompt_string("joueur", "le prénom")
-                if [last_name, first_name] not in current_players:
-                    player_found = self.db_player.search_table_players(last_name, first_name)
+                if [last_name, first_name] not in tournament.current_players:
+                    player_found = self.db_player.search_table_players(
+                        last_name, first_name
+                    )
                     if not player_found:
                         birth_date = self.user_view.prompt_string(
                             "joueur", "la date de naissance"
@@ -138,11 +138,12 @@ class PlayerController:
                         player = Participant(
                             last_name, first_name, birth_date, sex, elo
                         )
-                        tournament.append_list_players(player)
+                        tournament.players.append(player)
                         self.db_player.save_table_players(player)
-                        player_found = self.db_player.search_table_players(last_name, first_name)
-                        #player_id = self.db_player.get_id_player(last_name, first_name)
-                        player.add_id(player_found.doc_id)
+                        player_found = self.db_player.search_table_players(
+                            last_name, first_name
+                        )
+                        player.player_id = player_found.doc_id
                         self.user_view.user_print_msg(
                             Fore.LIGHTYELLOW_EX + f"\nLe joueur {str(player)} a bien "
                             "été ajouté et enregistré dans la base de données!"
@@ -155,8 +156,8 @@ class PlayerController:
                             player_found["sex"],
                             player_found["elo"],
                         )
-                        player.add_id(player_found.doc_id)
-                        tournament.append_list_players(player)
+                        player.player_id = player_found.doc_id
+                        tournament.players.append(player)
                         self.user_view.user_print_msg(
                             Fore.LIGHTYELLOW_EX + f"\nLe joueur {str(player)} "
                             "a bien été ajouté!"
@@ -164,7 +165,7 @@ class PlayerController:
                         self.user_view.user_print_msg(
                             "Ses informations sont importés depuis la base de données."
                         )
-                    current_players.append([last_name, first_name])
+                    tournament.current_players.append([last_name, first_name])
                 else:
                     self.user_view.user_print_err(
                         f"\nLe joueur {last_name} {first_name} est déjà présent dans le tournoi !"
@@ -181,9 +182,8 @@ class PlayerController:
     def update_players_elo(self) -> None:
         """Method used to modify the elo rank of a player
         if the player exists in the database, else returns an error."""
-        players = self.db_player.get_players
         self.player_view.print_header_player_array()
-        for player in players:
+        for player in self.db_player.players:
             self.player_view.print_player(
                 player.doc_id,
                 player["last_name"],
@@ -212,7 +212,7 @@ class PlayerController:
                 player_found["elo"],
             )
             elo = self.player_view.prompt_player_elo()
-            player.update_elo(elo)
+            player.elo = elo
             self.db_player.update_player(player, player_id)
             self.user_view.user_print_msg(
                 Fore.LIGHTYELLOW_EX + f"Le joueur {str(player)} a bien été modifié."

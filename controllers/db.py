@@ -216,6 +216,8 @@ class DbControllerTournament:
             tournament (Tournament): a Tournament instance
         """
         try:
-            self.tournaments.update(tournament.serialize(), doc_ids=[tournament.get_id])
+            self.tournaments.update(
+                tournament.serialize(), doc_ids=[tournament.tournament_id]
+            )
         except Exception as err:
             logger.error("Oops! %s :", err)

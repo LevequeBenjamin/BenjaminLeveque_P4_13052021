@@ -33,9 +33,7 @@ class Player:
         Returns:
             string: return a message for the user.
         """
-        return "Le joueur {} {} a bien été ajouté !".format(
-            self.last_name, self.first_name
-        )
+        return f"Le joueur {self.last_name} {self.first_name} a bien été ajouté !"
 
     # - - - - - - - - - - - #
     # methods               #
@@ -62,15 +60,6 @@ class Player:
             "elo": self.elo,
         }
 
-    def update_elo(self, elo: None) -> None:
-        """Method allowing to modify the elo classification of a Player.
-
-        Args:
-            elo (int): contains elo classement entered by the user.
-        """
-        self.elo = elo
-
-
 class Participant(Player):
     """It is a class allowing to create an inheritance from the Player class."""
 
@@ -94,7 +83,7 @@ class Participant(Player):
         self.score = 0
         self.ladder = 0
         self.opponents = []
-        Player.__init__(self, last_name, first_name, birth_date, sex, elo)
+        super().__init__(last_name, first_name, birth_date, sex, elo)
 
     def __str__(self) -> str:
         """Method used to display the last name and first name of the player.
@@ -102,84 +91,7 @@ class Participant(Player):
         Returns:
             string: return a message for the user.
         """
-        return "{} {}".format(self.last_name, self.first_name)
-
-    # - - - - - - - - - - - #
-    # properties            #
-    # - - - - - - - - - - - #
-
-    @property
-    def get_last_name(self) -> str:
-        """Return the player last name.
-
-        Returns:
-            Participant.last_name (string): contains the last name entered by the user.
-        """
-        return self.last_name
-
-    @property
-    def get_first_name(self) -> str:
-        """Return the player first name.
-
-        Returns:
-            Participant.first_name (string): contains the first name entered by the user.
-        """
-        return self.first_name
-
-    @property
-    def get_id(self) -> int:
-        """Return the player id.
-
-        Returns:
-            Participant.player_id (int): contains the id of the player taken from the database.
-        """
-        return self.player_id
-
-    @property
-    def get_birth_date(self):
-        return self.birth_date
-
-    @property
-    def get_sex(self):
-        return self.sex
-
-    @property
-    def get_elo(self) -> int:
-        """Return the player elo.
-
-        Returns:
-            Participant.elo (int): contains the elo classement entered by the user.
-        """
-        return self.elo
-
-    @property
-    def get_score(self) -> float:
-        """Return the player score.
-
-        Returns:
-            Participant.score (float): contains the total tournament score added
-            up during the tournament.
-        """
-        return self.score
-
-    @property
-    def get_ladder(self) -> int:
-        """Return the player ladder.
-
-        Returns:
-            Participant.ladder (int): contains the player ranking added at the end of the tournament.
-        """
-        return self.ladder
-
-    @property
-    def get_opponents(self) -> list:
-        """Return the player opponents.
-
-        Returns:
-            Participant.opponents (list): contains all the opponents that the player encounters
-            during the tournament.
-        """
-        return self.opponents
+        return f"{self.last_name} {self.first_name}"
 
     # - - - - - - - - - - - #
     # methods               #
@@ -250,35 +162,3 @@ class Participant(Player):
             "first_name": self.first_name,
             "id": self.player_id,
         }
-
-    def add_id(self, player_id: int) -> None:
-        """Method used to add the player id.
-
-        Args:
-            player_id (int): contains the id of the player taken from the database.
-        """
-        self.player_id = player_id
-
-    def add_score(self, score: float) -> None:
-        """Method used to add up the player's scores.
-
-        Args:
-            score (float): contains the score entered by the user.
-        """
-        self.score += score
-
-    def add_ladder(self, ladder: int) -> None:
-        """[summary]
-
-        Args:
-            ladder ([type]): [description]
-        """
-        self.ladder = ladder
-
-    def append_list_opponents(self, player_id: int) -> None:
-        """Method used to add opponent id to the opponents list.
-
-        Args:
-            player_id (int): contains the id of the player taken from the database.
-        """
-        self.opponents.append(player_id)

@@ -95,12 +95,12 @@ class RoundView:
             player_two (object): a Participant instance.
         """
         print(
-            Fore.LIGHTWHITE_EX + f"{player_one.get_last_name.center(24)} | "
-            f"{player_one.get_first_name.center(24)}"
+            Fore.LIGHTWHITE_EX + f"{player_one.last_name.center(24)} | "
+            f"{player_one.first_name.center(24)}"
             + Fore.LIGHTYELLOW_EX
             + f" | {'*'.center(10)} | "
             + Fore.LIGHTWHITE_EX
-            + f"{player_two.get_last_name.center(24)} | "
-            f"{player_two.get_first_name.center(24)}"
+            + f"{player_two.last_name.center(24)} | "
+            f"{player_two.first_name.center(24)}"
             f"\n{'-' * 119}"
         )

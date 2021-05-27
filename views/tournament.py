@@ -94,17 +94,14 @@ class TournamentView:
         """
         self.user_views.header()
         print(Fore.LIGHTWHITE_EX + f'{"* MENU TOURNAMENT*"}'.center(119))
-        if tournament.get_current_round < 5:
-            if (
-                not tournament.get_list_players
-                or len(tournament.serialize_players()) < 8
-            ):
+        if tournament.current_round < 5:
+            if not tournament.players or len(tournament.serialize_players()) < 8:
                 print(Fore.LIGHTWHITE_EX + "[1] Ajouter 8 joueurs.")
                 print("[0] Quitter le tournoi.\n")
             else:
                 print(
                     Fore.LIGHTWHITE_EX
-                    + f"[1] Démarrer le tour : {tournament.get_current_round}."
+                    + f"[1] Démarrer le tour : {tournament.current_round}."
                 )
                 print("[0] Quitter le tournoi.\n")
         else:
@@ -156,7 +153,7 @@ class TournamentView:
                 logger.error("Oops! %s", err)
         return user_choice
 
-    def print_current_tournament(self, tournoi):
+    def print_current_tournament(self, tournament):
         print(
             f"{'Ronde en cours'.center(20)} | "
             f"{'Nom'.center(22)} | "
@@ -165,22 +162,22 @@ class TournamentView:
             f"{'Time control'.center(22)}"
             f"\n{'°' * 119}"
         )
-        if tournoi.get_current_round == 5:
+        if tournament.current_round == 5:
             print(
-                f"{str(tournoi.get_current_round).center(20)} | "
-                f"{tournoi.get_name.center(22)} | "
-                f"{tournoi.get_location.center(22)} | "
-                f"{tournoi.get_dated.center(22)} | "
-                f"{tournoi.get_time_control.center(22)}"
+                f"{str(tournament.current_round).center(20)} | "
+                f"{tournament.name.center(22)} | "
+                f"{tournament.location.center(22)} | "
+                f"{tournament.dated.center(22)} | "
+                f"{tournament.time_control.center(22)}"
                 f"\n{'-' * 119}"
             )
         else:
             print(
-                f"{tournoi.get_current_tournament.center(20)} | "
-                f"{tournoi.get_name.center(22)} | "
-                f"{tournoi.get_location.center(22)} | "
-                f"{tournoi.get_dated.center(22)} | "
-                f"{tournoi.get_time_control.center(22)}"
+                f"{tournament.current_tournament.center(20)} | "
+                f"{tournament.name.center(22)} | "
+                f"{tournament.location.center(22)} | "
+                f"{tournament.dated.center(22)} | "
+                f"{tournament.time_control.center(22)}"
                 f"\n{'-' * 119}"
             )
 
@@ -217,11 +214,11 @@ class TournamentView:
 
         for player in players:
             print(
-                f"{str(player.get_ladder).center(15)} | "
-                f"{player.get_first_name.center(30)} | "
-                f"{player.get_last_name.center(30)} | "
-                f"{str(player.get_score).center(15)} | "
-                f"{str(player.get_elo).center(15)}"
+                f"{str(player.ladder).center(15)} | "
+                f"{player.first_name.center(30)} | "
+                f"{player.last_name.center(30)} | "
+                f"{str(player.score).center(15)} | "
+                f"{str(player.elo).center(15)}"
                 f"\n{'-' * 119}"
             )
 
