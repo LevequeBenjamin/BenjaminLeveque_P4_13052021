@@ -252,8 +252,8 @@ class TournamentController:
             score_player_two = self.round_view.prompt_set_score()
             player_two.score += score_player_two
             match = Match(
-                player_one.serialize_player_match(),
-                player_two.serialize_player_match(),
+                player_one.serialize_player_match,
+                player_two.serialize_player_match,
                 score_player_one,
                 score_player_two,
             )

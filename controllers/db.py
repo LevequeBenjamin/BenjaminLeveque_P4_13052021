@@ -84,7 +84,7 @@ class DbControllerlPlayer:
             player (PLayer): a Player instance
             player_id (int): contains the player id.
         """
-        self.players.update(player.serialize_player(), doc_ids=[player_id])
+        self.players.update(player.serialize_player, doc_ids=[player_id])
 
     def save_table_players(self, player: object) -> None:
         """Method used to save player in database.
@@ -92,7 +92,7 @@ class DbControllerlPlayer:
         Args:
             player (Player): a Player instance
         """
-        self.players.insert(player.serialize_player())
+        self.players.insert(player.serialize_player)
 
 
 class DbControllerTournament:
@@ -160,7 +160,7 @@ class DbControllerTournament:
         Args:
             tournament (Tournament): a Tournament instance
         """
-        self.tournaments.insert(tournament.serialize())
+        self.tournaments.insert(tournament.serialize)
 
     def update_table_tournament(self, tournament: object) -> None:
         """Method used to modify a tournament in the database
@@ -169,5 +169,5 @@ class DbControllerTournament:
             tournament (Tournament): a Tournament instance
         """
         self.tournaments.update(
-            tournament.serialize(), doc_ids=[tournament.tournament_id]
+            tournament.serialize, doc_ids=[tournament.tournament_id]
         )

@@ -97,9 +97,9 @@ class PlayerController:
         Args:
             tournament (Tournament): Tournament instance
         """
-        j = len(tournament.serialize_players())
+        j = len(tournament.serialize_players)
         while j in range(0, 7):
-            j = len(tournament.serialize_players())
+            j = len(tournament.serialize_players)
             self.user_view.header()
             self.player_view.print_header_player_array()
             for player in tournament.players:

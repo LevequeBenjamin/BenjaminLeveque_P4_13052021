@@ -51,10 +51,7 @@ class Tournament:
         )
         return self.players
 
-    # - - - - - - - - - - - #
-    # methods               #
-    # - - - - - - - - - - - #
-
+    @property
     def serialize(self) -> dict:
         """Method used to serialize a tournament before saving
         it in the table TOURNAMENTS.
@@ -77,14 +74,15 @@ class Tournament:
             "name": self.name,
             "location": self.location,
             "dated": self.dated,
-            "rounds": self.serialize_rounds(),
-            "players": self.serialize_players(),
+            "rounds": self.serialize_rounds,
+            "players": self.serialize_players,
             "time_control": self.time_control,
             "description": self.description,
             "current_tournament": self.current_tournament,
             "current_players": self.current_players,
         }
 
+    @property
     def serialize_players(self) -> list:
         """Method used to serialize a list of Participant instance before saving
         it in the table TOURNAMENTS.
@@ -94,9 +92,10 @@ class Tournament:
         """
         players_serialized = []
         for player in self.players:
-            players_serialized.append(player.serialize())
+            players_serialized.append(player.serialize)
         return players_serialized
 
+    @property
     def serialize_rounds(self) -> list:
         """Method used to serialize a list of Round instance before saving
         it in the table TOURNAMENTS.
@@ -106,5 +105,5 @@ class Tournament:
         """
         rounds_serialized = []
         for round_game in self.rounds:
-            rounds_serialized.append(round_game.serialize())
+            rounds_serialized.append(round_game.serialize)
         return rounds_serialized

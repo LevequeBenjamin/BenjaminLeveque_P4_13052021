@@ -36,10 +36,7 @@ class Player:
         """
         return f"Le joueur {self.last_name} {self.first_name} a bien été ajouté !"
 
-    # - - - - - - - - - - - #
-    # methods               #
-    # - - - - - - - - - - - #
-
+    @property
     def serialize_player(self) -> dict:
         """Method allowing to serialize a player before saving
         it in the table PLAYERS.
@@ -95,10 +92,7 @@ class Participant(Player):
         """
         return f"{self.last_name} {self.first_name}"
 
-    # - - - - - - - - - - - #
-    # methods               #
-    # - - - - - - - - - - - #
-
+    @property
     def serialize(self) -> dict:
         """Method allowing to serialize a player before saving
         it in the table TOURNAMENTS.
@@ -128,27 +122,27 @@ class Participant(Player):
             "opponents": self.opponents,
         }
 
-    def serialize_player(self) -> dict:
-        """Method allowing to serialize a player before saving
-        it in the table PLAYERS.
+    # def serialize_player(self) -> dict:
+    #     """Method allowing to serialize a player before saving
+    #     it in the table PLAYERS.
 
-        Returns:
-            a dictionary of Player:
-                "last_name": self.last_name,
-                "first_name": self.first_name,
-                "birth_date": self.birth_date,
-                "sex": self.sex,
-                "elo": self.elo,
-        }
-        """
-        return {
-            "last_name": self.last_name,
-            "first_name": self.first_name,
-            "birth_date": self.birth_date,
-            "sex": self.sex,
-            "elo": self.elo,
-        }
-
+    #     Returns:
+    #         a dictionary of Player:
+    #             "last_name": self.last_name,
+    #             "first_name": self.first_name,
+    #             "birth_date": self.birth_date,
+    #             "sex": self.sex,
+    #             "elo": self.elo,
+    #     }
+    #     """
+    #     return {
+    #         "last_name": self.last_name,
+    #         "first_name": self.first_name,
+    #         "birth_date": self.birth_date,
+    #         "sex": self.sex,
+    #         "elo": self.elo,
+    #     }
+    @property
     def serialize_player_match(self) -> dict:
         """Method allowing to serialize a player before create a instance of Match.
 

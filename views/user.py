@@ -71,15 +71,6 @@ class UserView:
         print(Fore.LIGHTYELLOW_EX + "*" * 119)
 
     @staticmethod
-    def separator_title(title):
-        """[summary]
-
-        Args:
-            title ([type]): [description]
-        """
-        print("\n", "*" * 21, f"{title}" "*" * 21, "\n")
-
-    @staticmethod
     def user_print_msg(message):
         """[summary]
 

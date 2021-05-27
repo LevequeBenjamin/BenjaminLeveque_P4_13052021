@@ -53,10 +53,7 @@ class Round:
         )
         return players_sorted
 
-    # - - - - - - - - - - - #
-    # methods               #
-    # - - - - - - - - - - - #
-
+    @property
     def serialize(self) -> dict:
         """Method used to serialize a round before saving
         it in the table TOURNAMENTS.
@@ -74,9 +71,10 @@ class Round:
             "created_at": self.created_at,
             "finished_at": self.finished_at,
             "round_in_progress": self.start,
-            "list_matches": self.serialize_match(),
+            "list_matches": self.serialize_match,
         }
 
+    @property
     def serialize_match(self) -> list:
         """Method used to serialize a list of Match instance before saving
         it in the table TOURNAMENTS.
@@ -86,8 +84,12 @@ class Round:
         """
         matches_serialized = []
         for match in self.matches:
-            matches_serialized.append(match.serialize())
+            matches_serialized.append(match.serialize)
         return matches_serialized
+
+    # - - - - - - - - - - - #
+    # methods               #
+    # - - - - - - - - - - - #
 
     @staticmethod
     def generate_pair_first_round(players: list) -> list:

@@ -32,10 +32,7 @@ class Match: # pylint: disable=too-few-public-methods
             [player_two, score_player_two],
         )
 
-    # - - - - - - - - - - - #
-    # methods               #
-    # - - - - - - - - - - - #
-
+    @property
     def serialize(self) -> dict:
         """Serialize matches
 

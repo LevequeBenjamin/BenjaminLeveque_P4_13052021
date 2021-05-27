@@ -77,7 +77,7 @@ class TournamentView:
                     confirm = self.user_views.prompt_confirm()
                     if confirm == "Y":
                         return self.perform_time_control(choice)
-                    else :
+                    else:
                         choice = 0
             except (ValueError, TypeError):
                 print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
@@ -91,7 +91,7 @@ class TournamentView:
         self.user_views.header()
         print(Fore.LIGHTWHITE_EX + f'{"* MENU TOURNAMENT*"}'.center(119))
         if tournament.current_round < 5:
-            if not tournament.players or len(tournament.serialize_players()) < 8:
+            if not tournament.players or len(tournament.serialize_players) < 8:
                 print(Fore.LIGHTWHITE_EX + "[1] Ajouter 8 joueurs.")
                 print("[0] Quitter le tournoi.\n")
             else:
