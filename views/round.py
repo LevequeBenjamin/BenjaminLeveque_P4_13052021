@@ -36,31 +36,20 @@ class RoundView:
                     Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
                     "veuillez entrer le score du joueur en caractère numerique svp."
                 )
-            while confirm != "Y" or "N":
-                confirm = input(Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : ").upper()
-                if confirm == "Y":
-                    return float(score)
-                if confirm == "N":
-                    print("Veuillez entrez le score du joueur svp.")
-                    break
-                print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire.")
-
-    @staticmethod
-    def prompt_choice_menu_round() -> int:
-        """Prompt for get user choice for menu players.
-
-        Returns:
-            user_choice (int): a user choice.
-        """
-        user_choice = 2
-        while user_choice not in range(0, 2):
-            try:
-                user_choice = int(
-                    input(Fore.LIGHTBLUE_EX + "\nQue voulez-vous faire ? : ")
-                )
-            except (ValueError, TypeError):
-                print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
-        return user_choice
+            else:
+                while confirm != "Y" or "N":
+                    confirm = input(
+                        Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : "
+                    ).upper()
+                    if confirm == "Y":
+                        return float(score)
+                    if confirm == "N":
+                        print("Veuillez entrez le score du joueur svp.")
+                        break
+                    print(
+                        Fore.LIGHTRED_EX
+                        + "Je n'ai pas compris ce que vous voulez dire."
+                    )
 
     @staticmethod
     def menu() -> None:

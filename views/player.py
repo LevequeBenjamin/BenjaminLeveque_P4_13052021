@@ -34,15 +34,21 @@ class PlayerView:
                     Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
                     "Veuillez entrer une commande valide svp."
                 )
-            print(Fore.LIGHTGREEN_EX + f"Le sexe du joueur est : {sex}")
-            while confirm not in ["Y", "N"]:
-                confirm = input(Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : ").upper()
-                if confirm == "Y":
-                    return sex
-                if confirm == "N":
-                    print("Veuillez entrez le sex du joueur svp.")
-                    break
-                print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire.")
+            else:
+                print(Fore.LIGHTGREEN_EX + f"Le sexe du joueur est : {sex}")
+                while confirm != "Y" or "N":
+                    confirm = input(
+                        Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : "
+                    ).upper()
+                    if confirm == "Y":
+                        return sex
+                    if confirm == "N":
+                        print("Veuillez entrez le sex du joueur svp.")
+                        break
+                    print(
+                        Fore.LIGHTRED_EX
+                        + "Je n'ai pas compris ce que vous voulez dire."
+                    )
 
     @staticmethod
     def prompt_player_elo() -> int:
@@ -62,15 +68,21 @@ class PlayerView:
                     Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
                     "veuillez entrer le classement Elo du joueur en caractère numerique svp."
                 )
-            print(Fore.LIGHTGREEN_EX + f"Le classement elo du joueur est: {elo}")
-            while confirm != "Y" or "N":
-                confirm = input(Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : ").upper()
-                if confirm == "Y":
-                    return int(elo)
-                if confirm == "N":
-                    print("Veuillez entrez le classement Elo du joueur svp.")
-                    break
-                print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire.")
+            else:
+                print(Fore.LIGHTGREEN_EX + f"Le classement elo du joueur est: {elo}")
+                while confirm != "Y" or "N":
+                    confirm = input(
+                        Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : "
+                    ).upper()
+                    if confirm == "Y":
+                        return int(elo)
+                    if confirm == "N":
+                        print("Veuillez entrez le classement Elo du joueur svp.")
+                        break
+                    print(
+                        Fore.LIGHTRED_EX
+                        + "Je n'ai pas compris ce que vous voulez dire."
+                    )
 
     @staticmethod
     def menu() -> None:

@@ -78,10 +78,10 @@ class PlayerController:
 
             player = Player(last_name, first_name, birth_date, sex, elo)
             self.db_player.save_table_players(player)
-            self.user_view.user_print_msg(Fore.LIGHTYELLOW_EX + f"\n{str(player)}")
+            self.user_view.user_print_msg(Fore.LIGHTGREEN_EX + f"\n{str(player)}")
         else:
-            self.user_view.user_print_err(
-                f"\nLe joueur {last_name} {first_name} "
+            self.user_view.user_print_msg(
+                Fore.LIGHTRED_EX + f"\nLe joueur {last_name} {first_name} "
                 "est déjà présent dans la base de données."
             )
         time.sleep(2.0)
@@ -135,7 +135,7 @@ class PlayerController:
                     )
                     player.player_id = player_found.doc_id
                     self.user_view.user_print_msg(
-                        Fore.LIGHTYELLOW_EX + f"\nLe joueur {str(player)} a bien "
+                        Fore.LIGHTGREEN_EX + f"\nLe joueur {str(player)} a bien "
                         "été ajouté et enregistré dans la base de données!"
                     )
                 else:
@@ -149,7 +149,7 @@ class PlayerController:
                     player.player_id = player_found.doc_id
                     tournament.players.append(player)
                     self.user_view.user_print_msg(
-                        Fore.LIGHTYELLOW_EX + f"\nLe joueur {str(player)} "
+                        Fore.LIGHTGREEN_EX + f"\nLe joueur {str(player)} "
                         "a bien été ajouté!"
                     )
                     self.user_view.user_print_msg(
@@ -157,13 +157,15 @@ class PlayerController:
                     )
                 tournament.current_players.append([last_name, first_name])
             else:
-                self.user_view.user_print_err(
-                    f"\nLe joueur {last_name} {first_name} est déjà présent dans le tournoi !"
+                self.user_view.user_print_msg(
+                    Fore.LIGHTRED_EX
+                    + f"\nLe joueur {last_name} {first_name} est déjà présent dans le tournoi !"
                 )
             self.db_tournament.update_table_tournament(tournament)
             time.sleep(2.0)
-        self.user_view.user_print_green_msg(
-            "Les 8 joueurs ont été créés, le tounoi peut commencer."
+        self.user_view.user_print_msg(
+            Fore.LIGHTGREEN_EX
+            + "Les 8 joueurs ont été créés, le tounoi peut commencer."
         )
         time.sleep(2.0)
 
@@ -203,9 +205,11 @@ class PlayerController:
             player.elo = elo
             self.db_player.update_player(player, player_id)
             self.user_view.user_print_msg(
-                Fore.LIGHTYELLOW_EX + f"Le joueur {str(player)} a bien été modifié."
+                Fore.LIGHTGREEN_EX + f"Le joueur {str(player)} a bien été modifié."
             )
             time.sleep(2.0)
         else:
-            self.user_view.user_print_err("Aucun joueur avec cet ID n'a été trouvé.")
+            self.user_view.user_print_msg(
+                Fore.LIGHTRED_EX + "Aucun joueur avec cet ID n'a été trouvé."
+            )
             time.sleep(2.0)

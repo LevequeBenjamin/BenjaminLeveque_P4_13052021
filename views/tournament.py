@@ -115,46 +115,12 @@ class TournamentView:
         print(Fore.CYAN + f'{"=" * 119}')
 
     @staticmethod
-    def prompt_choice_menu_tournament():
-        """[summary]
-
-        Returns:
-            [type]: [description]
-        """
-        user_choice = 4
-        while user_choice not in range(0, 4):
-            try:
-                user_choice = int(
-                    input(Fore.LIGHTBLUE_EX + "Que voulez-vous faire ? : ")
-                )
-            except (ValueError, TypeError):
-                print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
-        return user_choice
-
-    @staticmethod
     def menu_tournois():
         """[summary]"""
         print(Fore.LIGHTWHITE_EX + f'{"* MENU TOURNAMENTS*"}'.center(119))
         print("[1] Importez un tournoi.")
         print("[0] Retour au menu principal.\n")
         print(Fore.CYAN + f'{"=" * 119}')
-
-    @staticmethod
-    def prompt_menu_tournaments():
-        """[summary]
-
-        Returns:
-            [type]: [description]
-        """
-        user_choice = 3
-        while user_choice not in range(0, 3):
-            try:
-                user_choice = int(
-                    input(Fore.LIGHTBLUE_EX + "\nQue voulez-vous faire ? >> ")
-                )
-            except (ValueError, TypeError):
-                print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
-        return user_choice
 
     @staticmethod
     def print_current_tournament(tournament):

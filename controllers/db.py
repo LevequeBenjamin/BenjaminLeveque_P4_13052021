@@ -84,11 +84,7 @@ class DbControllerlPlayer:
             player (PLayer): a Player instance
             player_id (int): contains the player id.
         """
-        try:
-            res = self.players.update(player.serialize_player(), doc_ids=[player_id])
-            res.raise_for_status()
-        except res.exceptions as err:
-            logger.error("Oops! %s :", err)
+        self.players.update(player.serialize_player(), doc_ids=[player_id])
 
     def save_table_players(self, player: object) -> None:
         """Method used to save player in database.
@@ -96,11 +92,7 @@ class DbControllerlPlayer:
         Args:
             player (Player): a Player instance
         """
-        try:
-            res = self.players.insert(player.serialize_player())
-            res.raise_for_status()
-        except res.exceptions as err:
-            logger.error("Oops! %s :", err)
+        self.players.insert(player.serialize_player())
 
 
 class DbControllerTournament:
@@ -168,11 +160,7 @@ class DbControllerTournament:
         Args:
             tournament (Tournament): a Tournament instance
         """
-        try:
-            res = self.tournaments.insert(tournament.serialize())
-            res.raise_for_status()
-        except res.exceptions as err:
-            logger.error("Oops! %s :", err)
+        self.tournaments.insert(tournament.serialize())
 
     def update_table_tournament(self, tournament: object) -> None:
         """Method used to modify a tournament in the database
@@ -180,10 +168,6 @@ class DbControllerTournament:
         Args:
             tournament (Tournament): a Tournament instance
         """
-        try:
-            res = self.tournaments.update(
-                tournament.serialize(), doc_ids=[tournament.tournament_id]
-            )
-            res.raise_for_status()
-        except res.exceptions as err:
-            logger.error("Oops! %s :", err)
+        self.tournaments.update(
+            tournament.serialize(), doc_ids=[tournament.tournament_id]
+        )

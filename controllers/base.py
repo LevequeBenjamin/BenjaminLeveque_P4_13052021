@@ -39,16 +39,15 @@ class Controller:
         """Method which displays a complete list of players in database."""
         players = self.player_controller.print_players()
         if players:
-            user_choice = self.player_controller.player_view.prompt_menu_players()
+            user_choice = self.user_view.prompt_choice_menu(3)
+            #user_choice = self.player_controller.player_view.prompt_menu_players()
             self.display_players_perform(user_choice)
 
     def display_tournaments(self) -> None:
         """Method which displays a complete list of tournaments in database."""
         tournaments = self.tournament_controller.print_tournaments()
         if tournaments:
-            user_choice = (
-                self.tournament_controller.tournament_view.prompt_menu_tournaments()
-            )
+            user_choice = self.user_view.prompt_choice_menu(2)
             self.display_tournaments_perform(user_choice)
 
     def get_choice_menu_tournament(self, tournament: object) -> None:
@@ -64,9 +63,10 @@ class Controller:
             self.tournament_controller.tournament_view.print_current_tournament(
                 tournament
             )
-            user_choice = (
-                self.tournament_controller.tournament_view.prompt_choice_menu_tournament()
-            )
+            user_choice = self.user_view.prompt_choice_menu(4)
+            # user_choice = (
+            #     self.tournament_controller.tournament_view.prompt_choice_menu_tournament()
+            # )
             self.start_tournament_perform(user_choice, tournament)
 
     def start_import_tournament(self) -> None:
@@ -174,7 +174,8 @@ class Controller:
         user_choice = ""
         while user_choice != 0:
             self.user_view.menu()
-            user_choice = self.user_view.prompt_start_program()
+            user_choice = self.user_view.prompt_choice_menu(6)
+            #user_choice = self.user_view.prompt_start_program()
             self.main_perform(user_choice)
 
     def run(self) -> None:

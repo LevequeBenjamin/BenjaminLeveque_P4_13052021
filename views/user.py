@@ -34,23 +34,6 @@ class UserView:
         print("\n")
         print("=" * 119)
 
-    @staticmethod
-    def prompt_start_program():
-        """[summary]
-
-        Returns:
-            [type]: [description]
-        """
-        user_choice = 6
-        while user_choice not in range(0, 6):
-            try:
-                user_choice = int(
-                    input(Fore.LIGHTBLUE_EX + "\nQue voulez-vous faire ? >> ")
-                )
-            except (ValueError, TypeError):
-                print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
-        return user_choice
-
     def menu(self):
         """Print main menu."""
         self.header()
@@ -71,9 +54,9 @@ class UserView:
         Args:
             title ([type]): [description]
         """
-        print(Fore.LIGHTWHITE_EX + "*".center(119) * 60)
+        print(Fore.LIGHTWHITE_EX + f'{"*" * 60}'.center(119))
         print(f"{title}".center(119))
-        print("*".center(122) * 60, "\n")
+        print(f'{"*" * 60}'.center(119), "\n")
 
     @staticmethod
     def exit_program():
@@ -118,8 +101,8 @@ class UserView:
             confirm = input(Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : ").upper()
             if confirm not in ["Y", "N"]:
                 print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire.")
-            else:
-                return confirm
+            return confirm
+
 
     @staticmethod
     def prompt_return():
@@ -135,8 +118,8 @@ class UserView:
             ).upper()
             if confirm not in ["Y", "N"]:
                 print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire.")
-            else:
-                return confirm
+        return confirm
+            
 
     @staticmethod
     def prompt_choice_menu(choice: int) -> int:
@@ -172,15 +155,17 @@ class UserView:
                     Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
                     f"veuillez entrer {argument_two} svp"
                 )
-            print(Fore.LIGHTGREEN_EX + f"{argument_two} du {argument_one} est: {value}")
-            while confirm != "Y" or "N":
-                confirm = input(Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : ").upper()
-                if confirm == "Y":
-                    return value
-                if confirm == "N":
-                    print(f"Veuillez entrez {argument_two} svp.")
-                    break
-                print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire.")
+            else:
+                print(Fore.LIGHTGREEN_EX + f"{argument_two} du {argument_one} est: {value}")
+                while confirm != "Y" or "N":
+                    confirm = input(Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : ").upper()
+                    if confirm == "Y":
+                        return value
+                    if confirm == "N":
+                        print(f"Veuillez entrez {argument_two} svp.")
+                        break
+                    else:
+                        print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire.")
 
     @staticmethod
     def prompt_id(argument_one, argument_two) -> int:
@@ -200,12 +185,14 @@ class UserView:
                     Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
                     f"veuillez entrer {argument_two} du {argument_one} en caractère numerique svp."
                 )
-            print(Fore.LIGHTGREEN_EX + f"{argument_two} du {argument_one} est: {value}")
-            while confirm != "Y" or "N":
-                confirm = input(Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : ").upper()
-                if confirm == "Y":
-                    return int(value)
-                if confirm == "N":
-                    print(f"Veuillez entrez {argument_two} du {argument_one} svp.")
-                    break
-                print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire.")
+            else:
+                print(Fore.LIGHTGREEN_EX + f"{argument_two} du {argument_one} est: {value}")
+                while confirm != "Y" or "N":
+                    confirm = input(Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : ").upper()
+                    if confirm == "Y":
+                        return int(value)
+                    if confirm == "N":
+                        print(f"Veuillez entrez {argument_two} du {argument_one} svp.")
+                        break
+                    else:
+                        print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire.")
