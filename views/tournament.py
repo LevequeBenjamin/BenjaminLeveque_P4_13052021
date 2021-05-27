@@ -1,9 +1,11 @@
 """Tournament views."""
 
 # librairies
-from views.user import UserView
-from colorama import Fore
 import logging
+from colorama import Fore
+
+# views
+from views.user import UserView
 
 # logger
 logging.basicConfig(level=logging.DEBUG)
@@ -25,13 +27,15 @@ class TournamentView:
     # methods               #
     # - - - - - - - - - - - #
 
-    def choice_time_control(self) -> None:
+    @staticmethod
+    def choice_time_control() -> None:
         """Show time control choice."""
         print(Fore.LIGHTWHITE_EX + "[1] Bullet.")
         print("[2] Blitz.")
         print("[3] Coup rapide.")
 
-    def perform_time_control(self, choice: int) -> str:
+    @staticmethod
+    def perform_time_control(choice: int) -> str:
         """Performs according to the user choice.
 
         Args:
@@ -44,10 +48,11 @@ class TournamentView:
         """
         if choice == 1:
             return "Bullet"
-        elif choice == 2:
+        if choice == 2:
             return "Blitz"
-        elif choice == 3:
+        if choice == 3:
             return "Coup rapide"
+        return None
 
     def prompt_tournament_time_control(self) -> str:
         """Prompt for get tournament time control.
@@ -75,14 +80,13 @@ class TournamentView:
                         ).upper()
                         if confirm == "Y":
                             return self.perform_time_control(choice)
-                        elif confirm == "N":
+                        if confirm == "N":
                             choice = 0
                             break
-                        else:
-                            print(
-                                Fore.LIGHTRED_EX
-                                + "Je n'ai pas compris ce que vous voulez dire."
-                            )
+                        print(
+                            Fore.LIGHTRED_EX
+                            + "Je n'ai pas compris ce que vous voulez dire."
+                        )
             except (ValueError, TypeError):
                 print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
 
@@ -110,7 +114,8 @@ class TournamentView:
             print("[0] Quitter le tournoi.\n")
         print(Fore.CYAN + f'{"=" * 119}')
 
-    def prompt_choice_menu_tournament(self):
+    @staticmethod
+    def prompt_choice_menu_tournament():
         """[summary]
 
         Returns:
@@ -124,18 +129,18 @@ class TournamentView:
                 )
             except (ValueError, TypeError):
                 print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
-            except Exception as err:
-                logger.error("Oops! %s", err)
         return user_choice
 
-    def menu_tournois(self):
+    @staticmethod
+    def menu_tournois():
         """[summary]"""
         print(Fore.LIGHTWHITE_EX + f'{"* MENU TOURNAMENTS*"}'.center(119))
         print("[1] Importez un tournoi.")
         print("[0] Retour au menu principal.\n")
         print(Fore.CYAN + f'{"=" * 119}')
 
-    def prompt_menu_tournaments(self):
+    @staticmethod
+    def prompt_menu_tournaments():
         """[summary]
 
         Returns:
@@ -149,11 +154,15 @@ class TournamentView:
                 )
             except (ValueError, TypeError):
                 print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
-            except Exception as err:
-                logger.error("Oops! %s", err)
         return user_choice
 
-    def print_current_tournament(self, tournament):
+    @staticmethod
+    def print_current_tournament(tournament):
+        """[summary]
+
+        Args:
+            tournament ([type]): [description]
+        """
         print(
             f"{'Ronde en cours'.center(20)} | "
             f"{'Nom'.center(22)} | "
@@ -181,9 +190,17 @@ class TournamentView:
                 f"\n{'-' * 119}"
             )
 
-    def print_confirm_tournament(
-        self, name, location, dated, time_control, description
-    ):
+    @staticmethod
+    def print_confirm_tournament(name, location, dated, time_control, description):
+        """[summary]
+
+        Args:
+            name ([type]): [description]
+            location ([type]): [description]
+            dated ([type]): [description]
+            time_control ([type]): [description]
+            description ([type]): [description]
+        """
         print(
             f"{'Nom'.center(25)} | "
             f"{'Lieu'.center(35)} | "
@@ -202,7 +219,13 @@ class TournamentView:
 
         print(f"description : {description}" f"\n{'-' * 119}")
 
-    def print_result_tournament(self, players):
+    @staticmethod
+    def print_result_tournament(players):
+        """[summary]
+
+        Args:
+            players ([type]): [description]
+        """
         print(
             f"{'Classement'.center(15)} | "
             f"{'Nom'.center(30)} | "
@@ -224,6 +247,7 @@ class TournamentView:
 
     @staticmethod
     def print_header_tournament_array():
+        """[summary]"""
         print(
             f"{'ID'.center(10)} | "
             f"{'Nom'.center(25)} | "
@@ -235,6 +259,15 @@ class TournamentView:
 
     @staticmethod
     def print_tournament(tournament_id, name, location, dated, time_control):
+        """[summary]
+
+        Args:
+            tournament_id ([type]): [description]
+            name ([type]): [description]
+            location ([type]): [description]
+            dated ([type]): [description]
+            time_control ([type]): [description]
+        """
         print(
             f"{str(tournament_id).center(10)} | "
             f"{name.center(25)} | "

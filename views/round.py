@@ -1,9 +1,11 @@
 """Round views."""
 
 # librairies
-from colorama import Fore
-from utils.utils import isfloat
 import logging
+from colorama import Fore
+
+# utils
+from utils.utils import isfloat
 
 # logger
 logging.basicConfig(level=logging.DEBUG)
@@ -17,7 +19,8 @@ class RoundView:
     # methods               #
     # - - - - - - - - - - - #
 
-    def prompt_set_score(self) -> float:
+    @staticmethod
+    def prompt_set_score() -> float:
         """Prompt for get player score.
 
         Returns:
@@ -33,23 +36,17 @@ class RoundView:
                     Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
                     "veuillez entrer le score du joueur en caractère numerique svp."
                 )
-            else:
-                while confirm != "Y" or "N":
-                    confirm = input(
-                        Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : "
-                    ).upper()
-                    if confirm == "Y":
-                        return float(score)
-                    elif confirm == "N":
-                        print("Veuillez entrez le score du joueur svp.")
-                        break
-                    else:
-                        print(
-                            Fore.LIGHTRED_EX
-                            + "Je n'ai pas compris ce que vous voulez dire."
-                        )
+            while confirm != "Y" or "N":
+                confirm = input(Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : ").upper()
+                if confirm == "Y":
+                    return float(score)
+                if confirm == "N":
+                    print("Veuillez entrez le score du joueur svp.")
+                    break
+                print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire.")
 
-    def prompt_choice_menu_round(self) -> int:
+    @staticmethod
+    def prompt_choice_menu_round() -> int:
         """Prompt for get user choice for menu players.
 
         Returns:
@@ -63,11 +60,10 @@ class RoundView:
                 )
             except (ValueError, TypeError):
                 print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
-            except Exception as err:
-                logger.error("Oops! %s", err)
         return user_choice
 
-    def menu(self) -> None:
+    @staticmethod
+    def menu() -> None:
         """Show rounds menu."""
         print(Fore.LIGHTWHITE_EX + f'{"* MENU RONDE *"}'.center(119))
         print("\n" * 1)
@@ -77,6 +73,7 @@ class RoundView:
 
     @staticmethod
     def print_header_players_pair_array():
+        """[summary]"""
         print(
             Fore.LIGHTBLUE_EX + f"{'Nom'.center(24)} | "
             f"{'Prénom'.center(24)} | "

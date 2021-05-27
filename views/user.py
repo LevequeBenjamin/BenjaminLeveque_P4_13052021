@@ -3,9 +3,8 @@
 # librairies
 import os
 import sys
-from colorama import Fore
 import logging
-import sys
+from colorama import Fore
 
 # logger
 logging.basicConfig(level=logging.DEBUG)
@@ -15,7 +14,8 @@ logger = logging.getLogger(__name__)
 class UserView:
     """User view"""
 
-    def header(self):
+    @staticmethod
+    def header():
         """[summary]"""
         if sys.platform.startswith("linux"):
             os.system("clear")
@@ -24,17 +24,18 @@ class UserView:
         elif sys.platform.startswith("darwin"):
             os.system("clear")
         print("\n")
-        print(Fore.LIGHTYELLOW_EX + f"   @ @@ @", " ".center(98), " @ @@ @")
-        print(f"   @@@@@@", " ".center(98), " @@@@@@")
-        print(f"     @@", " ".center(102), " @@")
-        print(f"    @@@@", " ".center(100), " @@@@")
-        print(f"   @@@@@@", " ".center(98), " @@@@@@")
-        print(f"  @@@@@@@@", " ".center(97), "@@@@@@@@")
-        print(Fore.CYAN + f"*** -*- CHESS TOURNAMENT -*- ***".center(119))
+        print(Fore.LIGHTYELLOW_EX + "   @ @@ @", " ".center(98), " @ @@ @")
+        print("   @@@@@@", " ".center(98), " @@@@@@")
+        print("     @@", " ".center(102), " @@")
+        print("    @@@@", " ".center(100), " @@@@")
+        print("   @@@@@@", " ".center(98), " @@@@@@")
+        print("  @@@@@@@@", " ".center(97), "@@@@@@@@")
+        print(Fore.CYAN + "*** -*- CHESS TOURNAMENT -*- ***".center(119))
         print("\n")
-        print(f'{"=" * 119}')
+        print("=" * 119)
 
-    def prompt_start_program(self):
+    @staticmethod
+    def prompt_start_program():
         """[summary]
 
         Returns:
@@ -48,14 +49,12 @@ class UserView:
                 )
             except (ValueError, TypeError):
                 print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
-            except Exception as err:
-                logger.error("Oops! %s", err)
         return user_choice
 
     def menu(self):
         """Print main menu."""
         self.header()
-        print(Fore.LIGHTWHITE_EX + f'{"* MENU *"}'.center(119))
+        print(Fore.LIGHTWHITE_EX + "* MENU *".center(119))
         print("\n" * 1)
         print("::[1] Ajouter un nouveau joueur")
         print("::[2] Créer un tournoi")
@@ -63,51 +62,43 @@ class UserView:
         print("::[4] Liste des joueurs")
         print("::[5] Liste des tournois")
         print("::[0] Quitter -*-CHESS TOURNAMENT-*-\n")
-        print(Fore.CYAN + f'{"=" * 119}')
+        print(Fore.CYAN + "=" * 119)
 
-    def title_h2(self, title):
-        print(Fore.LIGHTWHITE_EX + f"{'*' * 60}".center(119))
-        print(f"{title}".center(119))
-        print(f"{'*' * 60}\n".center(122))
-
-    def exit_program(self):
-        """[summary]"""
-        print(Fore.LIGHTYELLOW_EX + f'{"*" * 119}')
-        print(f"\n" * 2)
-        print(
-            Fore.WHITE
-            + "Merci d'avoir utilisé -*-CHESS TOURNAMENT-*-, à bientôt !!".center(119)
-        )
-        print("\n" * 2)
-        print(Fore.LIGHTYELLOW_EX + f'{"*" * 119}')
-        sys.exit()
-
-    def separator_title(self, title):
+    @staticmethod
+    def title_h2(title):
         """[summary]
 
         Args:
             title ([type]): [description]
         """
-        print(
-            Fore.LIGHTYELLOW_EX + f"\n********************* {title} "
-            "*********************\n"
-        )
+        print(Fore.LIGHTWHITE_EX + "*".center(119) * 60)
+        print(f"{title}".center(119))
+        print("*".center(122) * 60, "\n")
 
-    def separator_yellow(self):
+    @staticmethod
+    def exit_program():
         """[summary]"""
+        print(Fore.LIGHTYELLOW_EX + "*" * 119)
+        print("\n" * 2)
         print(
-            Fore.LIGHTYELLOW_EX + "*********************************************"
-            "***************\n"
+            Fore.WHITE
+            + "Merci d'avoir utilisé -*-CHESS TOURNAMENT-*-, à bientôt !!".center(119)
         )
+        print("\n" * 2)
+        print(Fore.LIGHTYELLOW_EX + "*" * 119)
+        sys.exit()
 
-    def separator_white(self):
-        """[summary]"""
-        print(
-            Fore.LIGHTWHITE_EX + "*********************************************"
-            "***************\n"
-        )
+    @staticmethod
+    def separator_title(title):
+        """[summary]
 
-    def user_print_msg(self, message):
+        Args:
+            title ([type]): [description]
+        """
+        print("\n", "*" * 21, f"{title}" "*" * 21, "\n")
+
+    @staticmethod
+    def user_print_msg(message):
         """[summary]
 
         Args:
@@ -115,23 +106,8 @@ class UserView:
         """
         print(f"{message}")
 
-    def user_print_green_msg(self, message):
-        """[summary]
-
-        Args:
-            message ([type]): [description]
-        """
-        print(Fore.LIGHTGREEN_EX + f"{message}")
-
-    def user_print_err(self, message):
-        """[summary]
-
-        Args:
-            message ([type]): [description]
-        """
-        print(Fore.LIGHTRED_EX + f"{message}")
-
-    def prompt_confirm(self):
+    @staticmethod
+    def prompt_confirm():
         """[summary]
 
         Returns:
@@ -145,7 +121,8 @@ class UserView:
             else:
                 return confirm
 
-    def prompt_return(self):
+    @staticmethod
+    def prompt_return():
         """[summary]
 
         Returns:
@@ -161,7 +138,8 @@ class UserView:
             else:
                 return confirm
 
-    def prompt_choice_menu(self, choice: int) -> int:
+    @staticmethod
+    def prompt_choice_menu(choice: int) -> int:
         """[summary]
 
         Returns:
@@ -175,11 +153,10 @@ class UserView:
                 )
             except (ValueError, TypeError):
                 print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
-            except Exception as err:
-                logger.error("Oops! %s", err)
         return user_choice
 
-    def prompt_string(self, argument_one, argument_two) -> str:
+    @staticmethod
+    def prompt_string(argument_one, argument_two) -> str:
         """Prompt for get tournament name.
 
         Returns:
@@ -195,27 +172,18 @@ class UserView:
                     Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
                     f"veuillez entrer {argument_two} svp"
                 )
-            else:
-                print(
-                    Fore.LIGHTGREEN_EX
-                    + f"{argument_two} du {argument_one} est: {value}"
-                )
-                while confirm != "Y" or "N":
-                    confirm = input(
-                        Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : "
-                    ).upper()
-                    if confirm == "Y":
-                        return value
-                    elif confirm == "N":
-                        print(f"Veuillez entrez {argument_two} svp.")
-                        break
-                    else:
-                        print(
-                            Fore.LIGHTRED_EX
-                            + "Je n'ai pas compris ce que vous voulez dire."
-                        )
+            print(Fore.LIGHTGREEN_EX + f"{argument_two} du {argument_one} est: {value}")
+            while confirm != "Y" or "N":
+                confirm = input(Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : ").upper()
+                if confirm == "Y":
+                    return value
+                if confirm == "N":
+                    print(f"Veuillez entrez {argument_two} svp.")
+                    break
+                print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire.")
 
-    def prompt_id(self, argument_one, argument_two) -> int:
+    @staticmethod
+    def prompt_id(argument_one, argument_two) -> int:
         """Prompt for get tournament id.
 
         Returns:
@@ -232,22 +200,12 @@ class UserView:
                     Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
                     f"veuillez entrer {argument_two} du {argument_one} en caractère numerique svp."
                 )
-            else:
-                print(
-                    Fore.LIGHTGREEN_EX
-                    + f"{argument_two} du {argument_one} est: {value}"
-                )
-                while confirm != "Y" or "N":
-                    confirm = input(
-                        Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : "
-                    ).upper()
-                    if confirm == "Y":
-                        return int(value)
-                    elif confirm == "N":
-                        print(f"Veuillez entrez {argument_two} du {argument_one} svp.")
-                        break
-                    else:
-                        print(
-                            Fore.LIGHTRED_EX
-                            + "Je n'ai pas compris ce que vous voulez dire."
-                        )
+            print(Fore.LIGHTGREEN_EX + f"{argument_two} du {argument_one} est: {value}")
+            while confirm != "Y" or "N":
+                confirm = input(Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : ").upper()
+                if confirm == "Y":
+                    return int(value)
+                if confirm == "N":
+                    print(f"Veuillez entrez {argument_two} du {argument_one} svp.")
+                    break
+                print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire.")

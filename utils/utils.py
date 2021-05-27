@@ -1,7 +1,7 @@
 """Docstrings."""
 
 
-def isfloat(str):
+def isfloat(argument):
     """[summary]
 
     Args:
@@ -11,7 +11,7 @@ def isfloat(str):
         [type]: [description]
     """
     try:
-        float(str)
+        float(argument)
     except ValueError:
         return False
     return True

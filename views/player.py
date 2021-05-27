@@ -1,8 +1,8 @@
 """Player views."""
 
 # librairies
-from colorama import Fore
 import logging
+from colorama import Fore
 
 # logger
 logging.basicConfig(level=logging.DEBUG)
@@ -16,7 +16,8 @@ class PlayerView:
     # methods               #
     # - - - - - - - - - - - #
 
-    def prompt_player_sex(self) -> str:
+    @staticmethod
+    def prompt_player_sex() -> str:
         """Prompt for get player sex.
 
         Returns:
@@ -28,29 +29,23 @@ class PlayerView:
                 Fore.LIGHTCYAN_EX
                 + "Veuillez entrer (M) pour masculin ou (F) pour feminin : "
             ).upper()
-            if not sex or sex != "M" and sex != "F":
+            if not sex or sex not in ["M", "F"]:
                 print(
                     Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
                     "Veuillez entrer une commande valide svp."
                 )
-            else:
-                print(Fore.LIGHTGREEN_EX + f"Le sexe du joueur est : {sex}")
-                while confirm != "Y" or "N":
-                    confirm = input(
-                        Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : "
-                    ).upper()
-                    if confirm == "Y":
-                        return sex
-                    elif confirm == "N":
-                        print("Veuillez entrez le sex du joueur svp.")
-                        break
-                    else:
-                        print(
-                            Fore.LIGHTRED_EX
-                            + "Je n'ai pas compris ce que vous voulez dire."
-                        )
+            print(Fore.LIGHTGREEN_EX + f"Le sexe du joueur est : {sex}")
+            while confirm not in ["Y", "N"]:
+                confirm = input(Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : ").upper()
+                if confirm == "Y":
+                    return sex
+                if confirm == "N":
+                    print("Veuillez entrez le sex du joueur svp.")
+                    break
+                print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire.")
 
-    def prompt_player_elo(self) -> int:
+    @staticmethod
+    def prompt_player_elo() -> int:
         """Prompt for get player elo.
 
         Returns:
@@ -67,24 +62,18 @@ class PlayerView:
                     Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
                     "veuillez entrer le classement Elo du joueur en caractère numerique svp."
                 )
-            else:
-                print(Fore.LIGHTGREEN_EX + f"Le classement elo du joueur est: {elo}")
-                while confirm != "Y" or "N":
-                    confirm = input(
-                        Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : "
-                    ).upper()
-                    if confirm == "Y":
-                        return int(elo)
-                    elif confirm == "N":
-                        print("Veuillez entrez le classement Elo du joueur svp.")
-                        break
-                    else:
-                        print(
-                            Fore.LIGHTRED_EX
-                            + "Je n'ai pas compris ce que vous voulez dire."
-                        )
+            print(Fore.LIGHTGREEN_EX + f"Le classement elo du joueur est: {elo}")
+            while confirm != "Y" or "N":
+                confirm = input(Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : ").upper()
+                if confirm == "Y":
+                    return int(elo)
+                if confirm == "N":
+                    print("Veuillez entrez le classement Elo du joueur svp.")
+                    break
+                print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire.")
 
-    def menu(self) -> None:
+    @staticmethod
+    def menu() -> None:
         """Show players menu."""
         print(Fore.LIGHTWHITE_EX + f'{"* MENU PLAYERS*"}'.center(119))
         print(Fore.LIGHTWHITE_EX + "[1] Ajouter un joueur.")
@@ -92,7 +81,8 @@ class PlayerView:
         print("[0] Retour au menu principal.\n")
         print(Fore.CYAN + f'{"=" * 119}')
 
-    def prompt_menu_players(self) -> int:
+    @staticmethod
+    def prompt_menu_players() -> int:
         """Prompt for get user choice for menu players.
 
         Returns:
@@ -106,12 +96,11 @@ class PlayerView:
                 )
             except (ValueError, TypeError):
                 print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
-            except Exception as err:
-                logger.error("Oops! %s", err)
         return user_choice
 
     @staticmethod
     def print_header_player_array():
+        """[summary]"""
         print(
             f"{'ID'.center(10)} | "
             f"{'Nom'.center(25)} | "
@@ -122,6 +111,7 @@ class PlayerView:
             f"\n{'°' * 119}"
         )
 
+    # pylint: disable=too-many-arguments
     @staticmethod
     def print_player(player_id, last_name, first_name, birth_date, sex, elo) -> None:
         """Display a array with information of player dict.
