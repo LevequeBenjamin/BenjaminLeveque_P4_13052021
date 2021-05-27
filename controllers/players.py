@@ -2,8 +2,8 @@
 
 # librairies
 import logging
-from colorama import Fore
 import time
+from colorama import Fore
 
 # models
 from models.players import Player
@@ -61,37 +61,30 @@ class PlayerController:
                     player["elo"],
                 )
             return self.db_player.players
-        else:
-            self.user_view.user_print_msg(
-                Fore.LIGHTRED_EX
-                + "Aucun joueur n'a été trouvé dans la base de données."
-            )
-            time.sleep(2.0)
-            return None
+        self.user_view.user_print_msg(
+            Fore.LIGHTRED_EX + "Aucun joueur n'a été trouvé dans la base de données."
+        )
+        time.sleep(2.0)
+        return None
 
     def set_new_player(self):
         """Create a new Player instance and save it in the database."""
-        try:
-            last_name = self.user_view.prompt_string("joueur", "le nom")
-            first_name = self.user_view.prompt_string("joueur", "le prénom")
-            if not self.db_player.search_table_players(last_name, first_name):
-                birth_date = self.user_view.prompt_string(
-                    "joueur", "la date de naissance"
-                )
-                sex = self.player_view.prompt_player_sex()
-                elo = self.player_view.prompt_player_elo()
+        last_name = self.user_view.prompt_string("joueur", "le nom")
+        first_name = self.user_view.prompt_string("joueur", "le prénom")
+        if not self.db_player.search_table_players(last_name, first_name):
+            birth_date = self.user_view.prompt_string("joueur", "la date de naissance")
+            sex = self.player_view.prompt_player_sex()
+            elo = self.player_view.prompt_player_elo()
 
-                player = Player(last_name, first_name, birth_date, sex, elo)
-                self.db_player.save_table_players(player)
-                self.user_view.user_print_msg(Fore.LIGHTYELLOW_EX + f"\n{str(player)}")
-            else:
-                self.user_view.user_print_err(
-                    f"\nLe joueur {last_name} {first_name} "
-                    "est déjà présent dans la base de données."
-                )
-            time.sleep(2.0)
-        except Exception as err:
-            logger.error("Oops! %s", err)
+            player = Player(last_name, first_name, birth_date, sex, elo)
+            self.db_player.save_table_players(player)
+            self.user_view.user_print_msg(Fore.LIGHTYELLOW_EX + f"\n{str(player)}")
+        else:
+            self.user_view.user_print_err(
+                f"\nLe joueur {last_name} {first_name} "
+                "est déjà présent dans la base de données."
+            )
+        time.sleep(2.0)
 
     def set_list_players(self, tournament: object) -> None:
         """Creates 8 players, if a player is present in the database,
@@ -121,59 +114,54 @@ class PlayerController:
                 self.user_view.title_h2(f"Créez le {j+1}er joueur.")
             else:
                 self.user_view.title_h2(f"Créez le {j+1}eme joueur.")
-            try:
-                last_name = self.user_view.prompt_string("joueur", "le nom")
-                first_name = self.user_view.prompt_string("joueur", "le prénom")
-                if [last_name, first_name] not in tournament.current_players:
+            last_name = self.user_view.prompt_string("joueur", "le nom")
+            first_name = self.user_view.prompt_string("joueur", "le prénom")
+            if [last_name, first_name] not in tournament.current_players:
+                player_found = self.db_player.search_table_players(
+                    last_name, first_name
+                )
+                if not player_found:
+                    birth_date = self.user_view.prompt_string(
+                        "joueur", "la date de naissance"
+                    )
+                    sex = self.player_view.prompt_player_sex()
+                    elo = self.player_view.prompt_player_elo()
+
+                    player = Participant(last_name, first_name, birth_date, sex, elo)
+                    tournament.players.append(player)
+                    self.db_player.save_table_players(player)
                     player_found = self.db_player.search_table_players(
                         last_name, first_name
                     )
-                    if not player_found:
-                        birth_date = self.user_view.prompt_string(
-                            "joueur", "la date de naissance"
-                        )
-                        sex = self.player_view.prompt_player_sex()
-                        elo = self.player_view.prompt_player_elo()
-
-                        player = Participant(
-                            last_name, first_name, birth_date, sex, elo
-                        )
-                        tournament.players.append(player)
-                        self.db_player.save_table_players(player)
-                        player_found = self.db_player.search_table_players(
-                            last_name, first_name
-                        )
-                        player.player_id = player_found.doc_id
-                        self.user_view.user_print_msg(
-                            Fore.LIGHTYELLOW_EX + f"\nLe joueur {str(player)} a bien "
-                            "été ajouté et enregistré dans la base de données!"
-                        )
-                    else:
-                        player = Participant(
-                            player_found["last_name"],
-                            player_found["first_name"],
-                            player_found["birth_date"],
-                            player_found["sex"],
-                            player_found["elo"],
-                        )
-                        player.player_id = player_found.doc_id
-                        tournament.players.append(player)
-                        self.user_view.user_print_msg(
-                            Fore.LIGHTYELLOW_EX + f"\nLe joueur {str(player)} "
-                            "a bien été ajouté!"
-                        )
-                        self.user_view.user_print_msg(
-                            "Ses informations sont importés depuis la base de données."
-                        )
-                    tournament.current_players.append([last_name, first_name])
-                else:
-                    self.user_view.user_print_err(
-                        f"\nLe joueur {last_name} {first_name} est déjà présent dans le tournoi !"
+                    player.player_id = player_found.doc_id
+                    self.user_view.user_print_msg(
+                        Fore.LIGHTYELLOW_EX + f"\nLe joueur {str(player)} a bien "
+                        "été ajouté et enregistré dans la base de données!"
                     )
-                self.db_tournament.update_table_tournament(tournament)
-                time.sleep(2.0)
-            except Exception as err:
-                logger.error("Oops! %s", err)
+                else:
+                    player = Participant(
+                        player_found["last_name"],
+                        player_found["first_name"],
+                        player_found["birth_date"],
+                        player_found["sex"],
+                        player_found["elo"],
+                    )
+                    player.player_id = player_found.doc_id
+                    tournament.players.append(player)
+                    self.user_view.user_print_msg(
+                        Fore.LIGHTYELLOW_EX + f"\nLe joueur {str(player)} "
+                        "a bien été ajouté!"
+                    )
+                    self.user_view.user_print_msg(
+                        "Ses informations sont importés depuis la base de données."
+                    )
+                tournament.current_players.append([last_name, first_name])
+            else:
+                self.user_view.user_print_err(
+                    f"\nLe joueur {last_name} {first_name} est déjà présent dans le tournoi !"
+                )
+            self.db_tournament.update_table_tournament(tournament)
+            time.sleep(2.0)
         self.user_view.user_print_green_msg(
             "Les 8 joueurs ont été créés, le tounoi peut commencer."
         )

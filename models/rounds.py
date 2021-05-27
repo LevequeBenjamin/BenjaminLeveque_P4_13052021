@@ -125,28 +125,28 @@ class Round:
         players_pair = []
         j = 0
         for j in range(4):
-            x = 1
-            if players[x].player_id not in players[0].opponents:
-                player_pair = [players[0], players[x]]
-                players[0].opponents.append(players[x].player_id)
-                players[x].opponents.append(players[0].player_id)
-                del players[x]
+            i = 1
+            if players[i].player_id not in players[0].opponents:
+                player_pair = [players[0], players[i]]
+                players[0].opponents.append(players[i].player_id)
+                players[i].opponents.append(players[0].player_id)
+                del players[i]
                 del players[0]
-                x += 1
+                i += 1
             elif len(players) == 2:
                 player_pair = [players[0], players[1]]
                 players[0].opponents.append(players[1].player_id)
                 players[1].opponents.append(players[0].player_id)
                 del players[1]
                 del players[0]
-                x += 1
+                i += 1
             else:
-                player_pair = [players[0], players[x]]
-                players[0].opponents.append(players[x].player_id)
-                players[x].opponents.append(players[0].player_id)
-                del players[x]
+                player_pair = [players[0], players[i]]
+                players[0].opponents.append(players[i].player_id)
+                players[i].opponents.append(players[0].player_id)
+                del players[i]
                 del players[0]
-                x += 1
+                i += 1
             j += 1
             players_pair.append(player_pair)
         return players_pair

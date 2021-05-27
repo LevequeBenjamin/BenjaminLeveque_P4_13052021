@@ -1,3 +1,5 @@
+# pylint: disable=too-many-arguments
+# pylint: disable=too-many-instance-attributes
 """Define the tournaments."""
 
 
@@ -43,7 +45,7 @@ class Tournament:
         Returns:
             Tournament.players [list]: a sorted list
         """
-        self.players(
+        self.players.sort(
             key=lambda player: (player.score, player.elo),
             reverse=True,
         )
@@ -103,6 +105,6 @@ class Tournament:
             rounds_serialized (list): contains a list of Round instances serialized
         """
         rounds_serialized = []
-        for round in self.rounds:
-            rounds_serialized.append(round.serialize())
+        for round_game in self.rounds:
+            rounds_serialized.append(round_game.serialize())
         return rounds_serialized

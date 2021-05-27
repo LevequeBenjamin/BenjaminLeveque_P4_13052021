@@ -1,7 +1,7 @@
 """Define the matches."""
 
 
-class Match:
+class Match: # pylint: disable=too-few-public-methods 
     """This is a class allowing to create a match."""
 
     # - - - - - - - - - - - #

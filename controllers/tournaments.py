@@ -63,13 +63,11 @@ class TournamentController:
                     tournament["time_control"],
                 )
             return self.db_tournament.tournaments
-        else:
-            self.user_view.user_print_msg(
-                Fore.LIGHTRED_EX
-                + "Aucun tournoi n'a été trouvé dans la base de données."
-            )
-            time.sleep(2.0)
-            return None
+        self.user_view.user_print_msg(
+            Fore.LIGHTRED_EX + "Aucun tournoi n'a été trouvé dans la base de données."
+        )
+        time.sleep(2.0)
+        return None
 
     def print_result_tournament(self, tournament: object) -> None:
         """Method used to display tournament rankings."""
@@ -78,7 +76,7 @@ class TournamentController:
         self.tournament_view.print_result_tournament(tournament.sort_score_players)
         confirm = self.user_view.prompt_return()
         if confirm == "Y":
-            return None
+            return
 
     def set_tournament(self) -> object:
         """Method used to creates a Tournament instance.
@@ -88,32 +86,25 @@ class TournamentController:
         Returns:
             tournament (Tournament): a Tournament instance
         """
-        try:
-            name = self.user_view.prompt_string("tournoi", "le nom")
-            location = self.user_view.prompt_string("tournoi", "l'adresse")
-            dated = self.user_view.prompt_string("tournoi", "la date")
-            time_control = self.tournament_view.prompt_tournament_time_control()
-            description = self.user_view.prompt_string("tournoi", "la description")
-            self.tournament_view.print_confirm_tournament(
-                name, location, dated, time_control, description
+        name = self.user_view.prompt_string("tournoi", "le nom")
+        location = self.user_view.prompt_string("tournoi", "l'adresse")
+        dated = self.user_view.prompt_string("tournoi", "la date")
+        time_control = self.tournament_view.prompt_tournament_time_control()
+        description = self.user_view.prompt_string("tournoi", "la description")
+        self.tournament_view.print_confirm_tournament(
+            name, location, dated, time_control, description
+        )
+        confirm = self.user_view.prompt_confirm()
+        if confirm == "Y":
+            tournament = Tournament(name, location, dated, time_control, description)
+            self.db_tournament.save_table_tournament(tournament)
+            tournament.tournament_id = self.db_tournament.get_id_tournament(name)
+            self.user_view.user_print_green_msg(
+                f"\nLe tournoi {name} est créé avec succés !"
             )
-            confirm = self.user_view.prompt_confirm()
-            if confirm == "Y":
-                tournament = Tournament(
-                    name, location, dated, time_control, description
-                )
-                self.db_tournament.save_table_tournament(tournament)
-                tournament.tournament_id = self.db_tournament.get_id_tournament(name)
-                self.user_view.user_print_green_msg(
-                    f"\nLe tournoi {name} est créé avec succés !"
-                )
-                time.sleep(2.0)
-                return tournament
-            else:
-                return None
-        except Exception as err:
-            logger.error("Oops! %s", err)
             time.sleep(2.0)
+            return tournament
+        return None
 
     def import_tournament(self) -> object:
         """Method used to import a tournament in progress and create a Tournament instance.
@@ -164,14 +155,14 @@ class TournamentController:
                         tournament.players.append(player)
                 if tournament_found["rounds"]:
                     for round_import in tournament_found["rounds"]:
-                        round = Round(
+                        round_game = Round(
                             round_import["list_matches"],
                             round_import["created_at"],
                             round_import["round"],
                         )
                         round.start = round_import["round_in_progress"]
                         round.finished_at = round_import["finished_at"]
-                        tournament.rounds.append(round)
+                        tournament.rounds.append(round_game)
                         for match_import in round_import["list_matches"]:
                             match = Match(
                                 match_import["match"][0][0],
@@ -179,7 +170,7 @@ class TournamentController:
                                 match_import["match"][0][1],
                                 match_import["match"][1][1],
                             )
-                            round.matches.append(match)
+                            round_game.matches.append(match)
                             tournament.current_round += 1
                         if tournament.current_round == 5:
                             tournament.current_tournament = "Tournoi terminé"
@@ -192,9 +183,9 @@ class TournamentController:
                 )
                 time.sleep(2.0)
                 return tournament
-        else:
-            self.user_view.user_print_err("Aucun tournoi en cours n'a été trouvé.")
-            time.sleep(2.0)
+        self.user_view.user_print_err("Aucun tournoi en cours n'a été trouvé.")
+        time.sleep(2.0)
+        return None
 
     def start_rounds(self, tournament: object) -> None:
         """Start the rounds.
@@ -206,14 +197,16 @@ class TournamentController:
             j = 1
             name = f"Round{tournament.current_round}"
             created_at = datetime.now()
-            round = Round(tournament.players, name, str(created_at))
+            round_game = Round(tournament.players, name, str(created_at))
             self.round_view.menu()
             if tournament.current_round == 1:
                 self.user_view.title_h2("Première ronde")
-                players_pair = round.generate_pair_first_round(round.sort_elo_players)
+                players_pair = round_game.generate_pair_first_round(
+                    round_game.sort_elo_players
+                )
             else:
                 self.user_view.title_h2(f"{tournament.current_round}ème tour.\n")
-                players_pair = round.generate_pair(round.sort_score_players)
+                players_pair = round_game.generate_pair(round_game.sort_score_players)
             self.round_view.print_header_players_pair_array()
             for player_one, player_two in players_pair:
                 self.round_view.print_players_pair(player_one, player_two)
@@ -223,13 +216,13 @@ class TournamentController:
                 self.start_round(round, players_pair, tournament, j)
             else:
                 return None
-        else:
-            self.user_view.user_print_err("Ce tournoi est terminé !")
-            time.sleep(2.0)
+        self.user_view.user_print_err("Ce tournoi est terminé !")
+        time.sleep(2.0)
+        return None
 
     def start_round(
         self,
-        round: object,
+        round_game: object,
         players_pair: list,
         tournament: object,
         j: int,
@@ -259,12 +252,12 @@ class TournamentController:
                 score_player_one,
                 score_player_two,
             )
-            round.matches.append(match)
+            round_game.matches.append(match)
             j += 1
-        tournament.rounds.append(round)
+        tournament.rounds.append(round_game)
         tournament.current_round += 1
-        round.finished_at = str(datetime.now())
-        round.start = False
+        round_game.finished_at = str(datetime.now())
+        round_game.start = False
         if tournament.current_round == 5:
             ladder = 1
             for player in tournament.sort_score_players:

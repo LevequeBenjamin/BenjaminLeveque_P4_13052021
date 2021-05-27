@@ -1,3 +1,4 @@
+# pylint: disable=too-many-arguments
 """Define the players."""
 
 
@@ -59,6 +60,7 @@ class Player:
             "sex": self.sex,
             "elo": self.elo,
         }
+
 
 class Participant(Player):
     """It is a class allowing to create an inheritance from the Player class."""
