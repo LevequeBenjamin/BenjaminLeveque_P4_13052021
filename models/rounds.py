@@ -34,8 +34,10 @@ class Round:
         Returns:
             Round.players [list]: a sorted list
         """
-        self.players.sort(key=lambda player: player.elo, reverse=True)
-        return self.players
+        players_sorted = sorted(
+            self.players, key=lambda player: player.elo, reverse=True
+        )
+        return players_sorted
 
     @property
     def sort_score_players(self) -> list:
@@ -44,11 +46,12 @@ class Round:
         Returns:
             Round.players [list]: a sorted list
         """
-        self.players.sort(
+        players_sorted = sorted(
+            self.players,
             key=lambda player: (player.score, player.elo),
             reverse=True,
         )
-        return self.players
+        return players_sorted
 
     # - - - - - - - - - - - #
     # methods               #
