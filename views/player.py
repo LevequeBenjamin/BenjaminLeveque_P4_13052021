@@ -4,6 +4,9 @@
 import logging
 from colorama import Fore
 
+# views
+from views.user import UserView
+
 # logger
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -13,11 +16,18 @@ class PlayerView:
     """Player view"""
 
     # - - - - - - - - - - - #
+    # special methods       #
+    # - - - - - - - - - - - #
+
+    def __init__(self):
+        """Inits TournamentView"""
+        self.user_views = UserView()
+
+    # - - - - - - - - - - - #
     # methods               #
     # - - - - - - - - - - - #
 
-    @staticmethod
-    def prompt_player_sex() -> str:
+    def prompt_player_sex(self) -> str:
         """Prompt for get player sex.
 
         Returns:
@@ -36,22 +46,11 @@ class PlayerView:
                 )
             else:
                 print(Fore.LIGHTGREEN_EX + f"Le sexe du joueur est : {sex}")
-                while confirm != "Y" or "N":
-                    confirm = input(
-                        Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : "
-                    ).upper()
-                    if confirm == "Y":
-                        return sex
-                    if confirm == "N":
-                        print("Veuillez entrez le sex du joueur svp.")
-                        break
-                    print(
-                        Fore.LIGHTRED_EX
-                        + "Je n'ai pas compris ce que vous voulez dire."
-                    )
+                confirm = self.user_views.prompt_confirm()
+                if confirm == "Y":
+                    return sex
 
-    @staticmethod
-    def prompt_player_elo() -> int:
+    def prompt_player_elo(self) -> int:
         """Prompt for get player elo.
 
         Returns:
@@ -70,19 +69,9 @@ class PlayerView:
                 )
             else:
                 print(Fore.LIGHTGREEN_EX + f"Le classement elo du joueur est: {elo}")
-                while confirm != "Y" or "N":
-                    confirm = input(
-                        Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : "
-                    ).upper()
-                    if confirm == "Y":
-                        return int(elo)
-                    if confirm == "N":
-                        print("Veuillez entrez le classement Elo du joueur svp.")
-                        break
-                    print(
-                        Fore.LIGHTRED_EX
-                        + "Je n'ai pas compris ce que vous voulez dire."
-                    )
+                confirm = self.user_views.prompt_confirm()
+                if confirm == "Y":
+                    return int(elo)
 
     @staticmethod
     def menu() -> None:

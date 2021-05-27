@@ -74,19 +74,11 @@ class TournamentView:
                 if choice not in range(1, 4):
                     print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
                 elif choice in range(1, 4):
-                    while confirm != "Y":
-                        confirm = input(
-                            Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : "
-                        ).upper()
-                        if confirm == "Y":
-                            return self.perform_time_control(choice)
-                        if confirm == "N":
-                            choice = 0
-                            break
-                        print(
-                            Fore.LIGHTRED_EX
-                            + "Je n'ai pas compris ce que vous voulez dire."
-                        )
+                    confirm = self.user_views.prompt_confirm()
+                    if confirm == "Y":
+                        return self.perform_time_control(choice)
+                    else :
+                        choice = 0
             except (ValueError, TypeError):
                 print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
 
@@ -110,7 +102,7 @@ class TournamentView:
                 print("[0] Quitter le tournoi.\n")
         else:
             print(Fore.LIGHTWHITE_EX + "[1] Afficher le classement.")
-            #print("[2] Afficher les matches.")
+            # print("[2] Afficher les matches.")
             print("[0] Quitter le tournoi.\n")
         print(Fore.CYAN + f'{"=" * 119}')
 

@@ -67,7 +67,6 @@ class TournamentController:
             Fore.LIGHTRED_EX + "Aucun tournoi n'a été trouvé dans la base de données."
         )
         time.sleep(2.0)
-        return None
 
     def print_result_tournament(self, tournament: object) -> None:
         """Method used to display tournament rankings."""

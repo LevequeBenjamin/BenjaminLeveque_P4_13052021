@@ -96,12 +96,11 @@ class UserView:
             [type]: [description]
         """
         confirm = ""
-        while confirm != "Y" or "N":
+        while confirm not in ["Y", "N"]:
             confirm = input(Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : ").upper()
             if confirm not in ["Y", "N"]:
                 print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire.")
-            return confirm
-
+        return confirm
 
     @staticmethod
     def prompt_return():
@@ -118,7 +117,6 @@ class UserView:
             if confirm not in ["Y", "N"]:
                 print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire.")
         return confirm
-            
 
     @staticmethod
     def prompt_choice_menu(choice: int) -> int:
@@ -137,8 +135,7 @@ class UserView:
                 print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
         return user_choice
 
-    @staticmethod
-    def prompt_string(argument_one, argument_two) -> str:
+    def prompt_string(self, argument_one, argument_two) -> str:
         """Prompt for get tournament name.
 
         Returns:
@@ -155,19 +152,15 @@ class UserView:
                     f"veuillez entrer {argument_two} svp"
                 )
             else:
-                print(Fore.LIGHTGREEN_EX + f"{argument_two} du {argument_one} est: {value}")
-                while confirm != "Y" or "N":
-                    confirm = input(Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : ").upper()
-                    if confirm == "Y":
-                        return value
-                    if confirm == "N":
-                        print(f"Veuillez entrez {argument_two} svp.")
-                        break
-                    else:
-                        print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire.")
+                print(
+                    Fore.LIGHTGREEN_EX
+                    + f"{argument_two} du {argument_one} est: {value}"
+                )
+                confirm = self.prompt_confirm()
+                if confirm == "Y":
+                    return value
 
-    @staticmethod
-    def prompt_id(argument_one, argument_two) -> int:
+    def prompt_id(self, argument_one, argument_two) -> int:
         """Prompt for get tournament id.
 
         Returns:
@@ -185,13 +178,10 @@ class UserView:
                     f"veuillez entrer {argument_two} du {argument_one} en caractère numerique svp."
                 )
             else:
-                print(Fore.LIGHTGREEN_EX + f"{argument_two} du {argument_one} est: {value}")
-                while confirm != "Y" or "N":
-                    confirm = input(Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : ").upper()
-                    if confirm == "Y":
-                        return int(value)
-                    if confirm == "N":
-                        print(f"Veuillez entrez {argument_two} du {argument_one} svp.")
-                        break
-                    else:
-                        print(Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire.")
+                print(
+                    Fore.LIGHTGREEN_EX
+                    + f"{argument_two} du {argument_one} est: {value}"
+                )
+                confirm = self.prompt_confirm()
+                if confirm == "Y":
+                    return int(value)
