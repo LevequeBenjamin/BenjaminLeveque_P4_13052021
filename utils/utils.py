@@ -10,3 +10,10 @@ def isfloat(argument):
     except ValueError:
         return False
     return True
+
+
+def ispair(argument):
+    if (argument % 2) == 0:
+        return True
+    else:
+        return False

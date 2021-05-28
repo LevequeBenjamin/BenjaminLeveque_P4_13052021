@@ -3,6 +3,7 @@
 # librairies
 from datetime import datetime
 import time
+from utils.utils import ispair
 from colorama import Fore
 
 # models
@@ -72,6 +73,11 @@ class TournamentController(GlobalController):
         number_players = self.user_view.prompt_integer(
             "tournoi", "le nombre de joueurs"
         )
+        while not ispair(number_players):
+            self.user_view.user_print_msg(Fore.LIGHTRED_EX + "Veuillez entrer un nombre pair svp.")
+            number_players = self.user_view.prompt_integer(
+                "tournoi", "le nombre de joueurs"
+            )
         number_rounds = self.user_view.prompt_integer("touroi", "le nombre de rondes")
         self.tournament_view.print_confirm_tournament(
             name,
