@@ -1,13 +1,8 @@
 """Match views."""
 
-# librairies
-from colorama import Fore
 
 # views
 from views.user import UserView
-
-# utils
-from utils.utils import isfloat
 
 
 class MatchView(UserView):
@@ -16,35 +11,34 @@ class MatchView(UserView):
     # - - - - - - - - - - - #
     # methods               #
     # - - - - - - - - - - - #
-    
+
     @staticmethod
-    def print_header_matches_array():
-        """[summary]"""
-        print(
-            f"{'ID'.center(10)} | "
-            f"{'Nom'.center(25)} | "
-            f"{'Lieu'.center(25)} | "
-            f"{'Date'.center(20)} | "
-            f"{'Time control'.center(25)}"
-            f"\n{'°' * 119}"
-        )
-        
-    @staticmethod
-    def print_matches(tournament_id, name, location, dated, time_control):
+    def print_matches(tournament):
         """[summary]
 
         Args:
-            tournament_id ([type]): [description]
-            name ([type]): [description]
-            location ([type]): [description]
-            dated ([type]): [description]
-            time_control ([type]): [description]
+            tournament ([type]): [description]
         """
-        print(
-            f"{str(tournament_id).center(10)} | "
-            f"{name.center(25)} | "
-            f"{location.center(25)} | "
-            f"{dated.center(20)} | "
-            f"{time_control.center(25)}"
-            f"\n{'-' * 119}"
-        )
+        for round_game in tournament.rounds:
+            print(f"\n{'=' * 119}")
+            print(f"{'-' * 20}".center(119))
+            print(f"{round_game.name.center(119)}")
+            print(f"{'-' * 20}".center(119))
+            print(
+                f"{'Nom'.center(20)} | "
+                f"{'Prénom'.center(20)} | "
+                f"{'Score'.center(25)} | "
+                f"{'Nom'.center(20)} | "
+                f"{'Prénom'.center(20)}"
+                f"\n{'°' * 119}"
+            )
+            for match in round_game.serialize_match:
+                print(
+                    f"{match['match'][0][0]['last_name'].center(20)} | "
+                    f"{match['match'][0][0]['first_name'].center(20)} | "
+                    f"{str(match['match'][0][1]).center(11)} | "
+                    f"{str(match['match'][1][1]).center(11)} | "
+                    f"{match['match'][1][0]['last_name'].center(20)} | "
+                    f"{match['match'][1][0]['first_name'].center(20)}"
+                    f"\n{'-' * 119}"
+                )

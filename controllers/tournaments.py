@@ -54,7 +54,7 @@ class TournamentController(GlobalController):
         confirm = self.user_view.prompt_return()
         if confirm == "Y":
             return
-        
+
     def print_rounds_tournament(self, tournament: object) -> None:
         """Method used to display tournament rankings."""
         self.round_view.print_header_rounds_array()
@@ -62,10 +62,10 @@ class TournamentController(GlobalController):
         confirm = self.user_view.prompt_return()
         if confirm == "Y":
             return
-    
+
     def print_matches_tournament(self, tournament: object) -> None:
         """Method used to display tournament rankings."""
-        pass
+        self.match_view.print_matches(tournament)
         confirm = self.user_view.prompt_return()
         if confirm == "Y":
             return
