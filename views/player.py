@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
-class PlayerView:
+class PlayerView(UserView):
     """Player view"""
 
     # - - - - - - - - - - - #
@@ -21,7 +21,7 @@ class PlayerView:
 
     def __init__(self):
         """Inits TournamentView"""
-        self.user_views = UserView()
+        super().__init__()
 
     # - - - - - - - - - - - #
     # methods               #
@@ -46,7 +46,7 @@ class PlayerView:
                 )
             else:
                 print(Fore.LIGHTGREEN_EX + f"Le sexe du joueur est : {sex}")
-                confirm = self.user_views.prompt_confirm()
+                confirm = self.prompt_confirm()
                 if confirm == "Y":
                     return sex
 

@@ -21,7 +21,7 @@ class TournamentView(UserView):
 
     def __init__(self):
         """Inits TournamentView"""
-        super().__init__(self)
+        super().__init__()
 
     # - - - - - - - - - - - #
     # methods               #

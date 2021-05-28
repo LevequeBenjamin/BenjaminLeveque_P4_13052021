@@ -24,7 +24,7 @@ class RoundView(UserView):
 
     def __init__(self):
         """Inits TournamentView"""
-        super().__init__(self)
+        super().__init__()
 
     # - - - - - - - - - - - #
     # methods               #
