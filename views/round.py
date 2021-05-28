@@ -77,3 +77,32 @@ class RoundView(UserView):
             f"{player_two.first_name.center(24)}"
             f"\n{'-' * 119}"
         )
+
+    @staticmethod
+    def print_header_rounds_array():
+        """[summary]"""
+        print(
+            f"{'Nom'.center(25)} | "
+            f"{'Début de ronde'.center(35)} | "
+            f"{'Fin de ronde'.center(35)}"
+            f"\n{'°' * 100}"
+        )
+
+    @staticmethod
+    def print_rounds(tournament):
+        """[summary]
+
+        Args:
+            tournament_id ([type]): [description]
+            name ([type]): [description]
+            location ([type]): [description]
+            dated ([type]): [description]
+            time_control ([type]): [description]
+        """
+        for round_game in tournament.rounds:
+            print(
+                f"{round_game.name.center(25)} | "
+                f"{round_game.created_at.center(35)} | "
+                f"{round_game.finished_at.center(35)}"
+                f"\n{'-' * 100}"
+            )

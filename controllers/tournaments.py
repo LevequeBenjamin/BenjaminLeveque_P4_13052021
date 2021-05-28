@@ -57,7 +57,8 @@ class TournamentController(GlobalController):
         
     def print_rounds_tournament(self, tournament: object) -> None:
         """Method used to display tournament rankings."""
-        pass
+        self.round_view.print_header_rounds_array()
+        self.round_view.print_rounds(tournament)
         confirm = self.user_view.prompt_return()
         if confirm == "Y":
             return
@@ -173,8 +174,8 @@ class TournamentController(GlobalController):
                     for round_import in tournament_found["rounds"]:
                         round_game = Round(
                             round_import["list_matches"],
-                            round_import["created_at"],
                             round_import["round"],
+                            round_import["created_at"],
                         )
                         round_game.start = round_import["round_in_progress"]
                         round_game.finished_at = round_import["finished_at"]
