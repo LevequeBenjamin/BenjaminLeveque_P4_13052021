@@ -2,10 +2,10 @@
 
 
 # views
-from views.user import UserView
+from views.abstract import AbstractView
 
 
-class MatchView(UserView):
+class MatchView(AbstractView):
     """Round view"""
 
     # - - - - - - - - - - - #

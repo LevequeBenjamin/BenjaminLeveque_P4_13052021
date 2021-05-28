@@ -13,10 +13,10 @@ from models.rounds import Round
 from models.matches import Match
 
 # controllers
-from controllers._global import GlobalController
+from controllers.abstract import AbstractController
 
 
-class TournamentController(GlobalController):
+class TournamentController(AbstractController):
     """TournamentController controller."""
 
     # - - - - - - - - - - - #
@@ -29,7 +29,7 @@ class TournamentController(GlobalController):
         Returns:
             tournaments (list): a list of players found in the database
         """
-        self.user_view.header()
+        self.tournament_view.header()
         if self.db_tournament.tournaments:
             self.tournament_view.menu_tournaments()
             self.tournament_view.print_header_tournament_array()
@@ -42,7 +42,7 @@ class TournamentController(GlobalController):
                     tournament["time_control"],
                 )
             return self.db_tournament.tournaments
-        self.user_view.user_print_msg(
+        self.tournament_view.user_print_msg(
             Fore.LIGHTRED_EX + "Aucun tournoi n'a été trouvé dans la base de données."
         )
         time.sleep(2.0)
@@ -51,7 +51,7 @@ class TournamentController(GlobalController):
     def print_players_tournament(self, tournament: object) -> None:
         """Method used to display tournament rankings."""
         self.player_view.print_players_tournament(tournament.sort_score_players)
-        confirm = self.user_view.prompt_return()
+        confirm = self.tournament_view.prompt_return()
         if confirm == "Y":
             return
 
@@ -59,14 +59,14 @@ class TournamentController(GlobalController):
         """Method used to display tournament rankings."""
         self.round_view.print_header_rounds_array()
         self.round_view.print_rounds(tournament)
-        confirm = self.user_view.prompt_return()
+        confirm = self.round_view.prompt_return()
         if confirm == "Y":
             return
 
     def print_matches_tournament(self, tournament: object) -> None:
         """Method used to display tournament rankings."""
         self.match_view.print_matches(tournament)
-        confirm = self.user_view.prompt_return()
+        confirm = self.match_view.prompt_return()
         if confirm == "Y":
             return
 
@@ -78,22 +78,22 @@ class TournamentController(GlobalController):
         Returns:
             tournament (Tournament): a Tournament instance
         """
-        name = self.user_view.prompt_string("tournoi", "le nom")
-        location = self.user_view.prompt_string("tournoi", "l'adresse")
-        dated = self.user_view.prompt_string("tournoi", "la date")
+        name = self.tournament_view.prompt_string("tournoi", "le nom")
+        location = self.tournament_view.prompt_string("tournoi", "l'adresse")
+        dated = self.tournament_view.prompt_string("tournoi", "la date")
         time_control = self.tournament_view.prompt_tournament_time_control()
-        description = self.user_view.prompt_string("tournoi", "la description")
-        number_players = self.user_view.prompt_integer(
+        description = self.tournament_view.prompt_string("tournoi", "la description")
+        number_players = self.tournament_view.prompt_integer(
             "tournoi", "le nombre de joueurs"
         )
         while not ispair(number_players):
-            self.user_view.user_print_msg(
+            self.tournament_view.user_print_msg(
                 Fore.LIGHTRED_EX + "Veuillez entrer un nombre pair svp."
             )
-            number_players = self.user_view.prompt_integer(
+            number_players = self.tournament_view.prompt_integer(
                 "tournoi", "le nombre de joueurs"
             )
-        number_rounds = self.user_view.prompt_integer("touroi", "le nombre de rondes")
+        number_rounds = self.tournament_view.prompt_integer("tournoi", "le nombre de rondes")
         self.tournament_view.print_confirm_tournament(
             name,
             location,
@@ -101,7 +101,7 @@ class TournamentController(GlobalController):
             time_control,
             description,
         )
-        confirm = self.user_view.prompt_confirm()
+        confirm = self.tournament_view.prompt_confirm()
         if confirm == "Y":
             tournament = Tournament(
                 name,
@@ -114,7 +114,7 @@ class TournamentController(GlobalController):
             )
             self.db_tournament.save_table_tournament(tournament)
             tournament.tournament_id = self.db_tournament.get_id_tournament(name)
-            self.user_view.user_print_msg(
+            self.tournament_view.user_print_msg(
                 Fore.LIGHTGREEN_EX + f"\nLe tournoi {name} est créé avec succés !"
             )
             time.sleep(2.0)
@@ -129,7 +129,7 @@ class TournamentController(GlobalController):
         Returns:
             tournament (Tournament): a Tournament instance
         """
-        tournament_id = self.user_view.prompt_integer("tournoi", "l'id")
+        tournament_id = self.tournament_view.prompt_integer("tournoi", "l'id")
         tournament_found = self.db_tournament.search_table_tournament_with_id(
             tournament_id
         )
@@ -142,7 +142,7 @@ class TournamentController(GlobalController):
                 tournament_found["dated"],
                 tournament_found["time_control"],
             )
-            confirm = self.user_view.prompt_confirm()
+            confirm = self.tournament_view.prompt_confirm()
             if confirm == "Y":
                 tournament = Tournament(
                     tournament_found["name"],
@@ -195,14 +195,14 @@ class TournamentController(GlobalController):
                 if tournament.current_round == 5:
                     tournament.current_tournament = "Tournoi terminé"
                 tournament.tournament_id = tournament_found.doc_id
-                self.user_view.user_print_msg(
+                self.tournament_view.user_print_msg(
                     Fore.LIGHTGREEN_EX
                     + f"\nLe tournoi {tournament.name} est importé avec succés !"
                 )
                 time.sleep(2.0)
                 return tournament
             return None
-        self.user_view.user_print_msg(
+        self.tournament_view.user_print_msg(
             Fore.LIGHTRED_EX + "Aucun tournoi en cours n'a été trouvé."
         )
         time.sleep(2.0)
@@ -222,24 +222,24 @@ class TournamentController(GlobalController):
             round_game = Round(players, name, str(created_at))
             self.round_view.sub_round_menu()
             if tournament.current_round == 1:
-                self.user_view.title_h2("Première ronde")
+                self.round_view.title_h2("Première ronde")
                 players_pair = round_game.generate_pair_first_round(
                     tournament, round_game.sort_elo_players
                 )
             else:
-                self.user_view.title_h2(f"{tournament.current_round}ème tour.\n")
+                self.round_view.title_h2(f"{tournament.current_round}ème tour.\n")
                 players_pair = round_game.generate_pair(round_game.sort_score_players)
             self.round_view.print_header_players_pair_array()
             for player_one, player_two in players_pair:
                 self.round_view.print_players_pair(player_one, player_two)
-            user_choice = self.user_view.prompt_choice_menu(2)
+            user_choice = self.round_view.prompt_choice_menu(2)
             if user_choice == 1:
-                self.user_view.header()
+                self.round_view.header()
                 self.start_round(round_game, players_pair, tournament, j)
             else:
                 return
         else:
-            self.user_view.user_print_msg(Fore.LIGHTRED_EX + "Ce tournoi est terminé !")
+            self.round_view.user_print_msg(Fore.LIGHTRED_EX + "Ce tournoi est terminé !")
             time.sleep(2.0)
             return
 
@@ -260,13 +260,13 @@ class TournamentController(GlobalController):
             j (int): a match counter.
         """
         for player_one, player_two in players_pair:
-            self.user_view.title_h2(f"MATCH : {j}")
+            self.round_view.title_h2(f"MATCH : {j}")
             self.round_view.print_header_players_pair_array()
             self.round_view.print_players_pair(player_one, player_two)
-            self.user_view.user_print_msg(f"\nJoueur : {str(player_one)}\n")
+            self.round_view.user_print_msg(f"\nJoueur : {str(player_one)}\n")
             score_player_one = self.round_view.prompt_set_score()
             player_one.score += score_player_one
-            self.user_view.user_print_msg(f"joueur : {str(player_two)}")
+            self.round_view.user_print_msg(f"joueur : {str(player_two)}")
             score_player_two = self.round_view.prompt_set_score()
             player_two.score += score_player_two
             match = Match(
@@ -286,13 +286,13 @@ class TournamentController(GlobalController):
             for player in tournament.sort_score_players:
                 player.ladder = ladder
                 ladder += 1
-            self.user_view.user_print_msg(
+            self.round_view.user_print_msg(
                 Fore.LIGHTGREEN_EX
                 + "TOURNOI TERMINÉ! Vous pouvez dés à present afficher les résultats."
             )
             tournament.current_tournament = "Tournoi terminé"
         else:
-            self.user_view.user_print_msg(
+            self.round_view.user_print_msg(
                 Fore.LIGHTGREEN_EX
                 + f"\nTOUR {str(tournament.current_round - 1)} TERMINÉ."
             )

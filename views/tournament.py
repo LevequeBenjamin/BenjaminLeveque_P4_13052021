@@ -4,10 +4,10 @@
 from colorama import Fore
 
 # views
-from views.user import UserView
+from views.abstract import AbstractView
 
 
-class TournamentView(UserView):
+class TournamentView(AbstractView):
     """TounamentView view"""
 
     # - - - - - - - - - - - #

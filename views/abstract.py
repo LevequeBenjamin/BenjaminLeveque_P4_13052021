@@ -3,10 +3,11 @@
 # librairies
 import os
 import sys
+from abc import ABC
 from colorama import Fore
 
 
-class UserView:
+class AbstractView(ABC):
     """User view"""
 
     @staticmethod

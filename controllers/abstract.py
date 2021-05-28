@@ -1,8 +1,9 @@
 """Define a parent controller for players controller and tournaments controller"""
 
+from abc import ABC
+
 # views
 from views.round import RoundView
-from views.user import UserView
 from views.tournament import TournamentView
 from views.player import PlayerView
 from views.match import MatchView
@@ -11,7 +12,7 @@ from views.match import MatchView
 from controllers.db import DbControllerTournament, DbControllerlPlayer
 
 
-class GlobalController:
+class AbstractController(ABC):
     """It is a parent class which is used to create inheritance."""
 
     # - - - - - - - - - - - #
@@ -25,7 +26,6 @@ class GlobalController:
         self.db_player = DbControllerlPlayer()
         # views
         self.tournament_view = TournamentView()
-        self.user_view = UserView()
         self.player_view = PlayerView()
         self.round_view = RoundView()
         self.match_view = MatchView()

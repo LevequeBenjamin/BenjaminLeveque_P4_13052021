@@ -4,13 +4,13 @@
 from colorama import Fore
 
 # views
-from views.user import UserView
+from views.abstract import AbstractView
 
 # utils
 from utils.utils import isfloat
 
 
-class RoundView(UserView):
+class RoundView(AbstractView):
     """Round view"""
 
     # - - - - - - - - - - - #
