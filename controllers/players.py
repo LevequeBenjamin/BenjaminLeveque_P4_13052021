@@ -57,7 +57,7 @@ class PlayerController(GlobalController):
 
             player = Player(last_name, first_name, birth_date, sex, elo)
             self.db_player.save_table_players(player)
-            self.user_view.user_print_msg(Fore.LIGHTGREEN_EX + f"\n{str(player)}")
+            self.user_view.user_print_msg(Fore.LIGHTGREEN_EX + f"\n{str(player)} a bien été ajouté!")
         else:
             self.user_view.user_print_msg(
                 Fore.LIGHTRED_EX + f"\nLe joueur {last_name} {first_name} "

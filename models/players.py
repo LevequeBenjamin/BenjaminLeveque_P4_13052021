@@ -34,7 +34,7 @@ class Player:
         Returns:
             string: return a message for the user.
         """
-        return f"Le joueur {self.last_name} {self.first_name} a bien été ajouté !"
+        return f"Le joueur {self.last_name} {self.first_name}"
 
     # - - - - - - - - - - - #
     # properties            #

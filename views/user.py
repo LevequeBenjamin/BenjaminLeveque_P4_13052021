@@ -156,7 +156,7 @@ class UserView:
         while confirm != "Y":
             value = input(
                 Fore.LIGHTCYAN_EX
-                + f"\nentrez {argument_two} du {argument_one} que vous voulez importer : "
+                + f"\nentrez {argument_two} du {argument_one} : "
             )
             if not value.isnumeric() or not value:
                 print(

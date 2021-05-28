@@ -47,7 +47,6 @@ class Controller:
         """
         self.user_view.header()
         if user_choice == 1:
-            self.user_view.title_h2("Créez un joueur.")
             self.player_controller.set_new_player()
         elif user_choice == 2:
             self.user_view.title_h2("Modifiez le classement Elo un d'un joueur.")
