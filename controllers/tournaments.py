@@ -254,7 +254,7 @@ class TournamentController(GlobalController):
             tournament.current_tournament = "Tournoi terminé"
         else:
             self.user_view.user_print_msg(
-                Fore.LIGHTGREEN_EX + f"\nTOUR {tournament.current_round} TERMINÉ."
+                Fore.LIGHTGREEN_EX + f"\nTOUR {str(tournament.current_round - 1)} TERMINÉ."
             )
         self.db_tournament.update_table_tournament(tournament)
         time.sleep(2.0)
