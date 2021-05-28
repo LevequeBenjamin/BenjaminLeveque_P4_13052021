@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
-class TournamentView:
+class TournamentView(UserView):
     """TounamentView view"""
 
     # - - - - - - - - - - - #
@@ -21,7 +21,7 @@ class TournamentView:
 
     def __init__(self):
         """Inits TournamentView"""
-        self.user_views = UserView()
+        super().__init__(self)
 
     # - - - - - - - - - - - #
     # methods               #
@@ -74,7 +74,7 @@ class TournamentView:
                 if choice not in range(1, 4):
                     print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
                 elif choice in range(1, 4):
-                    confirm = self.user_views.prompt_confirm()
+                    confirm = self.prompt_confirm()
                     if confirm == "Y":
                         return self.perform_time_control(choice)
                     else:
@@ -88,7 +88,7 @@ class TournamentView:
         Args:
             tournament (Object): a Tournament instance.
         """
-        self.user_views.header()
+        self.header()
         print(Fore.LIGHTWHITE_EX + f'{"* MENU TOURNAMENT*"}'.center(119))
         if tournament.current_round < 5:
             if not tournament.players or len(tournament.serialize_players) < 8:

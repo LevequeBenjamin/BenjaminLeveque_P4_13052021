@@ -113,7 +113,7 @@ class TournamentController:
         Returns:
             tournament (Tournament): a Tournament instance
         """
-        tournament_id = self.user_view.prompt_id("tournoi", "l'id")
+        tournament_id = self.user_view.prompt_integer("tournoi", "l'id")
         tournament_found = self.db_tournament.search_table_tournament_with_id(
             tournament_id
         )

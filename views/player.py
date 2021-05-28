@@ -50,29 +50,6 @@ class PlayerView:
                 if confirm == "Y":
                     return sex
 
-    def prompt_player_elo(self) -> int:
-        """Prompt for get player elo.
-
-        Returns:
-            elo (int): elo for create Player instance.
-        """
-        confirm = ""
-        while confirm != "Y":
-            elo = input(
-                Fore.LIGHTCYAN_EX
-                + "entrez le classement Elo du joueur en caractère numerique: "
-            )
-            if not elo.isnumeric() or not elo:
-                print(
-                    Fore.LIGHTRED_EX + "Je n'ai pas compris ce que vous voulez dire, "
-                    "veuillez entrer le classement Elo du joueur en caractère numerique svp."
-                )
-            else:
-                print(Fore.LIGHTGREEN_EX + f"Le classement elo du joueur est: {elo}")
-                confirm = self.user_views.prompt_confirm()
-                if confirm == "Y":
-                    return int(elo)
-
     @staticmethod
     def menu() -> None:
         """Show players menu."""

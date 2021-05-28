@@ -4,6 +4,9 @@
 import logging
 from colorama import Fore
 
+# views
+from views.user import UserView
+
 # utils
 from utils.utils import isfloat
 
@@ -12,15 +15,22 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
-class RoundView:
+class RoundView(UserView):
     """Round view"""
+
+    # - - - - - - - - - - - #
+    # special methods       #
+    # - - - - - - - - - - - #
+
+    def __init__(self):
+        """Inits TournamentView"""
+        super().__init__(self)
 
     # - - - - - - - - - - - #
     # methods               #
     # - - - - - - - - - - - #
 
-    @staticmethod
-    def prompt_set_score() -> float:
+    def prompt_set_score(self) -> float:
         """Prompt for get player score.
 
         Returns:
@@ -37,19 +47,9 @@ class RoundView:
                     "veuillez entrer le score du joueur en caractère numerique svp."
                 )
             else:
-                while confirm != "Y" or "N":
-                    confirm = input(
-                        Fore.LIGHTCYAN_EX + "Vous confirmez ? (Y/N) : "
-                    ).upper()
-                    if confirm == "Y":
-                        return float(score)
-                    if confirm == "N":
-                        print("Veuillez entrez le score du joueur svp.")
-                        break
-                    print(
-                        Fore.LIGHTRED_EX
-                        + "Je n'ai pas compris ce que vous voulez dire."
-                    )
+                confirm = self.prompt_confirm()
+                if confirm == "Y":
+                    return float(score)
 
     @staticmethod
     def menu() -> None:

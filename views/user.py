@@ -151,7 +151,7 @@ class UserView:
                 if confirm == "Y":
                     return value
 
-    def prompt_id(self, argument_one, argument_two) -> int:
+    def prompt_integer(self, argument_one, argument_two) -> int:
         """Prompt for get tournament id.
 
         Returns:

@@ -75,7 +75,7 @@ class PlayerController:
         if not self.db_player.search_table_players(last_name, first_name):
             birth_date = self.user_view.prompt_string("joueur", "la date de naissance")
             sex = self.player_view.prompt_player_sex()
-            elo = self.player_view.prompt_player_elo()
+            elo = self.user_view.prompt_integer("joueur", "le classement elo")
 
             player = Player(last_name, first_name, birth_date, sex, elo)
             self.db_player.save_table_players(player)
@@ -126,7 +126,7 @@ class PlayerController:
                         "joueur", "la date de naissance"
                     )
                     sex = self.player_view.prompt_player_sex()
-                    elo = self.player_view.prompt_player_elo()
+                    elo = self.user_view.prompt_integer("joueur", "le classement elo")
 
                     player = Participant(last_name, first_name, birth_date, sex, elo)
                     tournament.players.append(player)
@@ -183,7 +183,7 @@ class PlayerController:
                 player["sex"],
                 player["elo"],
             )
-        player_id = self.user_view.prompt_id("joueur", "l'id")
+        player_id = self.user_view.prompt_integer("joueur", "l'id")
         player_found = self.db_player.search_table_players_with_id(player_id)
         if player_found:
             player = Player(
@@ -202,7 +202,7 @@ class PlayerController:
                 player_found["sex"],
                 player_found["elo"],
             )
-            elo = self.player_view.prompt_player_elo()
+            elo = self.user_view.prompt_integer("joueur", "le classement elo")
             player.elo = elo
             self.db_player.update_player(player, player_id)
             self.user_view.user_print_msg(
