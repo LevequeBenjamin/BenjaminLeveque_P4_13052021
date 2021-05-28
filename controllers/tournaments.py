@@ -74,7 +74,9 @@ class TournamentController(GlobalController):
             "tournoi", "le nombre de joueurs"
         )
         while not ispair(number_players):
-            self.user_view.user_print_msg(Fore.LIGHTRED_EX + "Veuillez entrer un nombre pair svp.")
+            self.user_view.user_print_msg(
+                Fore.LIGHTRED_EX + "Veuillez entrer un nombre pair svp."
+            )
             number_players = self.user_view.prompt_integer(
                 "tournoi", "le nombre de joueurs"
             )
@@ -213,9 +215,7 @@ class TournamentController(GlobalController):
                 )
             else:
                 self.user_view.title_h2(f"{tournament.current_round}ème tour.\n")
-                players_pair = round_game.generate_pair(
-                    tournament, round_game.sort_score_players
-                )
+                players_pair = round_game.generate_pair(round_game.sort_score_players)
             self.round_view.print_header_players_pair_array()
             for player_one, player_two in players_pair:
                 self.round_view.print_players_pair(player_one, player_two)

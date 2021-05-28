@@ -57,7 +57,9 @@ class PlayerController(GlobalController):
 
             player = Player(last_name, first_name, birth_date, sex, elo)
             self.db_player.save_table_players(player)
-            self.user_view.user_print_msg(Fore.LIGHTGREEN_EX + f"\n{str(player)} a bien été ajouté!")
+            self.user_view.user_print_msg(
+                Fore.LIGHTGREEN_EX + f"\n{str(player)} a bien été ajouté!"
+            )
         else:
             self.user_view.user_print_msg(
                 Fore.LIGHTRED_EX + f"\nLe joueur {last_name} {first_name} "
@@ -76,7 +78,7 @@ class PlayerController(GlobalController):
             tournament (Tournament): Tournament instance
         """
         j = len(tournament.serialize_players)
-        while j in range(0, tournament.number_players-1):
+        while j in range(0, tournament.number_players - 1):
             j = len(tournament.serialize_players)
             self.user_view.header()
             self.player_view.print_header_player_array()
@@ -147,7 +149,7 @@ class PlayerController(GlobalController):
             + f"Les {str(tournament.number_players)} joueurs ont été créés, le tounoi peut commencer."
         )
         time.sleep(2.0)
-###########################################
+
     def update_players_elo(self) -> None:
         """Method used to modify the elo rank of a player
         if the player exists in the database, else return an error."""

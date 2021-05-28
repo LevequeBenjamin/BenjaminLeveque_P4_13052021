@@ -28,6 +28,8 @@ class Tournament:
             dated (string): contains the dated entered by the user,
             time_control (string): contains the time control entered by the user,
             description (string): contains the description entered by the user,
+            number_players (int) : contains the number of players entered by the user.
+            number_rounds (int) : contains the number or rounds entred by the user.
         """
         self.tournament_id = 0
         self.name = name
