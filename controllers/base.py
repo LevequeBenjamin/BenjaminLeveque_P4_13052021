@@ -113,7 +113,7 @@ class Controller:
         """
         self.user_view.header()
         if tournament.current_round <= 4:
-            if not tournament.players or len(tournament.serialize_players()) < 8:
+            if not tournament.players or len(tournament.serialize_players) < 8:
                 if user_choice == 1:
                     self.user_view.title_h2("Créez 8 joueur.")
                     self.player_controller.set_list_players(tournament)
