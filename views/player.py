@@ -83,23 +83,6 @@ class PlayerView:
         print(Fore.CYAN + f'{"=" * 119}')
 
     @staticmethod
-    def prompt_menu_players() -> int:
-        """Prompt for get user choice for menu players.
-
-        Returns:
-            user_choice (int): a user choice.
-        """
-        user_choice = 3
-        while user_choice not in range(0, 3):
-            try:
-                user_choice = int(
-                    input(Fore.LIGHTBLUE_EX + "\nQue voulez-vous faire ? >> ")
-                )
-            except (ValueError, TypeError):
-                print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
-        return user_choice
-
-    @staticmethod
     def print_header_player_array():
         """[summary]"""
         print(

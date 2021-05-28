@@ -102,7 +102,6 @@ class TournamentView:
                 print("[0] Quitter le tournoi.\n")
         else:
             print(Fore.LIGHTWHITE_EX + "[1] Afficher le classement.")
-            # print("[2] Afficher les matches.")
             print("[0] Quitter le tournoi.\n")
         print(Fore.CYAN + f'{"=" * 119}')
 

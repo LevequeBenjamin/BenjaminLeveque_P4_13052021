@@ -1,7 +1,7 @@
 """Define the matches."""
 
 
-class Match: # pylint: disable=too-few-public-methods 
+class Match:  # pylint: disable=too-few-public-methods
     """This is a class allowing to create a match."""
 
     # - - - - - - - - - - - #
@@ -31,6 +31,10 @@ class Match: # pylint: disable=too-few-public-methods
             [player_one, score_player_one],
             [player_two, score_player_two],
         )
+
+    # - - - - - - - - - - - #
+    # properties            #
+    # - - - - - - - - - - - #
 
     @property
     def serialize(self) -> dict:
