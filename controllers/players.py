@@ -66,7 +66,7 @@ class PlayerController(GlobalController):
         time.sleep(2.0)
 
     def set_list_players(self, tournament: object) -> None:
-        """Creates 8 players, if a player is present in the database,
+        """Creates list players, if a player is present in the database,
         the method imports it. If a player is already present in the
         tournament players list the method returns an error. And if a
         player is not present in the database, the method records it.
@@ -144,7 +144,7 @@ class PlayerController(GlobalController):
             time.sleep(2.0)
         self.user_view.user_print_msg(
             Fore.LIGHTGREEN_EX
-            + "Les 8 joueurs ont été créés, le tounoi peut commencer."
+            + f"Les {str(tournament.number_players)} joueurs ont été créés, le tounoi peut commencer."
         )
         time.sleep(2.0)
 ###########################################
