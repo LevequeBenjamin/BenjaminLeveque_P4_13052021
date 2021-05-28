@@ -48,11 +48,23 @@ class TournamentController(GlobalController):
         time.sleep(2.0)
         return None
 
-    def print_result_tournament(self, tournament: object) -> None:
+    def print_players_tournament(self, tournament: object) -> None:
         """Method used to display tournament rankings."""
-        self.tournament_view.print_current_tournament(tournament)
-        self.user_view.title_h2("Résultat du tournoi")
-        self.tournament_view.print_result_tournament(tournament.sort_score_players)
+        self.player_view.print_players_tournament(tournament.sort_score_players)
+        confirm = self.user_view.prompt_return()
+        if confirm == "Y":
+            return
+        
+    def print_rounds_tournament(self, tournament: object) -> None:
+        """Method used to display tournament rankings."""
+        pass
+        confirm = self.user_view.prompt_return()
+        if confirm == "Y":
+            return
+    
+    def print_matches_tournament(self, tournament: object) -> None:
+        """Method used to display tournament rankings."""
+        pass
         confirm = self.user_view.prompt_return()
         if confirm == "Y":
             return

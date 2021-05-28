@@ -29,7 +29,7 @@ class PlayerController(GlobalController):
         if self.db_player.players:
             self.player_view.sub_players_menu()
             self.player_view.print_header_player_array()
-            for player in self.db_player.players:
+            for player in self.db_player.sort_alphabetical_players:
                 self.player_view.print_player(
                     player.doc_id,
                     player["last_name"],
@@ -39,6 +39,33 @@ class PlayerController(GlobalController):
                     player["elo"],
                 )
             return self.db_player.players
+        self.user_view.user_print_msg(
+            Fore.LIGHTRED_EX + "Aucun joueur n'a été trouvé dans la base de données."
+        )
+        time.sleep(2.0)
+        return None
+
+    def print_elo_players(self) -> list:
+        """Method used to display all players in the database
+
+        Returns:
+            players (list): a list of players found in the database
+        """
+        self.user_view.header()
+        self.user_view.title_h2("Liste de tous les joueurs par classement Elo.")
+        if self.db_player.players:
+            for player in self.db_player.sort_elo_players:
+                self.player_view.print_player(
+                    player.doc_id,
+                    player["last_name"],
+                    player["first_name"],
+                    player["birth_date"],
+                    player["sex"],
+                    player["elo"],
+                )
+            confirm = self.user_view.prompt_return()
+            if confirm == "Y":
+                return self.db_player.players
         self.user_view.user_print_msg(
             Fore.LIGHTRED_EX + "Aucun joueur n'a été trouvé dans la base de données."
         )
@@ -153,6 +180,8 @@ class PlayerController(GlobalController):
     def update_players_elo(self) -> None:
         """Method used to modify the elo rank of a player
         if the player exists in the database, else return an error."""
+        self.user_view.header()
+        self.user_view.title_h2("Modifiez le classement Elo un d'un joueur.")
         self.player_view.print_header_player_array()
         for player in self.db_player.players:
             self.player_view.print_player(

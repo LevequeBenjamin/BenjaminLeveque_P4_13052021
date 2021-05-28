@@ -35,7 +35,7 @@ class Controller:
         """Method which displays a complete list of players in database."""
         players = self.player_controller.print_players()
         if players:
-            user_choice = self.user_view.prompt_choice_menu(3)
+            user_choice = self.user_view.prompt_choice_menu(4)
             self.display_players_perform(user_choice)
         self.start_program()
 
@@ -48,9 +48,13 @@ class Controller:
         self.user_view.header()
         if user_choice == 1:
             self.player_controller.set_new_player()
+            self.display_players()
         elif user_choice == 2:
-            self.user_view.title_h2("Modifiez le classement Elo un d'un joueur.")
             self.player_controller.update_players_elo()
+            self.display_players()
+        elif user_choice == 3:
+            self.player_controller.print_elo_players()
+            self.display_players()
         elif user_choice == 0:
             self.start_program()
 
@@ -94,7 +98,7 @@ class Controller:
             self.tournament_controller.tournament_view.print_current_tournament(
                 tournament
             )
-            user_choice = self.user_view.prompt_choice_menu(2)
+            user_choice = self.user_view.prompt_choice_menu(5)
             self.start_tournament_perform(user_choice, tournament)
 
     def start_tournament_perform(self, user_choice: int, tournament: object) -> None:
@@ -121,13 +125,47 @@ class Controller:
                 if user_choice == 1:
                     self.user_view.title_h2("Tournoi en cours.")
                     self.tournament_controller.start_rounds(tournament)
+                elif user_choice == 2:
+                    self.tournament_controller.tournament_view.print_current_tournament(
+                        tournament
+                    )
+                    self.user_view.title_h2("Liste des participants.")
+                    self.tournament_controller.print_players_tournament(tournament)
+                elif user_choice == 3:
+                    self.tournament_controller.tournament_view.print_current_tournament(
+                        tournament
+                    )
+                    self.user_view.title_h2("Liste des rondes.")
+                    self.tournament_controller.print_rounds_tournament(tournament)
+                elif user_choice == 4:
+                    self.tournament_controller.tournament_view.print_current_tournament(
+                        tournament
+                    )
+                    self.user_view.title_h2("Liste des mathes.")
+                    self.tournament_controller.print_matches_tournament(tournament)
                 elif user_choice == 0:
                     self.start_program()
             user_choice = ""
         else:
             if user_choice == 1:
-                self.tournament_controller.print_result_tournament(tournament)
-            if user_choice == 3:
+                self.tournament_controller.tournament_view.print_current_tournament(
+                    tournament
+                )
+                self.user_view.title_h2("Résultat du tournoi")
+                self.tournament_controller.print_players_tournament(tournament)
+            elif user_choice == 2:
+                self.tournament_controller.tournament_view.print_current_tournament(
+                    tournament
+                )
+                self.user_view.title_h2("Liste des rondes.")
+                self.tournament_controller.print_rounds_tournament(tournament)
+            elif user_choice == 3:
+                self.tournament_controller.tournament_view.print_current_tournament(
+                    tournament
+                )
+                self.user_view.title_h2("Liste des mathes.")
+                self.tournament_controller.print_matches_tournament(tournament)
+            if user_choice == 0:
                 self.start_program()
 
     # # # # # # # # # display players # # # # # # # # #

@@ -91,9 +91,15 @@ class TournamentView(UserView):
                     Fore.LIGHTWHITE_EX
                     + f"[1] Démarrer le tour : {tournament.current_round}."
                 )
+                print("[2] Afficher la liste des participants.")
+                print("[3] Afficher la liste des rondes.")
+                print("[4] Afficher la liste des matches.")
                 print("[0] Quitter le tournoi.\n")
         else:
             print(Fore.LIGHTWHITE_EX + "[1] Afficher le classement.")
+            print("[2] Afficher la liste des participants.")
+            print("[3] Afficher la liste des rondes.")
+            print("[4] Afficher la liste des matches.")
             print("[0] Quitter le tournoi.\n")
         print(Fore.CYAN + f'{"=" * 119}')
 
@@ -167,32 +173,6 @@ class TournamentView(UserView):
         )
 
         print(f"description : {description}" f"\n{'-' * 119}")
-
-    @staticmethod
-    def print_result_tournament(players):
-        """[summary]
-
-        Args:
-            players ([type]): [description]
-        """
-        print(
-            f"{'Classement'.center(15)} | "
-            f"{'Nom'.center(30)} | "
-            f"{'Prénom'.center(30)} | "
-            f"{'Score'.center(15)} | "
-            f"{'Elo'.center(15)}"
-            f"\n{'°' * 119}"
-        )
-
-        for player in players:
-            print(
-                f"{str(player.ladder).center(15)} | "
-                f"{player.first_name.center(30)} | "
-                f"{player.last_name.center(30)} | "
-                f"{str(player.score).center(15)} | "
-                f"{str(player.elo).center(15)}"
-                f"\n{'-' * 119}"
-            )
 
     @staticmethod
     def print_header_tournament_array():

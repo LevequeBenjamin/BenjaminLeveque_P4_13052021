@@ -43,6 +43,7 @@ class PlayerView(UserView):
         print(Fore.LIGHTWHITE_EX + f'{"* MENU PLAYERS*"}'.center(119))
         print(Fore.LIGHTWHITE_EX + "[1] Ajouter un joueur.")
         print("[2] Modifier le classement Elo d'un joueur.")
+        print("[3] Afficher par classement Elo.")
         print("[0] Retour au menu principal.\n")
         print(Fore.CYAN + f'{"=" * 119}')
 
@@ -76,3 +77,29 @@ class PlayerView(UserView):
             f"{str(elo).center(10)}"
             f"\n{'-' * 119}"
         )
+
+    @staticmethod
+    def print_players_tournament(players):
+        """[summary]
+
+        Args:
+            players ([type]): [description]
+        """
+        print(
+            f"{'Classement'.center(15)} | "
+            f"{'Nom'.center(30)} | "
+            f"{'Prénom'.center(30)} | "
+            f"{'Score'.center(15)} | "
+            f"{'Elo'.center(15)}"
+            f"\n{'°' * 119}"
+        )
+
+        for player in players:
+            print(
+                f"{str(player.ladder).center(15)} | "
+                f"{player.first_name.center(30)} | "
+                f"{player.last_name.center(30)} | "
+                f"{str(player.score).center(15)} | "
+                f"{str(player.elo).center(15)}"
+                f"\n{'-' * 119}"
+            )

@@ -25,6 +25,18 @@ class DbControllerlPlayer:
     # methods               #
     # - - - - - - - - - - - #
 
+    @property
+    def sort_alphabetical_players(self):
+        players_sort = sorted(self.players, key=lambda player: player["last_name"])
+        return players_sort
+
+    @property
+    def sort_elo_players(self):
+        players_sort = sorted(
+            self.players, key=lambda player: player["elo"], reverse=True
+        )
+        return players_sort
+
     def get_id_player(self, last_name: str, first_name: str) -> int:
         """Method used to find the player id in the PLAYERS table
 
@@ -56,7 +68,7 @@ class DbControllerlPlayer:
                 return player_found
         return None
 
-    def search_table_players_with_id(self, player_id: id) -> dict:
+    def search_table_players_with_id(self, player_id: int) -> dict:
         """Method used to check if a player exist in the database.
 
         Args:
@@ -66,10 +78,14 @@ class DbControllerlPlayer:
             PLayer : return player if is
             found in the bd
         """
-        for player in self.players:
-            if player.doc_id == player_id:
-                player_found = player
-                return player_found
+        # for player in self.players:
+        #     if player.doc_id == player_id:
+        #         player_found = player
+        #         return player_found
+        # return None
+        player_found = self.players.get(doc_id=player_id)
+        if player_found:
+            return player_found
         return None
 
     def update_player(self, player: object, player_id: int) -> None:
