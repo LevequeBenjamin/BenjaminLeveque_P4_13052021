@@ -30,7 +30,7 @@ class Controller:
     # methods               #
     # - - - - - - - - - - - #
 
-    ##################### display players ####################
+    # # # # # # # # # display players # # # # # # # # #
     def display_players(self) -> None:
         """Method which displays a complete list of players in database."""
         players = self.player_controller.print_players()
@@ -54,9 +54,9 @@ class Controller:
         elif user_choice == 0:
             self.start_program()
 
-    ##################### display players end ####################
+    # # # # # # # # # display players # # # # # # # # #
 
-    ##################### display tournaments end ####################
+    # # # # # # # # # display players # # # # # # # # #
     def display_tournaments(self) -> None:
         """Method which displays a complete list of tournaments in database."""
         tournaments = self.tournament_controller.print_tournaments()
@@ -77,9 +77,9 @@ class Controller:
         elif user_choice == 0:
             self.start_program()
 
-    ##################### display tournaments end ####################
+    # # # # # # # # # display players # # # # # # # # #
 
-    ##################### start tournament ####################
+    # # # # # # # # # display players # # # # # # # # #
 
     def get_choice_menu_tournament(self, tournament: object) -> None:
         """Method which displays the tournament submenu as well as the current
@@ -130,7 +130,7 @@ class Controller:
             if user_choice == 3:
                 self.start_program()
 
-    ##################### main program ####################
+    # # # # # # # # # display players # # # # # # # # #
 
     def start_program(self) -> None:
         """Start the program."""
