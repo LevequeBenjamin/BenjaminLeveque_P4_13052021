@@ -29,7 +29,7 @@ class UserView:
         print("\n")
         print("=" * 119)
 
-    def menu(self):
+    def main_menu(self):
         """Print main menu."""
         self.header()
         print(Fore.LIGHTWHITE_EX + "* MENU *".center(119))

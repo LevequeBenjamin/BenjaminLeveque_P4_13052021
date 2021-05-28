@@ -39,7 +39,7 @@ class RoundView(UserView):
                     return float(score)
 
     @staticmethod
-    def menu() -> None:
+    def sub_round_menu() -> None:
         """Show rounds menu."""
         print(Fore.LIGHTWHITE_EX + f'{"* MENU RONDE *"}'.center(119))
         print("\n" * 1)

@@ -91,7 +91,7 @@ class Controller:
         """
         user_choice = ""
         while user_choice != 0:
-            self.tournament_controller.tournament_view.menu(tournament)
+            self.tournament_controller.tournament_view.sub_tournament_menu(tournament)
             self.tournament_controller.tournament_view.print_current_tournament(
                 tournament
             )
@@ -132,11 +132,12 @@ class Controller:
         """Start the program."""
         user_choice = ""
         while user_choice != 0:
-            self.user_view.menu()
+            self.user_view.main_menu()
             user_choice = self.user_view.prompt_choice_menu(6)
             self.main_perform(user_choice)
 
     def set_new_player(self):
+        """Method used to create a new player."""
         self.player_controller.set_new_player()
         self.start_program()
 
@@ -160,6 +161,7 @@ class Controller:
         self.start_program()
 
     def exit_program(self):
+        """Method used to exit the program."""
         self.user_view.exit_program()
         sys.exit()
 

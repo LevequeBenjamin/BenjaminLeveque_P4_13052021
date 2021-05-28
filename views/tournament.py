@@ -64,12 +64,11 @@ class TournamentView(UserView):
                     confirm = self.prompt_confirm()
                     if confirm == "Y":
                         return self.perform_time_control(choice)
-                    else:
-                        choice = 0
+                    choice = 0
             except (ValueError, TypeError):
                 print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
 
-    def menu(self, tournament: object) -> None:
+    def sub_tournament_menu(self, tournament: object) -> None:
         """Show tournament menu.
 
         Args:
@@ -93,7 +92,7 @@ class TournamentView(UserView):
         print(Fore.CYAN + f'{"=" * 119}')
 
     @staticmethod
-    def menu_tournois():
+    def menu_tournaments():
         """[summary]"""
         print(Fore.LIGHTWHITE_EX + f'{"* MENU TOURNAMENTS*"}'.center(119))
         print("[1] Importez un tournoi.")

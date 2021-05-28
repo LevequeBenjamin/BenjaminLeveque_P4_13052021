@@ -30,7 +30,7 @@ class TournamentController(GlobalController):
         """
         self.user_view.header()
         if self.db_tournament.tournaments:
-            self.tournament_view.menu_tournois()
+            self.tournament_view.menu_tournaments()
             self.tournament_view.print_header_tournament_array()
             for tournament in self.db_tournament.tournaments:
                 self.tournament_view.print_tournament(
@@ -45,6 +45,7 @@ class TournamentController(GlobalController):
             Fore.LIGHTRED_EX + "Aucun tournoi n'a été trouvé dans la base de données."
         )
         time.sleep(2.0)
+        return None
 
     def print_result_tournament(self, tournament: object) -> None:
         """Method used to display tournament rankings."""
@@ -180,7 +181,7 @@ class TournamentController(GlobalController):
             created_at = datetime.now()
             players = tournament.players
             round_game = Round(players, name, str(created_at))
-            self.round_view.menu()
+            self.round_view.sub_round_menu()
             if tournament.current_round == 1:
                 self.user_view.title_h2("Première ronde")
                 players_pair = round_game.generate_pair_first_round(

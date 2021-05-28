@@ -38,7 +38,7 @@ class PlayerView(UserView):
                     return sex
 
     @staticmethod
-    def menu() -> None:
+    def sub_players_menu() -> None:
         """Show players menu."""
         print(Fore.LIGHTWHITE_EX + f'{"* MENU PLAYERS*"}'.center(119))
         print(Fore.LIGHTWHITE_EX + "[1] Ajouter un joueur.")

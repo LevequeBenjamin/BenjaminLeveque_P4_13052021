@@ -27,7 +27,7 @@ class PlayerController(GlobalController):
         """
         self.user_view.header()
         if self.db_player.players:
-            self.player_view.menu()
+            self.player_view.sub_players_menu()
             self.player_view.print_header_player_array()
             for player in self.db_player.players:
                 self.player_view.print_player(
@@ -150,7 +150,7 @@ class PlayerController(GlobalController):
 
     def update_players_elo(self) -> None:
         """Method used to modify the elo rank of a player
-        if the player exists in the database, else returns an error."""
+        if the player exists in the database, else return an error."""
         self.player_view.print_header_player_array()
         for player in self.db_player.players:
             self.player_view.print_player(
