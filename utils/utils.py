@@ -3,7 +3,7 @@
 
 def isfloat(argument):
     """this function takes a value as argument,
-    returns Flase if it is not a float, and True
+    returns False if it is not a float, or True
     if the value is a Float or an integer"""
     try:
         float(argument)
@@ -13,6 +13,8 @@ def isfloat(argument):
 
 
 def ispair(argument):
+    """this function takes a value as argument,
+    returns True if it is a pair number, or False"""
     if (argument % 2) == 0:
         return True
     else:
