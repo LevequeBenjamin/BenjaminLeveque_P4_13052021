@@ -11,7 +11,14 @@ class Tournament:
     # - - - - - - - - - - - #
 
     def __init__(
-        self, name: str, location: str, dated: str, time_control: str, description: str
+        self,
+        name: str,
+        location: str,
+        dated: str,
+        time_control: str,
+        description: str,
+        number_players: int,
+        number_rounds: int,
     ):
         """Inits Tournament
 
@@ -33,6 +40,8 @@ class Tournament:
         self.description = description
         self.current_tournament = ""
         self.current_players = []
+        self.number_players = number_players
+        self.number_rounds = number_rounds
 
     # - - - - - - - - - - - #
     # properties            #
@@ -80,6 +89,8 @@ class Tournament:
             "description": self.description,
             "current_tournament": self.current_tournament,
             "current_players": self.current_players,
+            "number_players": self.number_players,
+            "number_rounds": self.number_rounds,
         }
 
     @property

@@ -92,7 +92,7 @@ class Round:
     # - - - - - - - - - - - #
 
     @staticmethod
-    def generate_pair_first_round(players: list) -> list:
+    def generate_pair_first_round(tournament: object, players: list) -> list:
         """Method allows to generate pairs of players according
         to the Swiss tournament system.
 
@@ -103,11 +103,11 @@ class Round:
         Returns:
             players_pair (list): return a list of Participant instance pairs
         """
-        players_part_one = players[0:4]
-        players_part_two = players[4:]
+        players_part_one = players[0 : tournament.number_rounds]
+        players_part_two = players[tournament.number_rounds :]
         players_pair = []
         j = 0
-        for j in range(4):
+        for j in range(tournament.number_rounds):
             player_pair = [players_part_one[j], players_part_two[j]]
             players_pair.append(player_pair)
             players_part_one[j].opponents.append(players_part_two[j].player_id)
@@ -116,7 +116,7 @@ class Round:
         return players_pair
 
     @staticmethod
-    def generate_pair(players: list) -> list:
+    def generate_pair(tournament: object, players: list) -> list:
         """Method allows to generate pairs of players according
         to the Swiss tournament system.
 
@@ -129,7 +129,7 @@ class Round:
         """
         players_pair = []
         j = 0
-        for j in range(4):
+        for j in range(tournament.number_rounds):
             i = 1
             if players[i].player_id not in players[0].opponents:
                 player_pair = [players[0], players[i]]

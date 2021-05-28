@@ -69,12 +69,28 @@ class TournamentController(GlobalController):
         dated = self.user_view.prompt_string("tournoi", "la date")
         time_control = self.tournament_view.prompt_tournament_time_control()
         description = self.user_view.prompt_string("tournoi", "la description")
+        number_players = self.user_view.prompt_integer(
+            "tournoi", "le nombre de joueurs"
+        )
+        number_rounds = self.user_view.prompt_integer("touroi", "le nombre de rondes")
         self.tournament_view.print_confirm_tournament(
-            name, location, dated, time_control, description
+            name,
+            location,
+            dated,
+            time_control,
+            description,
         )
         confirm = self.user_view.prompt_confirm()
         if confirm == "Y":
-            tournament = Tournament(name, location, dated, time_control, description)
+            tournament = Tournament(
+                name,
+                location,
+                dated,
+                time_control,
+                description,
+                number_players,
+                number_rounds,
+            )
             self.db_tournament.save_table_tournament(tournament)
             tournament.tournament_id = self.db_tournament.get_id_tournament(name)
             self.user_view.user_print_msg(
@@ -113,6 +129,8 @@ class TournamentController(GlobalController):
                     tournament_found["dated"],
                     tournament_found["time_control"],
                     tournament_found["description"],
+                    tournament_found["number_players"],
+                    tournament_found["number_rounds"],
                 )
                 if tournament_found["players"]:
                     for player_import in tournament_found["players"]:
@@ -175,7 +193,7 @@ class TournamentController(GlobalController):
         Args:
             tournament (Object): Tournament instance
         """
-        if tournament.current_round <= 4:
+        if tournament.current_round <= tournament.number_rounds:
             j = 1
             name = f"Round{tournament.current_round}"
             created_at = datetime.now()
@@ -185,11 +203,13 @@ class TournamentController(GlobalController):
             if tournament.current_round == 1:
                 self.user_view.title_h2("Première ronde")
                 players_pair = round_game.generate_pair_first_round(
-                    round_game.sort_elo_players
+                    tournament, round_game.sort_elo_players
                 )
             else:
                 self.user_view.title_h2(f"{tournament.current_round}ème tour.\n")
-                players_pair = round_game.generate_pair(round_game.sort_score_players)
+                players_pair = round_game.generate_pair(
+                    tournament, round_game.sort_score_players
+                )
             self.round_view.print_header_players_pair_array()
             for player_one, player_two in players_pair:
                 self.round_view.print_players_pair(player_one, player_two)
@@ -242,7 +262,7 @@ class TournamentController(GlobalController):
         tournament.current_round += 1
         round_game.finished_at = str(datetime.now())
         round_game.start = False
-        if tournament.current_round == 5:
+        if tournament.current_round == tournament.number_rounds + 1:
             ladder = 1
             for player in tournament.sort_score_players:
                 player.ladder = ladder
@@ -254,7 +274,8 @@ class TournamentController(GlobalController):
             tournament.current_tournament = "Tournoi terminé"
         else:
             self.user_view.user_print_msg(
-                Fore.LIGHTGREEN_EX + f"\nTOUR {str(tournament.current_round - 1)} TERMINÉ."
+                Fore.LIGHTGREEN_EX
+                + f"\nTOUR {str(tournament.current_round - 1)} TERMINÉ."
             )
         self.db_tournament.update_table_tournament(tournament)
         time.sleep(2.0)

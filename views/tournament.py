@@ -76,9 +76,15 @@ class TournamentView(UserView):
         """
         self.header()
         print(Fore.LIGHTWHITE_EX + f'{"* MENU TOURNAMENT*"}'.center(119))
-        if tournament.current_round < 5:
-            if not tournament.players or len(tournament.serialize_players) < 8:
-                print(Fore.LIGHTWHITE_EX + "[1] Ajouter 8 joueurs.")
+        if tournament.current_round < tournament.number_rounds + 1:
+            if (
+                not tournament.players
+                or len(tournament.serialize_players) < tournament.number_players
+            ):
+                print(
+                    Fore.LIGHTWHITE_EX
+                    + f"[1] Ajouter {tournament.number_players} joueurs."
+                )
                 print("[0] Quitter le tournoi.\n")
             else:
                 print(
@@ -114,7 +120,7 @@ class TournamentView(UserView):
             f"{'Time control'.center(22)}"
             f"\n{'°' * 119}"
         )
-        if tournament.current_round == 5:
+        if tournament.current_round == tournament.number_rounds + 1:
             print(
                 f"{tournament.current_tournament.center(20)} | "
                 f"{tournament.name.center(22)} | "
