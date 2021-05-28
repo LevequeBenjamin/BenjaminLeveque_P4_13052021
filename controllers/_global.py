@@ -1,3 +1,4 @@
+"""[summary]"""
 
 # views
 from views.round import RoundView
@@ -9,8 +10,12 @@ from views.player import PlayerView
 from controllers.db import DbControllerTournament, DbControllerlPlayer
 
 class GlobalController:
+    """[summary]
+    """
 
     def __init__(self):
+        """[summary]
+        """
         self.db_tournament = DbControllerTournament()
         self.db_player = DbControllerlPlayer()
         self.tournament_view = TournamentView()

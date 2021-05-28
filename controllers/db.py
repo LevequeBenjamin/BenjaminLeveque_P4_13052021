@@ -1,12 +1,7 @@
 """Define the db controller."""
 
 # librairies
-import logging
 from tinydb import TinyDB, Query
-
-# logger
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
 
 # database
 DB = TinyDB("db/db.json")

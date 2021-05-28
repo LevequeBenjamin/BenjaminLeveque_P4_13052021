@@ -1,27 +1,14 @@
 """Tournament views."""
 
 # librairies
-import logging
 from colorama import Fore
 
 # views
 from views.user import UserView
 
-# logger
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
-
 
 class TournamentView(UserView):
     """TounamentView view"""
-
-    # - - - - - - - - - - - #
-    # special methods       #
-    # - - - - - - - - - - - #
-
-    def __init__(self):
-        """Inits TournamentView"""
-        super().__init__()
 
     # - - - - - - - - - - - #
     # methods               #

@@ -2,7 +2,6 @@
 
 # librairies
 import sys
-import logging
 
 # views
 from views.user import UserView
@@ -10,11 +9,6 @@ from views.user import UserView
 # controller
 from controllers.players import PlayerController
 from controllers.tournaments import TournamentController
-
-
-# logger
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
 
 
 class Controller:
@@ -186,6 +180,10 @@ class Controller:
         }
         getattr(commands[user_choice]())
 
+    # # # # # # # # # # # # #
+    #    ***** RUN *****    #
+    # # # # # # # # # # # # #
+
     def run(self) -> None:
-        """Run the tournament."""
+        """Run CHESS TOURNAMENT."""
         self.start_program()

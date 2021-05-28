@@ -1,7 +1,6 @@
 """Define the players controller."""
 
 # librairies
-import logging
 import time
 from colorama import Fore
 
@@ -11,10 +10,6 @@ from models.players import Participant
 
 # controller
 from controllers._global import GlobalController
-
-# logger
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
 
 
 class PlayerController(GlobalController):

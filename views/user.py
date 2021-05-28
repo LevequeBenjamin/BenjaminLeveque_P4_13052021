@@ -3,12 +3,7 @@
 # librairies
 import os
 import sys
-import logging
 from colorama import Fore
-
-# logger
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
 
 
 class UserView:

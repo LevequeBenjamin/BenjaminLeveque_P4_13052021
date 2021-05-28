@@ -2,7 +2,6 @@
 
 # librairies
 from datetime import datetime
-import logging
 import time
 from colorama import Fore
 
@@ -14,10 +13,6 @@ from models.matches import Match
 
 # controllers
 from controllers._global import GlobalController
-
-# logger
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
 
 
 class TournamentController(GlobalController):
