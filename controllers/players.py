@@ -10,32 +10,15 @@ from models.players import Player
 from models.players import Participant
 
 # controller
-from controllers.db import DbControllerlPlayer, DbControllerTournament
-
-# views
-from views.user import UserView
-from views.player import PlayerView
+from controllers._global import GlobalController
 
 # logger
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
-class PlayerController:
+class PlayerController(GlobalController):
     """PlayerController controller."""
-
-    # - - - - - - - - - - - #
-    # special methods       #
-    # - - - - - - - - - - - #
-
-    def __init__(self):
-        """Inits PlayerController"""
-        # controllers
-        self.db_player = DbControllerlPlayer()
-        self.db_tournament = DbControllerTournament()
-        # views
-        self.player_view = PlayerView()
-        self.user_view = UserView()
 
     # - - - - - - - - - - - #
     # methods               #
