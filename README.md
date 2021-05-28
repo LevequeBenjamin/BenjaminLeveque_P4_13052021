@@ -15,7 +15,7 @@ Pour créez un environnement, utilisez la commande :
 
 ```
 $ cd BenjaminLeveque_P4_13052021
-$ python -m venv env
+$ python3 -m venv env
 ```
 
 Pour activer l'environnement, exécutez la commande :
@@ -39,7 +39,7 @@ $ pip install -r requirements.txt
 Pour lancer le script utilisez la commande:
 
 ```
-$ python chess_tournament.py
+$ python3 chess_tournament.py
 ```
 
 ### Générer un rapport flake8
@@ -47,5 +47,3 @@ $ python chess_tournament.py
 ```
 flake8 --format=html --htmldir=flake-report
 ```
-
-
