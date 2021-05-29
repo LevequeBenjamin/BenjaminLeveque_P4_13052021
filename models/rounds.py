@@ -3,7 +3,6 @@
 from typing import List
 from models.players import Participant
 from models.matches import Match
-from models.tournaments import Tournament
 
 
 class Round:
@@ -13,7 +12,7 @@ class Round:
     # special methods       #
     # - - - - - - - - - - - #
 
-    def __init__(self, players: List[Participant], name: str, created_at: str) -> None:
+    def __init__(self, name: str, created_at: str) -> None:
         """Inits Round.
 
         Args:
@@ -22,7 +21,6 @@ class Round:
             created_at (string): time retrieved from lib time,
         """
         self.matches: List[Match] = []
-        self.players: List[Participant] = players
         self.name = name
         self.created_at = created_at
         self.finished_at = None
@@ -31,32 +29,6 @@ class Round:
     # - - - - - - - - - - - #
     # properties            #
     # - - - - - - - - - - - #
-
-    @property
-    def sort_elo_players(self) -> list:
-        """Sort the list from high elo to low
-
-        Returns:
-            Round.players [list]: a sorted list
-        """
-        players_sorted = sorted(
-            self.players, key=lambda player: player.elo, reverse=True
-        )
-        return players_sorted
-
-    @property
-    def sort_score_players(self) -> list:
-        """Sort the list from high score to low and high elo to low
-
-        Returns:
-            Round.players [list]: a sorted list
-        """
-        players_sorted = sorted(
-            self.players,
-            key=lambda player: (player.score, player.elo),
-            reverse=True,
-        )
-        return players_sorted
 
     @property
     def serialize(self) -> dict:
@@ -95,66 +67,3 @@ class Round:
     # - - - - - - - - - - - #
     # methods               #
     # - - - - - - - - - - - #
-
-    @staticmethod
-    def generate_pair_first_round(tournament: Tournament, players: List[Participant]) -> List[Participant]:
-        """Method allows to generate pairs of players according
-        to the Swiss tournament system.
-
-        Args:
-            players [list]: a list of Participant instance.
-            Tournament.current_round (int): contains the current round.
-
-        Returns:
-            players_pair (list): return a list of Participant instance pairs
-        """
-        players_part_one = players[0 : int(tournament.number_players / 2)]
-        players_part_two = players[int(tournament.number_players / 2) :]
-        players_pair = []
-        j = 0
-        for j in range(int(tournament.number_players / 2)):
-            player_pair = [players_part_one[j], players_part_two[j]]
-            players_pair.append(player_pair)
-            players_part_one[j].opponents.append(players_part_two[j].player_id)
-            players_part_two[j].opponents.append(players_part_one[j].player_id)
-            j += 1
-        return players_pair
-
-    @staticmethod
-    def generate_pair(players: List[Participant]) -> List[Participant]:
-        """Method allows to generate pairs of players according
-        to the Swiss tournament system.
-
-        Args:
-            players [list]: a list of Participant instance.
-            Tournament.current_round (int): contains the current round.
-
-        Returns:
-            players_pair (list): return a list of Participant instance pairs
-        """
-        players_pair = []
-        while players:
-            i = 1
-            if players[i].player_id not in players[0].opponents:
-                player_pair = [players[0], players[i]]
-                players[0].opponents.append(players[i].player_id)
-                players[i].opponents.append(players[0].player_id)
-                del players[i]
-                del players[0]
-                i += 1
-            elif len(players) == 2:
-                player_pair = [players[0], players[1]]
-                players[0].opponents.append(players[1].player_id)
-                players[1].opponents.append(players[0].player_id)
-                del players[1]
-                del players[0]
-                i += 1
-            else:
-                player_pair = [players[0], players[i]]
-                players[0].opponents.append(players[i].player_id)
-                players[i].opponents.append(players[0].player_id)
-                del players[i]
-                del players[0]
-                i += 1
-            players_pair.append(player_pair)
-        return players_pair

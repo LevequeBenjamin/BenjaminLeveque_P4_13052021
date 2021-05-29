@@ -53,19 +53,6 @@ class Tournament:
     # - - - - - - - - - - - #
 
     @property
-    def sort_score_players(self) -> list:
-        """Sort the list from high score to low and high elo to low
-
-        Returns:
-            Tournament.players [list]: a sorted list
-        """
-        self.players.sort(
-            key=lambda player: (player.score, player.elo),
-            reverse=True,
-        )
-        return self.players
-
-    @property
     def serialize(self) -> dict:
         """Method used to serialize a tournament before saving
         it in the table TOURNAMENTS.
@@ -123,3 +110,94 @@ class Tournament:
         for round_game in self.rounds:
             rounds_serialized.append(round_game.serialize)
         return rounds_serialized
+
+    # - - - - - - - - - - - #
+    # methods               #
+    # - - - - - - - - - - - #
+    
+    def sort_elo_players(self) -> list:
+        """Sort the list from high elo to low
+
+        Returns:
+            Round.players [list]: a sorted list
+        """
+        players_sorted = sorted(
+            self.players, key=lambda player: player.elo, reverse=True
+        )
+        return players_sorted
+    
+    def sort_score_players(self) -> list:
+        """Sort the list from high score to low and high elo to low
+
+        Returns:
+            Round.players [list]: a sorted list
+        """
+        players_sorted = sorted(
+            self.players,
+            key=lambda player: (player.score, player.elo),
+            reverse=True,
+        )
+        return players_sorted
+
+    def generate_pair_first_round(self) -> List[Participant]:
+        """Method allows to generate pairs of players according
+        to the Swiss tournament system.
+
+        Args:
+            players [list]: a list of Participant instance.
+            Tournament.current_round (int): contains the current round.
+
+        Returns:
+            players_pair (list): return a list of Participant instance pairs
+        """
+        players = self.sort_elo_players()
+        players_part_one = players[0 : int(self.number_players / 2)]
+        players_part_two = players[int(self.number_players / 2) :]
+        players_pair = []
+        j = 0
+        for j in range(int(self.number_players / 2)):
+            player_pair = [players_part_one[j], players_part_two[j]]
+            players_pair.append(player_pair)
+            players_part_one[j].opponents.append(players_part_two[j].player_id)
+            players_part_two[j].opponents.append(players_part_one[j].player_id)
+            j += 1
+        return players_pair
+
+    def generate_pair(self) -> List[Participant]:
+        """Method allows to generate pairs of players according
+        to the Swiss tournament system.
+
+        Args:
+            players [list]: a list of Participant instance.
+            Tournament.current_round (int): contains the current round.
+
+        Returns:
+            players_pair (list): return a list of Participant instance pairs
+        """
+        players = self.sort_score_players()
+        players_pair = []
+        while players:
+            i = 1
+            if players[i].player_id not in players[0].opponents:
+                player_pair = [players[0], players[i]]
+                players[0].opponents.append(players[i].player_id)
+                players[i].opponents.append(players[0].player_id)
+                del players[i]
+                del players[0]
+                i += 1
+            elif len(players) == 2:
+                player_pair = [players[0], players[1]]
+                players[0].opponents.append(players[1].player_id)
+                players[1].opponents.append(players[0].player_id)
+                del players[1]
+                del players[0]
+                i += 1
+            else:
+                player_pair = [players[0], players[i]]
+                players[0].opponents.append(players[i].player_id)
+                players[i].opponents.append(players[0].player_id)
+                del players[i]
+                del players[0]
+                i += 1
+            players_pair.append(player_pair)
+        return players_pair

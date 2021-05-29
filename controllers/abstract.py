@@ -6,7 +6,6 @@ from abc import ABC
 from views.round import RoundView
 from views.tournament import TournamentView
 from views.player import PlayerView
-from views.match import MatchView
 
 # controllers
 from controllers.db import DbControllerTournament, DbControllerlPlayer
@@ -28,4 +27,3 @@ class AbstractController(ABC):
         self.tournament_view = TournamentView()
         self.player_view = PlayerView()
         self.round_view = RoundView()
-        self.match_view = MatchView()

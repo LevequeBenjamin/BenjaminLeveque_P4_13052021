@@ -50,7 +50,7 @@ class TournamentController(AbstractController):
 
     def print_players_tournament(self, tournament: Tournament) -> None:
         """Method used to display tournament rankings."""
-        self.player_view.print_players_tournament(tournament.sort_score_players)
+        self.player_view.print_players_tournament(tournament.sort_score_players())
         confirm = self.tournament_view.prompt_return()
         if confirm == "Y":
             return
@@ -65,8 +65,8 @@ class TournamentController(AbstractController):
 
     def print_matches_tournament(self, tournament: Tournament) -> None:
         """Method used to display tournament rankings."""
-        self.match_view.print_matches(tournament)
-        confirm = self.match_view.prompt_return()
+        self.round_view.print_matches(tournament)
+        confirm = self.round_view.prompt_return()
         if confirm == "Y":
             return
 
@@ -93,7 +93,9 @@ class TournamentController(AbstractController):
             number_players = self.tournament_view.prompt_integer(
                 "tournoi", "le nombre de joueurs"
             )
-        number_rounds = self.tournament_view.prompt_integer("tournoi", "le nombre de rondes")
+        number_rounds = self.tournament_view.prompt_integer(
+            "tournoi", "le nombre de rondes"
+        )
         self.tournament_view.print_confirm_tournament(
             name,
             location,
@@ -173,7 +175,6 @@ class TournamentController(AbstractController):
                 if tournament_found["rounds"]:
                     for round_import in tournament_found["rounds"]:
                         round_game = Round(
-                            round_import["list_matches"],
                             round_import["round"],
                             round_import["created_at"],
                         )
@@ -218,17 +219,14 @@ class TournamentController(AbstractController):
             j = 1
             name = f"Round{tournament.current_round}"
             created_at = datetime.now()
-            players = tournament.players
-            round_game = Round(players, name, str(created_at))
+            round_game = Round(name, str(created_at))
             self.round_view.sub_round_menu()
             if tournament.current_round == 1:
                 self.round_view.title_h2("Première ronde")
-                players_pair = round_game.generate_pair_first_round(
-                    tournament, round_game.sort_elo_players
-                )
+                players_pair = tournament.generate_pair_first_round()
             else:
                 self.round_view.title_h2(f"{tournament.current_round}ème tour.\n")
-                players_pair = round_game.generate_pair(round_game.sort_score_players)
+                players_pair = tournament.generate_pair()
             self.round_view.print_header_players_pair_array()
             for player_one, player_two in players_pair:
                 self.round_view.print_players_pair(player_one, player_two)
@@ -239,7 +237,9 @@ class TournamentController(AbstractController):
             else:
                 return
         else:
-            self.round_view.user_print_msg(Fore.LIGHTRED_EX + "Ce tournoi est terminé !")
+            self.round_view.user_print_msg(
+                Fore.LIGHTRED_EX + "Ce tournoi est terminé !"
+            )
             time.sleep(2.0)
             return
 
@@ -283,7 +283,7 @@ class TournamentController(AbstractController):
         round_game.start = False
         if tournament.current_round == tournament.number_rounds + 1:
             ladder = 1
-            for player in tournament.sort_score_players:
+            for player in tournament.sort_score_players():
                 player.ladder = ladder
                 ladder += 1
             self.round_view.user_print_msg(
