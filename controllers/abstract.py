@@ -11,7 +11,7 @@ from views.player import PlayerView
 from controllers.db import DbControllerTournament, DbControllerlPlayer
 
 
-class AbstractController(ABC):
+class AbstractController(ABC): # pylint: disable=too-few-public-methods
     """It is a parent class which is used to create inheritance."""
 
     # - - - - - - - - - - - #

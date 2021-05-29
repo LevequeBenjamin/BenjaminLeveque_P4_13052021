@@ -3,8 +3,10 @@
 # librairies
 from datetime import datetime
 import time
-from utils.utils import ispair
 from colorama import Fore
+
+# utils
+from utils.utils import ispair
 
 # models
 from models.tournaments import Tournament
@@ -227,14 +229,39 @@ class TournamentController(AbstractController):
             else:
                 self.round_view.title_h2(f"{tournament.current_round}ème tour.\n")
                 players_pair = tournament.generate_pair()
-            self.round_view.print_header_players_pair_array()
-            for player_one, player_two in players_pair:
-                self.round_view.print_players_pair(player_one, player_two)
-            user_choice = self.round_view.prompt_choice_menu(2)
-            if user_choice == 1:
-                self.round_view.header()
-                self.start_round(round_game, players_pair, tournament, j)
+            if players_pair:
+                confirm = ""
+                while confirm != "Y":
+                    self.round_view.header()
+                    self.round_view.sub_round_menu()
+                    self.round_view.print_header_players_pair_array()
+                    for player_one, player_two in players_pair:
+                        self.round_view.print_players_pair(player_one, player_two)
+                    self.round_view.user_print_msg(
+                        f"\n{round_game.name} en cours. Veuillez attendre que tous"
+                        "les matches soit terminés avant d'inscire les résultats."
+                    )
+                    self.round_view.user_print_msg(
+                        "Si vous quittez la ronde en cours, elle sera supprimé.\n"
+                    )
+                    user_choice = self.round_view.prompt_choice_menu(2)
+                    if user_choice == 0:
+                        self.round_view.user_print_msg(
+                            Fore.LIGHTRED_EX
+                            + "Etes vous certain de quitter la ronde? Attention elle sera supprimé."
+                        )
+                        confirm = self.round_view.prompt_confirm()
+                        if confirm == "Y":
+                            return
+                    else:
+                        self.round_view.header()
+                        self.start_round(round_game, players_pair, tournament, j)
+                        return
             else:
+                self.round_view.user_print_msg(
+                    Fore.LIGHTRED_EX + "Oops! Désolé quelque chose c'est mal passé."
+                )
+                time.sleep(2.0)
                 return
         else:
             self.round_view.user_print_msg(

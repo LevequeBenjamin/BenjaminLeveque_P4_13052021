@@ -176,30 +176,21 @@ class Tournament:
         """
         players = self.sort_score_players()
         players_pair = []
-        while players:
-            i = 1
-            while players[i].player_id in players[0].opponents and i <= len(players):
-                i += 1
-            if players[i].player_id not in players[0].opponents:
+        try:
+            while players:
+                i = 1
+                while (
+                    i <= len(players)
+                    and len(players) > 2
+                    and players[i].player_id in players[0].opponents
+                ):
+                    i += 1
                 player_pair = [players[0], players[i]]
                 players[0].opponents.append(players[i].player_id)
                 players[i].opponents.append(players[0].player_id)
                 del players[i]
                 del players[0]
-                print(i)
-            elif len(players) == 2:
-                player_pair = [players[0], players[1]]
-                players[0].opponents.append(players[1].player_id)
-                players[1].opponents.append(players[0].player_id)
-                del players[1]
-                del players[0]
-                print(i)
-            else:
-                player_pair = [players[0], players[i]]
-                players[0].opponents.append(players[i].player_id)
-                players[i].opponents.append(players[0].player_id)
-                del players[i]
-                del players[0]
-                print(i)
-            players_pair.append(player_pair)
+                players_pair.append(player_pair)
+        except IndexError:
+            return None
         return players_pair

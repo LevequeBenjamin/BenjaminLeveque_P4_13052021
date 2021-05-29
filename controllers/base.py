@@ -29,6 +29,7 @@ class Controller:
     # - - - - - - - - - - - #
 
     # # # # # # # # # display players # # # # # # # # #
+
     def display_players(self) -> None:
         """Method which displays a complete list of players in database."""
         players = self.player_controller.print_players()
@@ -56,14 +57,16 @@ class Controller:
         elif user_choice == 0:
             self.start_program()
 
-    # # # # # # # # # display players # # # # # # # # #
+    # # # # # # # # # display players end # # # # # # # # #
 
-    # # # # # # # # # display players # # # # # # # # #
+    # # # # # # # # # display tournaments # # # # # # # # #
     def display_tournaments(self) -> None:
         """Method which displays a complete list of tournaments in database."""
         tournaments = self.tournament_controller.print_tournaments()
         if tournaments:
-            user_choice = self.tournament_controller.tournament_view.prompt_choice_menu(2)
+            user_choice = self.tournament_controller.tournament_view.prompt_choice_menu(
+                2
+            )
             self.display_tournaments_perform(user_choice)
         self.start_program()
 
@@ -79,9 +82,9 @@ class Controller:
         elif user_choice == 0:
             self.start_program()
 
-    # # # # # # # # # display players # # # # # # # # #
+    # # # # # # # # # display tournaments end # # # # # # # # #
 
-    # # # # # # # # # display players # # # # # # # # #
+    # # # # # # # # # display sub menu tournament # # # # # # # # #
 
     def get_choice_menu_tournament(self, tournament: Tournament) -> None:
         """Method which displays the tournament submenu as well as the current
@@ -96,10 +99,14 @@ class Controller:
             self.tournament_controller.tournament_view.print_current_tournament(
                 tournament
             )
-            user_choice = self.tournament_controller.tournament_view.prompt_choice_menu(5)
+            user_choice = self.tournament_controller.tournament_view.prompt_choice_menu(
+                5
+            )
             self.start_tournament_perform(user_choice, tournament)
 
-    def start_tournament_perform(self, user_choice: int, tournament: Tournament) -> None:
+    def start_tournament_perform(
+        self, user_choice: int, tournament: Tournament
+    ) -> None:
         """Dispatch the action requested by the user
 
         Args:
@@ -121,7 +128,9 @@ class Controller:
                     self.start_program()
             else:
                 if user_choice == 1:
-                    self.tournament_controller.tournament_view.title_h2("Tournoi en cours.")
+                    self.tournament_controller.tournament_view.title_h2(
+                        "Tournoi en cours."
+                    )
                     self.tournament_controller.start_rounds(tournament)
                 elif user_choice == 2:
                     self.tournament_controller.tournament_view.print_current_tournament(
@@ -135,13 +144,17 @@ class Controller:
                     self.tournament_controller.tournament_view.print_current_tournament(
                         tournament
                     )
-                    self.tournament_controller.tournament_view.title_h2("Liste des rondes.")
+                    self.tournament_controller.tournament_view.title_h2(
+                        "Liste des rondes."
+                    )
                     self.tournament_controller.print_rounds_tournament(tournament)
                 elif user_choice == 4:
                     self.tournament_controller.tournament_view.print_current_tournament(
                         tournament
                     )
-                    self.tournament_controller.tournament_view.title_h2("Liste des matches.")
+                    self.tournament_controller.tournament_view.title_h2(
+                        "Liste des matches."
+                    )
                     self.tournament_controller.print_matches_tournament(tournament)
                 elif user_choice == 0:
                     self.start_program()
@@ -151,7 +164,9 @@ class Controller:
                 self.tournament_controller.tournament_view.print_current_tournament(
                     tournament
                 )
-                self.tournament_controller.tournament_view.title_h2("Résultat du tournoi")
+                self.tournament_controller.tournament_view.title_h2(
+                    "Résultat du tournoi"
+                )
                 self.tournament_controller.print_players_tournament(tournament)
             elif user_choice == 2:
                 self.tournament_controller.tournament_view.print_current_tournament(
@@ -168,14 +183,18 @@ class Controller:
             if user_choice == 0:
                 self.start_program()
 
-    # # # # # # # # # display players # # # # # # # # #
+    # # # # # # # # # display sub menu tournaments # # # # # # # # #
+
+    # # # # # # # # # main # # # # # # # # #
 
     def start_program(self) -> None:
         """Start the program."""
         user_choice = ""
         while user_choice != 0:
             self.tournament_controller.tournament_view.main_menu()
-            user_choice = self.tournament_controller.tournament_view.prompt_choice_menu(6)
+            user_choice = self.tournament_controller.tournament_view.prompt_choice_menu(
+                6
+            )
             self.main_perform(user_choice)
 
     def set_new_player(self):
@@ -223,6 +242,8 @@ class Controller:
             0: self.exit_program,
         }
         getattr(commands[user_choice]())
+
+    # # # # # # # # # main end # # # # # # # # #
 
     # # # # # # # # # # # # #
     #    ***** RUN *****    #
