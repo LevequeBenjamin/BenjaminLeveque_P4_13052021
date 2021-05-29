@@ -2,6 +2,7 @@
 
 
 # views
+from models.tournaments import Tournament
 from views.abstract import AbstractView
 
 
@@ -13,7 +14,7 @@ class MatchView(AbstractView):
     # - - - - - - - - - - - #
 
     @staticmethod
-    def print_matches(tournament):
+    def print_matches(tournament: Tournament):
         """[summary]
 
         Args:

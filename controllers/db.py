@@ -78,11 +78,6 @@ class DbControllerlPlayer:
             PLayer : return player if is
             found in the bd
         """
-        # for player in self.players:
-        #     if player.doc_id == player_id:
-        #         player_found = player
-        #         return player_found
-        # return None
         player_found = self.players.get(doc_id=player_id)
         if player_found:
             return player_found
@@ -159,11 +154,10 @@ class DbControllerTournament:
         Returns:
             tournament_found (dict) : contains the tournament found in the bd
         """
-        tournament_found = ""
-        for tournament in self.tournaments:
-            if tournament.doc_id == tournament_id:
-                tournament_found = tournament
-        return tournament_found
+        tournament_found = self.tournaments.get(doc_id=tournament_id)
+        if tournament_found:
+            return tournament_found
+        return None
 
     def save_table_tournament(self, tournament: object) -> None:
         """Method used to save tournament in database.

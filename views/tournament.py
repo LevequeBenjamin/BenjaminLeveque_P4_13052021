@@ -3,6 +3,9 @@
 # librairies
 from colorama import Fore
 
+# models
+from models.tournaments import Tournament
+
 # views
 from views.abstract import AbstractView
 
@@ -68,7 +71,7 @@ class TournamentView(AbstractView):
             except (ValueError, TypeError):
                 print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
 
-    def sub_tournament_menu(self, tournament: object) -> None:
+    def sub_tournament_menu(self, tournament: Tournament) -> None:
         """Show tournament menu.
 
         Args:
@@ -112,7 +115,7 @@ class TournamentView(AbstractView):
         print(Fore.CYAN + f'{"=" * 119}')
 
     @staticmethod
-    def print_current_tournament(tournament):
+    def print_current_tournament(tournament: Tournament):
         """[summary]
 
         Args:

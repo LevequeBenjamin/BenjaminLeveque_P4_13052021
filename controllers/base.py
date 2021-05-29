@@ -3,6 +3,9 @@
 # librairies
 import sys
 
+# models
+from models.tournaments import Tournament
+
 # controller
 from controllers.players import PlayerController
 from controllers.tournaments import TournamentController
@@ -80,7 +83,7 @@ class Controller:
 
     # # # # # # # # # display players # # # # # # # # #
 
-    def get_choice_menu_tournament(self, tournament: object) -> None:
+    def get_choice_menu_tournament(self, tournament: Tournament) -> None:
         """Method which displays the tournament submenu as well as the current
         tournament and allows you to select an option among the submenu.
 
@@ -96,7 +99,7 @@ class Controller:
             user_choice = self.tournament_controller.tournament_view.prompt_choice_menu(5)
             self.start_tournament_perform(user_choice, tournament)
 
-    def start_tournament_perform(self, user_choice: int, tournament: object) -> None:
+    def start_tournament_perform(self, user_choice: int, tournament: Tournament) -> None:
         """Dispatch the action requested by the user
 
         Args:

@@ -7,6 +7,7 @@ from colorama import Fore
 # models
 from models.players import Player
 from models.players import Participant
+from models.tournaments import Tournament
 
 # controller
 from controllers.abstract import AbstractController
@@ -96,7 +97,7 @@ class PlayerController(AbstractController):
             )
         time.sleep(2.0)
 
-    def set_list_players(self, tournament: object) -> None:
+    def set_list_players(self, tournament: Tournament) -> None:
         """Creates list players, if a player is present in the database,
         the method imports it. If a player is already present in the
         tournament players list the method returns an error. And if a

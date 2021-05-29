@@ -3,6 +3,10 @@
 # librairies
 from colorama import Fore
 
+# models
+from models.players import Participant
+from models.tournaments import Tournament
+
 # views
 from views.abstract import AbstractView
 
@@ -60,7 +64,7 @@ class RoundView(AbstractView):
         )
 
     @staticmethod
-    def print_players_pair(player_one: object, player_two: object) -> None:
+    def print_players_pair(player_one: Participant, player_two: Participant) -> None:
         """Display a array with information of player one et two.
 
         Args:
@@ -89,7 +93,7 @@ class RoundView(AbstractView):
         )
 
     @staticmethod
-    def print_rounds(tournament):
+    def print_rounds(tournament: Tournament):
         """[summary]
 
         Args:

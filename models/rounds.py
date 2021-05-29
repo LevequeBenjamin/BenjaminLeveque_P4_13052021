@@ -1,5 +1,10 @@
 """Define the rounds."""
 
+from typing import List
+from models.players import Participant
+from models.matches import Match
+from models.tournaments import Tournament
+
 
 class Round:
     """It is a class allowing to create a Round."""
@@ -8,7 +13,7 @@ class Round:
     # special methods       #
     # - - - - - - - - - - - #
 
-    def __init__(self, players: list, name: str, created_at: str) -> None:
+    def __init__(self, players: List[Participant], name: str, created_at: str) -> None:
         """Inits Round.
 
         Args:
@@ -16,8 +21,8 @@ class Round:
             name (string): contains the name of the round,
             created_at (string): time retrieved from lib time,
         """
-        self.matches = []
-        self.players = players
+        self.matches: List[Match] = []
+        self.players: List[Participant] = players
         self.name = name
         self.created_at = created_at
         self.finished_at = None
@@ -92,7 +97,7 @@ class Round:
     # - - - - - - - - - - - #
 
     @staticmethod
-    def generate_pair_first_round(tournament: object, players: list) -> list:
+    def generate_pair_first_round(tournament: Tournament, players: List[Participant]) -> List[Participant]:
         """Method allows to generate pairs of players according
         to the Swiss tournament system.
 
@@ -103,8 +108,8 @@ class Round:
         Returns:
             players_pair (list): return a list of Participant instance pairs
         """
-        players_part_one = players[0: int(tournament.number_players / 2)]
-        players_part_two = players[int(tournament.number_players / 2):]
+        players_part_one = players[0 : int(tournament.number_players / 2)]
+        players_part_two = players[int(tournament.number_players / 2) :]
         players_pair = []
         j = 0
         for j in range(int(tournament.number_players / 2)):
@@ -116,7 +121,7 @@ class Round:
         return players_pair
 
     @staticmethod
-    def generate_pair(players: list) -> list:
+    def generate_pair(players: List[Participant]) -> List[Participant]:
         """Method allows to generate pairs of players according
         to the Swiss tournament system.
 

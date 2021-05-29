@@ -1,6 +1,8 @@
 """Player views."""
 
 # librairies
+from typing import List
+from models.players import Participant
 from colorama import Fore
 
 # views
@@ -79,7 +81,7 @@ class PlayerView(AbstractView):
         )
 
     @staticmethod
-    def print_players_tournament(players):
+    def print_players_tournament(players: List[Participant]):
         """[summary]
 
         Args:

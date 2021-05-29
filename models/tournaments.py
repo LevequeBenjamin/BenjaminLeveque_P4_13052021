@@ -1,6 +1,9 @@
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-instance-attributes
 """Define the tournaments."""
+from typing import List
+from models.players import Participant
+from models.rounds import Round
 
 
 class Tournament:
@@ -36,8 +39,8 @@ class Tournament:
         self.location = location
         self.dated = dated
         self.current_round = 1
-        self.rounds = []
-        self.players = []
+        self.rounds: List[Round] = []
+        self.players: List[Participant] = []
         self.time_control = time_control
         self.description = description
         self.current_tournament = ""

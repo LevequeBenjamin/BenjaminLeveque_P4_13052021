@@ -48,14 +48,14 @@ class TournamentController(AbstractController):
         time.sleep(2.0)
         return None
 
-    def print_players_tournament(self, tournament: object) -> None:
+    def print_players_tournament(self, tournament: Tournament) -> None:
         """Method used to display tournament rankings."""
         self.player_view.print_players_tournament(tournament.sort_score_players)
         confirm = self.tournament_view.prompt_return()
         if confirm == "Y":
             return
 
-    def print_rounds_tournament(self, tournament: object) -> None:
+    def print_rounds_tournament(self, tournament: Tournament) -> None:
         """Method used to display tournament rankings."""
         self.round_view.print_header_rounds_array()
         self.round_view.print_rounds(tournament)
@@ -63,14 +63,14 @@ class TournamentController(AbstractController):
         if confirm == "Y":
             return
 
-    def print_matches_tournament(self, tournament: object) -> None:
+    def print_matches_tournament(self, tournament: Tournament) -> None:
         """Method used to display tournament rankings."""
         self.match_view.print_matches(tournament)
         confirm = self.match_view.prompt_return()
         if confirm == "Y":
             return
 
-    def set_tournament(self) -> object:
+    def set_tournament(self) -> Tournament:
         """Method used to creates a Tournament instance.
         if a tournament is created, the method redirects to a tournament submenu
         with the possibility of creating the list of participants.
@@ -208,7 +208,7 @@ class TournamentController(AbstractController):
         time.sleep(2.0)
         return None
 
-    def start_rounds(self, tournament: object) -> None:
+    def start_rounds(self, tournament: Tournament) -> None:
         """Start the rounds.
 
         Args:
@@ -245,17 +245,17 @@ class TournamentController(AbstractController):
 
     def start_round(
         self,
-        round_game: object,
+        round_game: Round,
         players_pair: list,
-        tournament: object,
+        tournament: Tournament,
         j: int,
     ) -> None:
         """This method manages the matches of a round.
 
         Args:
-            round (object): a Round instance.
+            round (Round): a Round instance.
             players_pair (list): a list of players pair.
-            tournament (object): a Tournament instance.
+            tournament (Tournament): a Tournament instance.
             current_round (int): a current round.
             j (int): a match counter.
         """
