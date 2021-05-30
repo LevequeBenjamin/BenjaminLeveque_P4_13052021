@@ -197,7 +197,7 @@ class Controller:
             )
             self.main_perform(user_choice)
 
-    def set_new_player(self):
+    def set_new_player(self) -> None:
         """Method used to create a new player."""
         self.player_controller.set_new_player()
         self.start_program()
@@ -221,12 +221,12 @@ class Controller:
             self.get_choice_menu_tournament(tournament)
         self.start_program()
 
-    def exit_program(self):
+    def exit_program(self) -> None:
         """Method used to exit the program."""
         self.tournament_controller.tournament_view.exit_program()
         sys.exit()
 
-    def main_perform(self, user_choice: int):
+    def main_perform(self, user_choice: int) -> None:
         """Dispatch the action requested by the user
 
         Args:

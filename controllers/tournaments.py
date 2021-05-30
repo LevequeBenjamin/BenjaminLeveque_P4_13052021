@@ -3,6 +3,7 @@
 # librairies
 from datetime import datetime
 import time
+from typing import List, Dict
 from colorama import Fore
 
 # utils
@@ -25,7 +26,7 @@ class TournamentController(AbstractController):
     # methods               #
     # - - - - - - - - - - - #
 
-    def print_tournaments(self) -> list:
+    def print_tournaments(self) -> List[Dict]:
         """Method used to display all tournaments in the database
 
         Returns:
@@ -125,7 +126,7 @@ class TournamentController(AbstractController):
             return tournament
         return None
 
-    def import_tournament(self) -> object:
+    def import_tournament(self) -> Tournament:
         """Method used to import a tournament in progress and create a Tournament instance.
         if a tournament is founded, the method redirects to a tournament submenu
         And resume where the tournament left off.
@@ -273,7 +274,7 @@ class TournamentController(AbstractController):
     def start_round(
         self,
         round_game: Round,
-        players_pair: list,
+        players_pair: List[Participant],
         tournament: Tournament,
         j: int,
     ) -> None:

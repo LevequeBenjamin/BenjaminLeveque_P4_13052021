@@ -50,7 +50,7 @@ class PlayerView(AbstractView):
         print(Fore.CYAN + f'{"=" * 119}')
 
     @staticmethod
-    def print_header_player_array():
+    def print_header_player_array() -> None:
         """[summary]"""
         print(
             f"{'ID'.center(10)} | "
@@ -64,7 +64,14 @@ class PlayerView(AbstractView):
 
     # pylint: disable=too-many-arguments
     @staticmethod
-    def print_player(player_id, last_name, first_name, birth_date, sex, elo) -> None:
+    def print_player(
+        player_id: int,
+        last_name: str,
+        first_name: str,
+        birth_date: str,
+        sex: str,
+        elo: int,
+    ) -> None:
         """Display a array with information of player dict.
 
         Args:
@@ -81,7 +88,7 @@ class PlayerView(AbstractView):
         )
 
     @staticmethod
-    def print_players_tournament(players: List[Participant]):
+    def print_players_tournament(players: List[Participant]) -> None:
         """[summary]
 
         Args:

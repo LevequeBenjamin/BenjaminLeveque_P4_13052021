@@ -107,7 +107,7 @@ class TournamentView(AbstractView):
         print(Fore.CYAN + f'{"=" * 119}')
 
     @staticmethod
-    def menu_tournaments():
+    def menu_tournaments() -> None:
         """[summary]"""
         print(Fore.LIGHTWHITE_EX + f'{"* MENU TOURNAMENTS*"}'.center(119))
         print("[1] Importez un tournoi.")
@@ -115,7 +115,7 @@ class TournamentView(AbstractView):
         print(Fore.CYAN + f'{"=" * 119}')
 
     @staticmethod
-    def print_current_tournament(tournament: Tournament):
+    def print_current_tournament(tournament: Tournament) -> None:
         """[summary]
 
         Args:
@@ -149,7 +149,9 @@ class TournamentView(AbstractView):
             )
 
     @staticmethod
-    def print_confirm_tournament(name, location, dated, time_control, description):
+    def print_confirm_tournament(
+        name: str, location: str, dated: str, time_control: str, description: str
+    ) -> None:
         """[summary]
 
         Args:
@@ -178,7 +180,7 @@ class TournamentView(AbstractView):
         print(f"description : {description}" f"\n{'-' * 119}")
 
     @staticmethod
-    def print_header_tournament_array():
+    def print_header_tournament_array() -> None:
         """[summary]"""
         print(
             f"{'ID'.center(10)} | "
@@ -190,7 +192,9 @@ class TournamentView(AbstractView):
         )
 
     @staticmethod
-    def print_tournament(tournament_id, name, location, dated, time_control):
+    def print_tournament(
+        tournament_id: int, name: str, location: str, dated: str, time_control: str
+    ) -> None:
         """[summary]
 
         Args:

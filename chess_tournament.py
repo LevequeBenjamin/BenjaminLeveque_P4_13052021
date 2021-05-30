@@ -13,7 +13,7 @@
 from controllers.base import Controller
 
 
-def main():
+def main() -> None:
     """Main instructions to run"""
     controller = Controller()
     controller.run()

@@ -11,7 +11,7 @@ class AbstractView(ABC):
     """User view"""
 
     @staticmethod
-    def header():
+    def header() -> None:
         """[summary]"""
         if sys.platform.startswith("linux"):
             os.system("clear")
@@ -30,7 +30,7 @@ class AbstractView(ABC):
         print("\n")
         print("=" * 119)
 
-    def main_menu(self):
+    def main_menu(self) -> None:
         """Print main menu."""
         self.header()
         print(Fore.LIGHTWHITE_EX + "* MENU *".center(119))
@@ -44,7 +44,7 @@ class AbstractView(ABC):
         print(Fore.CYAN + "=" * 119)
 
     @staticmethod
-    def title_h2(title):
+    def title_h2(title: str) -> None:
         """[summary]
 
         Args:
@@ -55,7 +55,7 @@ class AbstractView(ABC):
         print(f'{"*" * 60}'.center(119), "\n")
 
     @staticmethod
-    def exit_program():
+    def exit_program() -> None:
         """[summary]"""
         print(Fore.LIGHTYELLOW_EX + "*" * 119)
         print("\n" * 2)
@@ -67,7 +67,7 @@ class AbstractView(ABC):
         print(Fore.LIGHTYELLOW_EX + "*" * 119)
 
     @staticmethod
-    def user_print_msg(message):
+    def user_print_msg(message: str) -> None:
         """[summary]
 
         Args:
@@ -76,7 +76,7 @@ class AbstractView(ABC):
         print(f"{message}")
 
     @staticmethod
-    def prompt_confirm():
+    def prompt_confirm() -> None:
         """[summary]
 
         Returns:
@@ -90,7 +90,7 @@ class AbstractView(ABC):
         return confirm
 
     @staticmethod
-    def prompt_return():
+    def prompt_return() -> None:
         """[summary]
 
         Returns:
@@ -122,7 +122,7 @@ class AbstractView(ABC):
                 print(Fore.LIGHTRED_EX + "Oops! Je n'ai pas compris votre choix.")
         return user_choice
 
-    def prompt_string(self, argument_one, argument_two) -> str:
+    def prompt_string(self, argument_one: str, argument_two: str) -> str:
         """Prompt for get tournament name.
 
         Returns:
@@ -147,7 +147,7 @@ class AbstractView(ABC):
                 if confirm == "Y":
                     return value
 
-    def prompt_integer(self, argument_one, argument_two) -> int:
+    def prompt_integer(self, argument_one: str, argument_two: str) -> int:
         """Prompt for get tournament id.
 
         Returns:
@@ -156,8 +156,7 @@ class AbstractView(ABC):
         confirm = ""
         while confirm != "Y":
             value = input(
-                Fore.LIGHTCYAN_EX
-                + f"\nentrez {argument_two} du {argument_one} : "
+                Fore.LIGHTCYAN_EX + f"\nentrez {argument_two} du {argument_one} : "
             )
             if not value.isnumeric() or not value:
                 print(

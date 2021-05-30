@@ -52,7 +52,7 @@ class RoundView(AbstractView):
         print(Fore.CYAN + f'{"=" * 119}')
 
     @staticmethod
-    def print_header_players_pair_array():
+    def print_header_players_pair_array() -> None:
         """[summary]"""
         print(
             Fore.LIGHTBLUE_EX + f"{'Nom'.center(24)} | "
@@ -83,7 +83,7 @@ class RoundView(AbstractView):
         )
 
     @staticmethod
-    def print_header_rounds_array():
+    def print_header_rounds_array() -> None:
         """[summary]"""
         print(
             f"{'Nom'.center(25)} | "
@@ -93,7 +93,7 @@ class RoundView(AbstractView):
         )
 
     @staticmethod
-    def print_rounds(tournament: Tournament):
+    def print_rounds(tournament: Tournament) -> None:
         """[summary]
 
         Args:
@@ -110,9 +110,9 @@ class RoundView(AbstractView):
                 f"{round_game.finished_at.center(35)}"
                 f"\n{'-' * 100}"
             )
-            
+
     @staticmethod
-    def print_matches(tournament: Tournament):
+    def print_matches(tournament: Tournament) -> None:
         """[summary]
 
         Args:

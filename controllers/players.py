@@ -1,6 +1,7 @@
 """Define the players controller."""
 
 # librairies
+from typing import List, Dict
 import time
 from colorama import Fore
 
@@ -20,7 +21,7 @@ class PlayerController(AbstractController):
     # methods               #
     # - - - - - - - - - - - #
 
-    def print_players(self) -> list:
+    def print_players(self) -> List[Dict]:
         """Method used to display all players in the database
 
         Returns:
@@ -46,7 +47,7 @@ class PlayerController(AbstractController):
         time.sleep(2.0)
         return None
 
-    def print_elo_players(self) -> list:
+    def print_elo_players(self) -> List[Dict]:
         """Method used to display all players in the database
 
         Returns:

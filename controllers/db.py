@@ -1,7 +1,11 @@
 """Define the db controller."""
 
 # librairies
+from typing import List, Dict
 from tinydb import TinyDB, Query
+
+# models
+from models.tournaments import Tournament
 
 # database
 DB = TinyDB("db/db.json")
@@ -26,12 +30,22 @@ class DbControllerlPlayer:
     # - - - - - - - - - - - #
 
     @property
-    def sort_alphabetical_players(self):
+    def sort_alphabetical_players(self) -> List[Dict]:
+        """Sort the list from high elo to low
+
+        Returns:
+            players_sort [list]: a sorted list
+        """
         players_sort = sorted(self.players, key=lambda player: player["last_name"])
         return players_sort
 
     @property
-    def sort_elo_players(self):
+    def sort_elo_players(self) -> List[Dict]:
+        """Sort the list from high score to low
+
+        Returns:
+            players-sort [list]: a sorted list
+        """
         players_sort = sorted(
             self.players, key=lambda player: player["elo"], reverse=True
         )
@@ -52,7 +66,7 @@ class DbControllerlPlayer:
             return player_found.doc_id
         return None
 
-    def search_table_players(self, last_name: str, first_name: str) -> dict:
+    def search_table_players(self, last_name: str, first_name: str) -> Dict:
         """Method used to check if a player exist in the db.
 
         Args:
@@ -68,7 +82,7 @@ class DbControllerlPlayer:
                 return player_found
         return None
 
-    def search_table_players_with_id(self, player_id: int) -> dict:
+    def search_table_players_with_id(self, player_id: int) -> Dict:
         """Method used to check if a player exist in the database.
 
         Args:
@@ -130,7 +144,7 @@ class DbControllerTournament:
             return tournament_found.doc_id
         return None
 
-    def search_table_tournaments(self, name: str) -> dict:
+    def search_table_tournaments(self, name: str) -> Dict:
         """Method used to check if a tournament exist in the db.
 
         Args:
@@ -145,7 +159,7 @@ class DbControllerTournament:
                 tournament_found = tournament
         return tournament_found
 
-    def search_table_tournament_with_id(self, tournament_id: int) -> dict:
+    def search_table_tournament_with_id(self, tournament_id: int) -> Dict:
         """Method used to check if a tournament exist in the db.
 
         Args:
@@ -159,7 +173,7 @@ class DbControllerTournament:
             return tournament_found
         return None
 
-    def save_table_tournament(self, tournament: object) -> None:
+    def save_table_tournament(self, tournament: Tournament) -> None:
         """Method used to save tournament in database.
 
         Args:
@@ -167,7 +181,7 @@ class DbControllerTournament:
         """
         self.tournaments.insert(tournament.serialize)
 
-    def update_table_tournament(self, tournament: object) -> None:
+    def update_table_tournament(self, tournament: Tournament) -> None:
         """Method used to modify a tournament in the database
 
         Args:

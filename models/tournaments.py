@@ -1,7 +1,7 @@
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-instance-attributes
 """Define the tournaments."""
-from typing import List
+from typing import List, Dict
 from models.players import Participant
 from models.rounds import Round
 
@@ -22,6 +22,9 @@ class Tournament:
         description: str,
         number_players: int,
         number_rounds: int,
+        tournament_id: int = 0,
+        current_round: int = 1,
+        current_tournament: str = None,
     ):
         """Inits Tournament
 
@@ -34,17 +37,17 @@ class Tournament:
             number_players (int) : contains the number of players entered by the user.
             number_rounds (int) : contains the number or rounds entred by the user.
         """
-        self.tournament_id = 0
+        self.tournament_id = tournament_id
         self.name = name
         self.location = location
         self.dated = dated
-        self.current_round = 1
+        self.current_round = current_round
         self.rounds: List[Round] = []
         self.players: List[Participant] = []
         self.time_control = time_control
         self.description = description
-        self.current_tournament = ""
-        self.current_players = []
+        self.current_tournament = current_tournament
+        self.current_players: List[Dict] = []
         self.number_players = number_players
         self.number_rounds = number_rounds
 
@@ -53,7 +56,7 @@ class Tournament:
     # - - - - - - - - - - - #
 
     @property
-    def serialize(self) -> dict:
+    def serialize(self) -> Dict:
         """Method used to serialize a tournament before saving
         it in the table TOURNAMENTS.
 
@@ -86,7 +89,7 @@ class Tournament:
         }
 
     @property
-    def serialize_players(self) -> list:
+    def serialize_players(self) -> List[Dict]:
         """Method used to serialize a list of Participant instance before saving
         it in the table TOURNAMENTS.
 
@@ -99,7 +102,7 @@ class Tournament:
         return players_serialized
 
     @property
-    def serialize_rounds(self) -> list:
+    def serialize_rounds(self) -> List[Dict]:
         """Method used to serialize a list of Round instance before saving
         it in the table TOURNAMENTS.
 
@@ -115,7 +118,7 @@ class Tournament:
     # methods               #
     # - - - - - - - - - - - #
 
-    def sort_elo_players(self) -> list:
+    def sort_elo_players(self) -> List[Participant]:
         """Sort the list from high elo to low
 
         Returns:
@@ -126,7 +129,7 @@ class Tournament:
         )
         return players_sorted
 
-    def sort_score_players(self) -> list:
+    def sort_score_players(self) -> List[Participant]:
         """Sort the list from high score to low and high elo to low
 
         Returns:

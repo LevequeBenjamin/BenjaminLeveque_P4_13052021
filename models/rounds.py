@@ -1,7 +1,6 @@
 """Define the rounds."""
 
-from typing import List
-from models.players import Participant
+from typing import List, Dict
 from models.matches import Match
 
 
@@ -12,7 +11,9 @@ class Round:
     # special methods       #
     # - - - - - - - - - - - #
 
-    def __init__(self, name: str, created_at: str) -> None:
+    def __init__(
+        self, name: str, created_at: str, finished_at: str = None, start: bool = True
+    ) -> None:
         """Inits Round.
 
         Args:
@@ -23,15 +24,15 @@ class Round:
         self.matches: List[Match] = []
         self.name = name
         self.created_at = created_at
-        self.finished_at = None
-        self.start = True
+        self.finished_at = finished_at
+        self.start = start
 
     # - - - - - - - - - - - #
     # properties            #
     # - - - - - - - - - - - #
 
     @property
-    def serialize(self) -> dict:
+    def serialize(self) -> Dict:
         """Method used to serialize a round before saving
         it in the table TOURNAMENTS.
 
@@ -52,7 +53,7 @@ class Round:
         }
 
     @property
-    def serialize_match(self) -> list:
+    def serialize_match(self) -> List[Dict]:
         """Method used to serialize a list of Match instance before saving
         it in the table TOURNAMENTS.
 

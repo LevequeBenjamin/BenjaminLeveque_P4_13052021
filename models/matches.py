@@ -1,5 +1,8 @@
 """Define the matches."""
 
+# librairies
+from typing import Dict, List, Tuple
+
 
 class Match:  # pylint: disable=too-few-public-methods
     """This is a class allowing to create a match."""
@@ -10,8 +13,8 @@ class Match:  # pylint: disable=too-few-public-methods
 
     def __init__(
         self,
-        player_one: dict,
-        player_two: dict,
+        player_one: Dict,
+        player_two: Dict,
         score_player_one: float,
         score_player_two: float,
     ) -> None:
@@ -27,7 +30,7 @@ class Match:  # pylint: disable=too-few-public-methods
         self.player_two = player_two
         self.score_player_one = score_player_one
         self.score_player_two = score_player_two
-        self.matches = (
+        self.matches: Tuple(List[Dict, float], List[Dict, float]) = (
             [player_one, score_player_one],
             [player_two, score_player_two],
         )
@@ -37,7 +40,7 @@ class Match:  # pylint: disable=too-few-public-methods
     # - - - - - - - - - - - #
 
     @property
-    def serialize(self) -> dict:
+    def serialize(self) -> Dict:
         """Serialize matches
 
         Returns:

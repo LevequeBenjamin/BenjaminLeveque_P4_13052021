@@ -1,6 +1,9 @@
 # pylint: disable=too-many-arguments
 """Define the players."""
 
+# librairies
+from typing import Dict, List
+
 
 class Player:
     """It is a class allowing to create a Player."""
@@ -41,7 +44,7 @@ class Player:
     # - - - - - - - - - - - #
 
     @property
-    def serialize_player(self) -> dict:
+    def serialize_player(self) -> Dict:
         """Method allowing to serialize a player before saving
         it in the table PLAYERS.
 
@@ -85,7 +88,7 @@ class Participant(Player):
         self.player_id = None
         self.score = 0
         self.ladder = 0
-        self.opponents = []
+        self.opponents: List[int] = []
         super().__init__(last_name, first_name, birth_date, sex, elo)
 
     def __str__(self) -> str:
@@ -101,7 +104,7 @@ class Participant(Player):
     # - - - - - - - - - - - #
 
     @property
-    def serialize(self) -> dict:
+    def serialize(self) -> Dict:
         """Method allowing to serialize a player before saving
         it in the table TOURNAMENTS.
 
@@ -131,7 +134,7 @@ class Participant(Player):
         }
 
     @property
-    def serialize_player_match(self) -> dict:
+    def serialize_player_match(self) -> Dict:
         """Method allowing to serialize a player before create a instance of Match.
 
         Returns:
