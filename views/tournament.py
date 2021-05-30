@@ -11,7 +11,34 @@ from views.abstract import AbstractView
 
 
 class TournamentView(AbstractView):
-    """TounamentView view"""
+    """TounamentView view
+
+    Static Methods:
+        choice_time_control() -> None:
+            Show time control choice.
+        perform_time_control(choice: int) -> str:
+            Performs according to the user choice.
+        menu_tournaments() -> None:
+            Print menu tournament.
+        print_current_tournament(tournament: Tournament) -> None:
+            Display a array with information of current tournament.
+        print_confirm_tournament(
+        name: str, location: str, dated: str, time_control: str, description: str
+        ) -> None:
+            Display a array with information of tournament for confirm import.
+        print_header_tournament_array() -> None:
+            Print header of tournament arrays.
+        print_tournament(
+        tournament_id: int, name: str, location: str, dated: str, time_control: str
+        ) -> None:
+            Display a array with information of tournament.
+
+    Methods:
+        prompt_tournament_time_control(self) -> str:
+            Prompt for get tournament time control.
+        sub_tournament_menu(self, tournament: Tournament) -> None:
+            Show tournament menu.
+    """
 
     # - - - - - - - - - - - #
     # methods               #
@@ -108,7 +135,7 @@ class TournamentView(AbstractView):
 
     @staticmethod
     def menu_tournaments() -> None:
-        """[summary]"""
+        """Print menu tournament."""
         print(Fore.LIGHTWHITE_EX + f'{"* MENU TOURNAMENTS*"}'.center(119))
         print("[1] Importez un tournoi.")
         print("[0] Retour au menu principal.\n")
@@ -116,7 +143,7 @@ class TournamentView(AbstractView):
 
     @staticmethod
     def print_current_tournament(tournament: Tournament) -> None:
-        """[summary]
+        """Display a array with information of current tournament.
 
         Args:
             tournament ([type]): [description]
@@ -152,7 +179,7 @@ class TournamentView(AbstractView):
     def print_confirm_tournament(
         name: str, location: str, dated: str, time_control: str, description: str
     ) -> None:
-        """[summary]
+        """Display a array with information of tournament for confirm import.
 
         Args:
             name ([type]): [description]
@@ -181,7 +208,7 @@ class TournamentView(AbstractView):
 
     @staticmethod
     def print_header_tournament_array() -> None:
-        """[summary]"""
+        """Print header of tournament arrays."""
         print(
             f"{'ID'.center(10)} | "
             f"{'Nom'.center(25)} | "
@@ -195,7 +222,7 @@ class TournamentView(AbstractView):
     def print_tournament(
         tournament_id: int, name: str, location: str, dated: str, time_control: str
     ) -> None:
-        """[summary]
+        """Display a array with information of tournament.
 
         Args:
             tournament_id ([type]): [description]

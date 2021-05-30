@@ -10,7 +10,22 @@ from views.abstract import AbstractView
 
 
 class PlayerView(AbstractView):
-    """Player view"""
+    """Player view
+
+    Static Methods:
+        sub_players_menu() -> None:
+            Show players menu.
+        print_header_player_array() -> None:
+            Print header of player array.
+        print_player(player_id: int, last_name: str,
+        first_name: str, birth_date: str, sex: str, elo: int,
+        ) -> None:
+            Display a array with information of player dict.
+
+    Methods:
+        prompt_player_sex(self) -> str:
+            Prompt for get player sex.
+    """
 
     # - - - - - - - - - - - #
     # methods               #
@@ -51,7 +66,7 @@ class PlayerView(AbstractView):
 
     @staticmethod
     def print_header_player_array() -> None:
-        """[summary]"""
+        """Print header of player array."""
         print(
             f"{'ID'.center(10)} | "
             f"{'Nom'.center(25)} | "

@@ -5,7 +5,21 @@ from typing import Dict, List, Tuple
 
 
 class Match:  # pylint: disable=too-few-public-methods
-    """This is a class allowing to create a match."""
+    """This is a class allowing to create a match.
+
+    Attributs:
+        player_one: Paricipant instance
+        player_two: Participant instance
+        score_player_one: float, player result
+        score_player_two: float, player result
+        matches: Tuple(List[Dict, float], List[Dict, float]) = (
+            [player_one, score_player_one],
+            [player_two, score_player_two],
+        )
+    Properties:
+        serialize(self) -> Dict:
+            Serialize matches.
+    """
 
     # - - - - - - - - - - - #
     # special methods       #
@@ -41,7 +55,7 @@ class Match:  # pylint: disable=too-few-public-methods
 
     @property
     def serialize(self) -> Dict:
-        """Serialize matches
+        """Serialize matches.
 
         Returns:
             dict: a dictionary of matches

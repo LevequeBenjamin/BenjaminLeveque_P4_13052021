@@ -15,14 +15,32 @@ from controllers.abstract import AbstractController
 
 
 class PlayerController(AbstractController):
-    """PlayerController controller."""
+    """PlayerController controller.
+
+    Methods:
+        print_players(self) -> List[Dict]:
+            Method used to display all players in the database.
+        print_elo_players(self) -> List[Dict]:
+            Method used to display all players in the database.
+        set_new_player(self) -> None:
+            Create a new Player instance and save it in the database.
+        set_list_players(self, tournament: Tournament) -> None:
+            Creates list players, if a player is present in the database,
+            the method imports it. If a player is already present in the
+            tournament players list the method returns an error. And if a
+            player is not present in the database, the method records it.
+            And add to the list players in Tournament instance.
+        update_players_elo(self) -> None:
+            Method used to modify the elo rank of a player
+            if the player exists in the database, else return an error.
+    """
 
     # - - - - - - - - - - - #
     # methods               #
     # - - - - - - - - - - - #
 
     def print_players(self) -> List[Dict]:
-        """Method used to display all players in the database
+        """Method used to display all players in the database.
 
         Returns:
             players (list): a list of players found in the database
@@ -48,7 +66,7 @@ class PlayerController(AbstractController):
         return None
 
     def print_elo_players(self) -> List[Dict]:
-        """Method used to display all players in the database
+        """Method used to display all players in the database.
 
         Returns:
             players (list): a list of players found in the database
@@ -74,7 +92,7 @@ class PlayerController(AbstractController):
         time.sleep(2.0)
         return None
 
-    def set_new_player(self):
+    def set_new_player(self) -> None:
         """Create a new Player instance and save it in the database."""
         self.player_view.title_h2("Créez un joueur.")
         last_name = self.player_view.prompt_string("joueur", "le nom")

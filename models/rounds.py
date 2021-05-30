@@ -5,7 +5,23 @@ from models.matches import Match
 
 
 class Round:
-    """It is a class allowing to create a Round."""
+    """It is a class allowing to create a Round.
+
+    Attributs:
+        matches (list): contains Match instances
+        players (Participant): contains a list of Participant intance,
+        name (string): contains the name of the round,
+        created_at (string): time retrieved from lib time,
+        start (bool): define the round it's start
+
+    Properties:
+        serialize(self) -> Dict:
+            Method used to serialize a round before saving
+            it in the table TOURNAMENT.
+        serialize_match(self) -> List[Dict]:
+            Method used to serialize a list of Match instance before saving
+            it in the table TOURNAMENTS.
+    """
 
     # - - - - - - - - - - - #
     # special methods       #
@@ -64,7 +80,3 @@ class Round:
         for match in self.matches:
             matches_serialized.append(match.serialize)
         return matches_serialized
-
-    # - - - - - - - - - - - #
-    # methods               #
-    # - - - - - - - - - - - #

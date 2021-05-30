@@ -15,7 +15,26 @@ from utils.utils import isfloat
 
 
 class RoundView(AbstractView):
-    """Round view"""
+    """Round view
+
+    Static Methods:
+        sub_round_menu() -> None:
+            Show rounds menu.
+        print_header_players_pair_array() -> None:
+            Print Header of players pair array.
+        print_players_pair(player_one: Participant, player_two: Participant) -> None:
+            Display a array with information of player one et two.
+        print_header_rounds_array() -> None:
+            Print header of rounds array.
+        print_rounds(tournament: Tournament) -> None:
+            Display a array with information of rounds.
+        print_matches(tournament: Tournament) -> None:
+            Display a array with information of matches.
+
+    Methods:
+        prompt_set_score(self) -> float:
+            Prompt for get player
+    """
 
     # - - - - - - - - - - - #
     # methods               #
@@ -53,7 +72,7 @@ class RoundView(AbstractView):
 
     @staticmethod
     def print_header_players_pair_array() -> None:
-        """[summary]"""
+        """Print Header of players pair array."""
         print(
             Fore.LIGHTBLUE_EX + f"{'Nom'.center(24)} | "
             f"{'Prénom'.center(24)} | "
@@ -84,7 +103,7 @@ class RoundView(AbstractView):
 
     @staticmethod
     def print_header_rounds_array() -> None:
-        """[summary]"""
+        """Print header of rounds array."""
         print(
             f"{'Nom'.center(25)} | "
             f"{'Début de ronde'.center(35)} | "
@@ -94,7 +113,7 @@ class RoundView(AbstractView):
 
     @staticmethod
     def print_rounds(tournament: Tournament) -> None:
-        """[summary]
+        """Display a array with information of rounds.
 
         Args:
             tournament_id ([type]): [description]
@@ -113,7 +132,7 @@ class RoundView(AbstractView):
 
     @staticmethod
     def print_matches(tournament: Tournament) -> None:
-        """[summary]
+        """Display a array with information of matches.
 
         Args:
             tournament ([type]): [description]

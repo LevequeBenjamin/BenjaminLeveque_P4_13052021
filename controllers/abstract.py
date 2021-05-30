@@ -12,7 +12,15 @@ from controllers.db import DbControllerTournament, DbControllerlPlayer
 
 
 class AbstractController(ABC):  # pylint: disable=too-few-public-methods
-    """It is a parent class which is used to create inheritance."""
+    """It is a parent class which is used to create inheritance.
+
+    Attributs:
+        db_tournament: DbControllerTournament()
+        db_player: DbControllerlPlayer()
+        tournament_view: TournamentView()
+        player_view: PlayerView()
+        round_view: RoundView()
+    """
 
     # - - - - - - - - - - - #
     # special methods       #

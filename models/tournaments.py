@@ -1,13 +1,53 @@
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-instance-attributes
 """Define the tournaments."""
+
+# librairies
 from typing import List, Dict
+
+# models
 from models.players import Participant
 from models.rounds import Round
 
 
 class Tournament:
-    """Tournament class."""
+    """Tournament class.
+
+    Attributs:
+        name (string): contains the name entered by the user,
+        location (string): contains the location entered by the user,
+        dated (string): contains the dated entered by the user,
+        time_control (string): contains the time control entered by the user,
+        description (string): contains the description entered by the user,
+        number_players (int): contains the number of players entered by the user,
+        number_rounds (int): contains the number or rounds entred by the user,
+        tournament_id (int): contains the id of tournament,
+        current_round (int): contains the current round,
+        current_tournament (str): define when the tournament it's finished,
+
+    Properties:
+        serialize(self) -> Dict:
+            Method used to serialize a tournament before saving
+            it in the table TOURNAMENTS.
+        serialize_players(self) -> List[Dict]:
+            Method used to serialize a list of Participant instance before saving
+            it in the table TOURNAMENTS.
+        serialize_rounds(self) -> List[Dict]:
+            Method used to serialize a list of Round instance before saving
+            it in the table TOURNAMENTS.
+
+    Methods:
+        sort_elo_players(self) -> List[Participant]:
+            Sort the list from high elo to low.
+        sort_score_players(self) -> List[Participant]:
+            Sort the list from high score to low and high elo to low.
+        generate_pair_first_round(self) -> List[Participant]:
+            Method allows to generate pairs of players according
+            to the Swiss tournament system.
+        generate_pair(self) -> List[Participant]:
+            Method allows to generate pairs of players according
+            to the Swiss tournament system.
+    """
 
     # - - - - - - - - - - - #
     # special methods       #
@@ -119,7 +159,7 @@ class Tournament:
     # - - - - - - - - - - - #
 
     def sort_elo_players(self) -> List[Participant]:
-        """Sort the list from high elo to low
+        """Sort the list from high elo to low.
 
         Returns:
             Round.players [list]: a sorted list
@@ -130,7 +170,7 @@ class Tournament:
         return players_sorted
 
     def sort_score_players(self) -> List[Participant]:
-        """Sort the list from high score to low and high elo to low
+        """Sort the list from high score to low and high elo to low.
 
         Returns:
             Round.players [list]: a sorted list

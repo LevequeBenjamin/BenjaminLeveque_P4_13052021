@@ -20,14 +20,38 @@ from controllers.abstract import AbstractController
 
 
 class TournamentController(AbstractController):
-    """TournamentController controller."""
+    """TournamentController controller.
+
+    Methods:
+        print_tournaments(self) -> List[Dict]:
+            Method used to display all tournaments in the database.
+        print_players_tournament(self, tournament: Tournament) -> None:
+            Method used to display tournament rankings.
+        print_rounds_tournament(self, tournament: Tournament) -> None:
+            Method used to display tournament rankings.
+        print_matches_tournament(self, tournament: Tournament) -> None:
+            Method used to display tournament rankings.
+        set_tournament(self) -> Tournament:
+            Method used to creates a Tournament instance.
+            if a tournament is created, the method redirects to a tournament submenu
+            with the possibility of creating the list of participants.
+        import_tournament(self) -> Tournament:
+            Method used to import a tournament in progress and create a Tournament instance.
+            if a tournament is founded, the method redirects to a tournament submenu
+            And resume where the tournament left off.
+        start_rounds(self, tournament: Tournament) -> None:
+            Start the rounds.
+        start_round(self, round_game: Round, players_pair: List[Participant], tournament: Tournament,
+        j: int) -> None:
+            This method manages the matches of a round.
+    """
 
     # - - - - - - - - - - - #
     # methods               #
     # - - - - - - - - - - - #
 
     def print_tournaments(self) -> List[Dict]:
-        """Method used to display all tournaments in the database
+        """Method used to display all tournaments in the database.
 
         Returns:
             tournaments (list): a list of players found in the database
@@ -216,7 +240,7 @@ class TournamentController(AbstractController):
         """Start the rounds.
 
         Args:
-            tournament (Object): Tournament instance
+            tournament (Tournament): Tournament instance
         """
         if tournament.current_round <= tournament.number_rounds:
             j = 1

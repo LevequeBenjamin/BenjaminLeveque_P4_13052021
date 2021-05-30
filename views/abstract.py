@@ -8,11 +8,36 @@ from colorama import Fore
 
 
 class AbstractView(ABC):
-    """User view"""
+    """User view.
+
+    Static methods:
+        header() -> None:
+            Header.
+        title_h2(title: str) -> None:
+            Print title.
+        exit_program() -> None:
+            Style exit program message.
+        user_print_msg(message: str) -> None:
+            Print message.
+        prompt_confirm() -> str:
+            Return Y or N.
+        prompt_return() -> str:
+            Return Y.
+        prompt_choice_menu(choice: int) -> int:
+            Return choice.
+
+    Methods;
+        main_menu(self) -> None:
+            Print main menu.
+        prompt_string(self, argument_one: str, argument_two: str) -> str:
+            Prompt for get tournament name.
+        prompt_integer(self, argument_one: str, argument_two: str) -> int:
+            Prompt for get int.
+    """
 
     @staticmethod
     def header() -> None:
-        """[summary]"""
+        """Header."""
         if sys.platform.startswith("linux"):
             os.system("clear")
         elif sys.platform.startswith("win32"):
@@ -45,10 +70,10 @@ class AbstractView(ABC):
 
     @staticmethod
     def title_h2(title: str) -> None:
-        """[summary]
+        """Print title
 
         Args:
-            title ([type]): [description]
+            title (str): title
         """
         print(Fore.LIGHTWHITE_EX + f'{"*" * 60}'.center(119))
         print(f"{title}".center(119))
@@ -56,7 +81,7 @@ class AbstractView(ABC):
 
     @staticmethod
     def exit_program() -> None:
-        """[summary]"""
+        """Style exit program message."""
         print(Fore.LIGHTYELLOW_EX + "*" * 119)
         print("\n" * 2)
         print(
@@ -68,7 +93,7 @@ class AbstractView(ABC):
 
     @staticmethod
     def user_print_msg(message: str) -> None:
-        """[summary]
+        """Print message.
 
         Args:
             message ([type]): [description]
@@ -76,8 +101,8 @@ class AbstractView(ABC):
         print(f"{message}")
 
     @staticmethod
-    def prompt_confirm() -> None:
-        """[summary]
+    def prompt_confirm() -> str:
+        """Return Y or N.
 
         Returns:
             [type]: [description]
@@ -90,8 +115,8 @@ class AbstractView(ABC):
         return confirm
 
     @staticmethod
-    def prompt_return() -> None:
-        """[summary]
+    def prompt_return() -> str:
+        """Return Y.
 
         Returns:
             [type]: [description]
@@ -107,7 +132,7 @@ class AbstractView(ABC):
 
     @staticmethod
     def prompt_choice_menu(choice: int) -> int:
-        """[summary]
+        """Return choice.
 
         Returns:
             [type]: [description]

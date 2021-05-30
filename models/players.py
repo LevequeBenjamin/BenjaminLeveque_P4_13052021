@@ -6,7 +6,19 @@ from typing import Dict, List
 
 
 class Player:
-    """It is a class allowing to create a Player."""
+    """It is a class allowing to create a Player.
+
+    Attributs:
+        last_name (string): contains the last name entered by the user,
+        first_name (string): contains the first name entered by the user,
+        birth_date (string): contains the last birth of date entered by the user,
+        sex (string): contains the sex entered by the user,
+        elo (int): contains the elo classement entered by the user,
+    Properties:
+        serialize_player(self) -> Dict:
+            Method allowing to serialize a player before saving
+            it in the table PLAYERS.
+    """
 
     # - - - - - - - - - - - #
     # special methods       #
@@ -67,7 +79,15 @@ class Player:
 
 
 class Participant(Player):
-    """It is a class allowing to create an inheritance from the Player class."""
+    """It is a class allowing to create an inheritance from the Player class.
+
+    Properties:
+        serialize(self) -> Dict:
+            Method allowing to serialize a player before saving
+            it in the table TOURNAMENTS.
+        serialize_player_match(self) -> Dict:
+            Method allowing to serialize a player before create a instance of Match.
+    """
 
     # - - - - - - - - - - - #
     # special methods       #

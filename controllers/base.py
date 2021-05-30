@@ -12,7 +12,41 @@ from controllers.tournaments import TournamentController
 
 
 class Controller:
-    """Main controller."""
+    """Main controller.
+
+    Attributs:
+            player_controller: PlayerController()
+            tournament_controller: TournamentController()
+
+    Methods:
+            display_players(self) -> None:
+                Method which displays a complete list of players in database.
+            display_players_perform(self, user_choice: int) -> None:
+                Dispatch the action requested by the user.
+            display_tournaments(self) -> None:
+                Method which displays a complete list of tournaments in database.
+            display_tournaments_perform(self, user_choice: int) -> None:
+                Dispatch the action requested by the user.
+            get_choice_menu_tournament(self, tournament: Tournament) -> None:
+                Method which displays the tournament submenu as well as the current
+                tournament and allows you to select an option among the submenu.
+            start_tournament_perform(self, user_choice: int, tournament: Tournament) -> None:
+                Dispatch the action requested by the user.
+            start_program(self) -> None:
+                Start the program.
+            set_new_player(self) -> None:
+                Method used to create a new player.
+            start_new_tournament(self) -> None:
+                Method used to create and start a new tournament.
+            start_import_tournament(self) -> None:
+                Method used to start a tournament imported from the database.
+            exit_program(self) -> None:
+                Method used to exit the program.
+            main_perform(self, user_choice: int) -> None:
+                Dispatch the action requested by the user.
+            run(self) -> None:
+                Run CHESS TOURNAMENT.
+    """
 
     # - - - - - - - - - - - #
     # special methods       #
@@ -39,7 +73,7 @@ class Controller:
         self.start_program()
 
     def display_players_perform(self, user_choice: int) -> None:
-        """Dispatch the action requested by the user
+        """Dispatch the action requested by the user.
 
         Args:
             user_choice (int): contains the user choice entered by the user.
@@ -71,7 +105,7 @@ class Controller:
         self.start_program()
 
     def display_tournaments_perform(self, user_choice: int) -> None:
-        """Dispatch the action requested by the user
+        """Dispatch the action requested by the user.
 
         Args:
             user_choice (int): contains the user choice entered by the user.
@@ -107,7 +141,7 @@ class Controller:
     def start_tournament_perform(
         self, user_choice: int, tournament: Tournament
     ) -> None:
-        """Dispatch the action requested by the user
+        """Dispatch the action requested by the user.
 
         Args:
             user_choice (int): contains the user choice entered by the user.
@@ -227,7 +261,7 @@ class Controller:
         sys.exit()
 
     def main_perform(self, user_choice: int) -> None:
-        """Dispatch the action requested by the user
+        """Dispatch the action requested by the user.
 
         Args:
             user_choice (int): contains the user choice entered by the user.

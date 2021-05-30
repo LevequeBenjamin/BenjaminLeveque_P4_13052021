@@ -15,7 +15,29 @@ TOURNAMENTS = DB.table("TOURNAMENTS")
 
 
 class DbControllerlPlayer:
-    """DbControllerPlayer controller."""
+    """DbControllerPlayer controller.
+
+    Attributs:
+        players: table PLAYERS
+
+    Properties:
+        sort_alphabetical_players(self) -> List[Dict]:
+            Sort the list from high elo to low.
+        sort_elo_players(self) -> List[Dict]:
+            Sort the list from high score to low.
+
+    Methods:
+        get_id_player(self, last_name: str, first_name: str) -> int:
+            Method used to find the player id in the PLAYERS table.
+        search_table_players(self, last_name: str, first_name: str) -> Dict:
+            Method used to check if a player exist in the db.
+        search_table_players_with_id(self, player_id: int) -> Dict:
+            Method used to check if a player exist in the database.
+        update_player(self, player: object, player_id: int) -> None:
+            Method used to modify a player in the database.
+        save_table_players(self, player: object) -> None:
+            Method used to save player in database.
+    """
 
     # - - - - - - - - - - - #
     # special methods       #
@@ -26,12 +48,12 @@ class DbControllerlPlayer:
         self.players = PLAYERS
 
     # - - - - - - - - - - - #
-    # methods               #
+    # properties            #
     # - - - - - - - - - - - #
 
     @property
     def sort_alphabetical_players(self) -> List[Dict]:
-        """Sort the list from high elo to low
+        """Sort the list from high elo to low.
 
         Returns:
             players_sort [list]: a sorted list
@@ -41,7 +63,7 @@ class DbControllerlPlayer:
 
     @property
     def sort_elo_players(self) -> List[Dict]:
-        """Sort the list from high score to low
+        """Sort the list from high score to low.
 
         Returns:
             players-sort [list]: a sorted list
@@ -51,8 +73,12 @@ class DbControllerlPlayer:
         )
         return players_sort
 
+    # - - - - - - - - - - - #
+    # methods               #
+    # - - - - - - - - - - - #
+
     def get_id_player(self, last_name: str, first_name: str) -> int:
-        """Method used to find the player id in the PLAYERS table
+        """Method used to find the player id in the PLAYERS table.
 
         Args:
             last_name (str): contains the last name entered by the user,
@@ -116,7 +142,20 @@ class DbControllerlPlayer:
 
 
 class DbControllerTournament:
-    """DbControllerTournament controller."""
+    """DbControllerTournament controller.
+
+    Methods:
+        get_id_tournament(self, name: str) -> int:
+            Method used to find the tournament id in the PLAYERS table.
+        search_table_tournaments(self, name: str) -> Dict:
+            Method used to check if a tournament exist in the db.
+        search_table_tournament_with_id(self, tournament_id: int) -> Dict:
+            Method used to check if a tournament exist in the db.
+        save_table_tournament(self, tournament: Tournament) -> None:
+            Method used to save tournament in database.
+        update_table_tournament(self, tournament: Tournament) -> None:
+            Method used to modify a tournament in the database
+    """
 
     # - - - - - - - - - - - #
     # special methods       #
@@ -131,7 +170,7 @@ class DbControllerTournament:
     # - - - - - - - - - - - #
 
     def get_id_tournament(self, name: str) -> int:
-        """Method used to find the tournament id in the PLAYERS table
+        """Method used to find the tournament id in the PLAYERS table.
 
         Args:
             name (string): contains the name entered by the user.
@@ -182,7 +221,7 @@ class DbControllerTournament:
         self.tournaments.insert(tournament.serialize)
 
     def update_table_tournament(self, tournament: Tournament) -> None:
-        """Method used to modify a tournament in the database
+        """Method used to modify a tournament in the database.
 
         Args:
             tournament (Tournament): a Tournament instance
