@@ -24,7 +24,7 @@ Pour créez un environnement, utilisez la commande :
 
 Pour activer l'environnement, exécutez la commande :
 
-Pour Mac, linux: `$ source env/bin/activate` sous macos ou linux.
+`$ source env/bin/activate` sous macos ou linux.
 
 `$ env/Scripts/activate` sous windows.
 
