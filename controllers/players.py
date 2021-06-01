@@ -195,7 +195,8 @@ class PlayerController(AbstractController):
             time.sleep(2.0)
         self.player_view.user_print_msg(
             Fore.LIGHTGREEN_EX
-            + f"Les {str(tournament.number_players)} joueurs ont été créés, le tounoi peut commencer."
+            + f"Les {str(tournament.number_players)} joueurs ont été créés,"
+            " le tounoi peut commencer."
         )
         time.sleep(2.0)
 

@@ -2,8 +2,10 @@
 
 # librairies
 from typing import List
-from models.players import Participant
 from colorama import Fore
+
+# models
+from models.players import Participant
 
 # views
 from views.abstract import AbstractView

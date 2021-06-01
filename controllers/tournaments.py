@@ -41,8 +41,8 @@ class TournamentController(AbstractController):
             And resume where the tournament left off.
         start_rounds(self, tournament: Tournament) -> None:
             Start the rounds.
-        start_round(self, round_game: Round, players_pair: List[Participant], tournament: Tournament,
-        j: int) -> None:
+        start_round(self, round_game: Round, players_pair: List[Participant],
+        tournament: Tournament, j: int) -> None:
             This method manages the matches of a round.
     """
 
@@ -220,7 +220,7 @@ class TournamentController(AbstractController):
                     for player in tournament_found["current_players"]:
                         tournament.current_players.append(player)
                 tournament.current_round = tournament_found["current_round"]
-                if tournament.current_round == 5:
+                if tournament.current_round > tournament.number_rounds:
                     tournament.current_tournament = "Tournoi terminé"
                 tournament.tournament_id = tournament_found.doc_id
                 self.tournament_view.user_print_msg(

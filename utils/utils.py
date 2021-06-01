@@ -17,5 +17,4 @@ def ispair(argument):
     returns True if it is a pair number, or False"""
     if (argument % 2) == 0:
         return True
-    else:
-        return False
+    return False
