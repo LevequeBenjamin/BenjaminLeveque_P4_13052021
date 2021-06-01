@@ -2,48 +2,47 @@
 
 ## Développez un programme logiciel en Python
 
+Le projet 4 de la formation Développeur d'application Python est un logiciel de tournoi géré selon le système de tournois "suisse" qui permet de gérer des événements hors ligne.
+
 ### Installation
 
-Clonez le [repository](https://github.com/LevequeBenjamin/BenjaminLeveque_P4_13052021.git)
-```
-https://github.com/LevequeBenjamin/BenjaminLeveque_P4_13052021.git
-```
+Ce logiciel exécutable localement peut être installée en suivant les étapes décrites ci-dessous. L'usage de pipenv est recommandé.
 
-Exécutez l'application dans un environnement virtuel
+1. Clonez le [repository](https://github.com/LevequeBenjamin/BenjaminLeveque_P4_13052021.git) à l'aide de la commande suivante :
+
+`$ git clone "https://github.com/LevequeBenjamin/BenjaminLeveque_P4_13052021.git"` (vous pouvez également télécharger le code en temps [qu'archive zip](https://github.com/LevequeBenjamin/BenjaminLeveque_P4_13052021/archive/refs/heads/master.zip))
+
+2. Exécutez l'application dans un environnement virtuel
+
+Rendez-vous depuis un terminal à la racine du répertoire BenjaminLeveque_P4_13052021 avec la commande `$ cd BenjaminLeveque_P4_13052021`
 
 Pour créez un environnement, utilisez la commande :
 
-```
-$ cd BenjaminLeveque_P4_13052021
-$ python3 -m venv env
-```
+`$ python3 -m venv env` sous macos ou linux.
+
+`$ python -m venv env` sous windows.
 
 Pour activer l'environnement, exécutez la commande :
 
-Pour Mac, linux:
-```
-$ source env/bin/activate
-```
-Pour Windows:
+Pour Mac, linux: `$ source env/bin/activate` sous macos ou linux.
 
-```
-$ env/Script/activate.bat
-```
+`$ env/Scripts/activate` sous windows.
 
-Installez les paquets Python répertoriés dans le fichier *requirements.txt*
-```
-$ pip install -r requirements.txt
-```
+3.  Installez les dépendances du projet avec la commande `$ pip install -r requirements.txt`
+
 ### Usage
 
 Pour lancer le script utilisez la commande:
 
 ```
-$ python3 chess_tournament.py
+
+$ python chess_tournament.py
+
 ```
 
 ### Générer un rapport flake8
 
 ```
-flake8 --format=html --htmldir=flake-report
+
+$ flake8 --format=html --htmldir=flake-report
 ```
