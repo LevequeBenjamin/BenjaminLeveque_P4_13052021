@@ -56,9 +56,7 @@ class TournamentController(AbstractController):
         Returns:
             tournaments (list): a list of players found in the database
         """
-        self.tournament_view.header()
         if self.db_tournament.tournaments:
-            self.tournament_view.menu_tournaments()
             self.tournament_view.print_header_tournament_array()
             for tournament in self.db_tournament.tournaments:
                 self.tournament_view.print_tournament(
@@ -245,7 +243,7 @@ class TournamentController(AbstractController):
         if tournament.current_round <= tournament.number_rounds:
             j = 1
             name = f"Round{tournament.current_round}"
-            created_at = datetime.now()
+            created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             round_game = Round(name, str(created_at))
             self.round_view.sub_round_menu()
             if tournament.current_round == 1:
@@ -331,7 +329,7 @@ class TournamentController(AbstractController):
             j += 1
         tournament.rounds.append(round_game)
         tournament.current_round += 1
-        round_game.finished_at = str(datetime.now())
+        round_game.finished_at = str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         round_game.start = False
         if tournament.current_round == tournament.number_rounds + 1:
             ladder = 1

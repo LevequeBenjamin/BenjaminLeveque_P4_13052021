@@ -96,6 +96,7 @@ class Controller:
     # # # # # # # # # display tournaments # # # # # # # # #
     def display_tournaments(self) -> None:
         """Method which displays a complete list of tournaments in database."""
+        self.tournament_controller.tournament_view.menu_tournaments()
         tournaments = self.tournament_controller.print_tournaments()
         if tournaments:
             user_choice = self.tournament_controller.tournament_view.prompt_choice_menu(
