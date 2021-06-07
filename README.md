@@ -35,14 +35,11 @@ Pour activer l'environnement, exécutez la commande :
 Pour lancer le script utilisez la commande:
 
 ```
-
 $ python chess_tournament.py
-
 ```
 
 ### Générer un rapport flake8
 
 ```
-
 $ flake8 --format=html --htmldir=flake-report
 ```

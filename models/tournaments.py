@@ -194,8 +194,8 @@ class Tournament:
             players_pair (list): return a list of Participant instance pairs
         """
         players = self.sort_elo_players()
-        players_part_one = players[0 : int(self.number_players / 2)]
-        players_part_two = players[int(self.number_players / 2) :]
+        players_part_one = players[0: int(self.number_players / 2)]
+        players_part_two = players[int(self.number_players / 2):]
         players_pair = []
         j = 0
         for j in range(int(self.number_players / 2)):
