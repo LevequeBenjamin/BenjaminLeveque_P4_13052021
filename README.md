@@ -7,7 +7,7 @@ Le projet 4 de la formation Développeur d'application Python est un logiciel de
 ## Demo
 
 <p align="center">
-    <img src="https://github.com/LevequeBenjamin/BenjaminLeveque_P4_13052021/docs/chess.gif" width="100" height="100">
+    <img src="https://github.com/LevequeBenjamin/BenjaminLeveque_P4_13052021/blob/master/docs/chess.gif" width="400" height="400">
 </p>
 
 ### Installation
