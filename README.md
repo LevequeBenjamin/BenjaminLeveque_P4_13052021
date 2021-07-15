@@ -4,6 +4,12 @@
 
 Le projet 4 de la formation Développeur d'application Python est un logiciel de tournoi géré selon le système de tournois "suisse" qui permet de gérer des événements hors ligne.
 
+## Demo
+
+<p align="center">
+    <img src="https://github.com/LevequeBenjamin/BenjaminLeveque_P4_13052021/docs/chess.gif" width="100" height="100">
+</p>
+
 ### Installation
 
 Ce logiciel exécutable localement peut être installée en suivant les étapes décrites ci-dessous. L'usage de pipenv est recommandé.
